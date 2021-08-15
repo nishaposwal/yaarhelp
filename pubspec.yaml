@@ -1,4 +1,4 @@
-name: flutter_fiverr_clone
+name: fiverr_clone
 description: Fiverr mobile app made with Flutter
 
 # The following defines the version and build number for your application.
@@ -19,6 +19,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  font_awesome_flutter: ^8.5.0
+  flutter_circular_chart: ^0.1.0
+  bezier_chart: ^1.0.6
+  flutter_icons: ^1.0.0+1
+  firebase_core: "0.7.0"
+  google_fonts: ^0.3.5
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -28,13 +34,11 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -44,6 +48,9 @@ flutter:
   # assets:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
+
+  assets:
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

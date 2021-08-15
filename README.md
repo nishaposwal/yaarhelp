@@ -1,16 +1,36 @@
-# flutter_fiverr_clone
+<p align="center">
+  <img src="./assets/images/fiverr_logo.png" width="150"/>
+  
+</p>
+<h1 align="center">FiverrClone</h1>
 
-Fiverr mobile app made with Flutter
+<p align="center">
+    <img src="https://img.shields.io/badge/Awesome-Flutter-%231389fd?style=for-the-badge"/>
+    <img src="https://img.shields.io/github/issues/pasanjg/FiverrClone?style=for-the-badge"/>
+    <img src="https://img.shields.io/github/forks/pasanjg/FiverrClone?style=for-the-badge"/>
+    <img src="https://img.shields.io/github/stars/pasanjg/FiverrClone?style=for-the-badge"/>
+    <img src="https://img.shields.io/github/license/pasanjg/FiverrClone?style=for-the-badge"/>
+</p>
 
-## Getting Started
+Fiverr mobile app made with [Flutter](https://flutter.dev/)
 
-This project is a starting point for a Flutter application.
+More updates are yet to come :heart_eyes:
 
-A few resources to get you started if this is your first Flutter project:
+## Screenshots  
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<table>
+  <tr>
+    <td><img src="./assets/screenshots/1.png"/></td>
+    <td><img src="./assets/screenshots/2.png"/></td>
+    <td><img src="./assets/screenshots/3.png"/></td>
+    <td><img src="./assets/screenshots/4.png"/></td>
+    <td><img src="./assets/screenshots/5.png"/></td>
+  </tr>
+  <tr>
+    <td><img src="./assets/screenshots/6.png"/></td>
+    <td><img src="./assets/screenshots/7.png"/></td>
+    <td><img src="./assets/screenshots/8.png"/></td>
+    <td><img src="./assets/screenshots/9.png"/></td>
+    <td><img src="./assets/screenshots/10.png"/></td>
+  </tr>
+</table>
