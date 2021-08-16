@@ -1,6 +1,7 @@
 import 'package:fiverr_clone/pages/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'bezierContainer.dart';
 // import 'package:google_fonts/google_fonts.dart';
@@ -21,6 +22,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String error = 'yes';
   bool loading = false;
+  bool googleLoading = false;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -158,6 +160,39 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Future<void> signInWithGoogle() async {
+    setState(() {
+      googleLoading = true;
+    });
+    // Trigger the authentication flow
+    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    if (googleUser != null) {
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      try {
+        final authUser =
+            await FirebaseAuth.instance.signInWithCredential(credential);
+        showdialogBox('Success', 'loagged in', false);
+      } catch (err) {
+        showdialogBox('Error has occured', err.message, true);
+      } finally {
+        setState(() {
+          googleLoading = false;
+        });
+      }
+    } else {
+      showdialogBox('Error has occured', 'No google account found ', true);
+      googleLoading = false;
+    }
+  }
+
   Widget _facebookButton() {
     return Container(
       height: 50,
@@ -194,11 +229,17 @@ class _LoginPageState extends State<LoginPage> {
                     topRight: Radius.circular(5)),
               ),
               alignment: Alignment.center,
-              child: Text('Log in with Google',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400)),
+              child: TextButton(
+                onPressed: signInWithGoogle,
+                child: googleLoading
+                    ? CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white))
+                    : Text('Log in with Google',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400)),
+              ),
             ),
           ),
         ],
