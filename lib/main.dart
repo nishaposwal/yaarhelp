@@ -1,12 +1,13 @@
-import 'package:fiverr_clone/pages/welcomePage.dart';
+// import 'package:fiverr_clone/pages/welcomePage.dart';
+import 'package:fiverr_clone/pages/main_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  runApp(FiverrClone());
+  runApp(yaarhelp());
 }
 
-class FiverrClone extends StatelessWidget {
+class yaarhelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -22,8 +23,8 @@ class FiverrClone extends StatelessWidget {
         primaryColor: Colors.white,
         accentColor: Color(0xFF1DBF73),
       ),
-      // home: MainTabs(),
-      home: WelcomePage(),
+      // home: WelcomePage(),
+      home: MainTabs(),
     );
   }
 }
