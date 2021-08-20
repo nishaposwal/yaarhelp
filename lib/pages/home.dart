@@ -60,6 +60,18 @@ class _HomePageState extends State<HomePage>
     "Volunteering":
         "https://webgate.ec.europa.eu/fpfis/wikis/download/thumbnails/285091230/ESC_VoluPart_What.png?version=1&modificationDate=1530888095124&api=v2"
   };
+
+  Map<String, List> subCategories = {
+    "Online Help": [
+      "Assignment Help",
+      "Spcial Media Help",
+      "Art & Design Help"
+    ],
+    "Offline Help": ["General Help", "echnical Help", "Organise/Decor Help"],
+  };
+
+  var times = 6;
+
   @override
   Widget build(BuildContext context) {
     final rotateAnimation = Tween(begin: 0.0, end: pi).animate(
@@ -70,13 +82,17 @@ class _HomePageState extends State<HomePage>
         title: Text(
           "yaarhelp",
           style: TextStyle(
-              fontFamily: 'Rowdies', color: Color(0xffB5EAEA), fontSize: 24),
+              fontFamily: 'Rowdies', color: Color(0xff7ED8D8), fontSize: 24),
         ),
         actions: <Widget>[
           InkWell(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ProfilePage()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfilePage(),
+                ),
+              );
             },
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
@@ -99,87 +115,302 @@ class _HomePageState extends State<HomePage>
           ),
         ],
       ),
-      body: Container(
-        margin: EdgeInsets.symmetric(vertical: 8, horizontal: 7),
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  height: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(11),
+      body: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 7),
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    height: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(11),
+                      ),
+                      color: Color(0xffD7E6EE),
                     ),
-                    color: Color(0xffD7E6EE),
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * .1),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      for (var item in list)
-                        Expanded(
-                          child: Container(
-                            margin: EdgeInsets.all(6),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(11),
-                              child: Image(
-                                image: NetworkImage(item),
-                                fit: BoxFit.fill,
-                                height: 60,
-                                width: 100,
+                  Container(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * .1),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        for (var item in list)
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.all(6),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(11),
+                                child: Image(
+                                  image: NetworkImage(item),
+                                  fit: BoxFit.fill,
+                                  height: 60,
+                                  width: 100,
+                                ),
                               ),
                             ),
+                          )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                height: 85,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(11),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color.fromRGBO(0, 0, 0, 0.15),
+                      spreadRadius: 0,
+                      blurRadius: 4,
+                      offset: Offset(0, 4), // changes position of shadow
+                    ),
+                  ],
+                  color: Colors.white,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    for (var item in categories.keys)
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: NetworkImage(categories[item]),
+                            radius: 25,
                           ),
-                        )
+                          SizedBox(
+                            height: 6,
+                          ),
+                          Text(
+                            item,
+                            style:
+                                TextStyle(fontSize: 12, fontFamily: 'Roboto'),
+                          )
+                        ],
+                      )
+                  ],
+                ),
+              ),
+              for (var item in subCategories.keys)
+                Container(
+                  margin: EdgeInsets.only(top: 14, bottom: 14),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(right: 8, bottom: 2),
+                        child: Text(
+                          'See All',
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: 'Roboto',
+                              color: Color(0xff4EB5B5),
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.only(left: 11),
+                              height: 50,
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 12, horizontal: 3),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(5),
+                                ),
+                                border: Border.all(
+                                  width: .5,
+                                  color: const Color.fromRGBO(0, 0, 0, 0.15),
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color.fromRGBO(242, 242, 242, 0.95),
+                                    spreadRadius: 0,
+                                    blurRadius: 4,
+                                    offset: Offset(
+                                        0, 4), // changes position of shadow
+                                  ),
+                                ],
+                                color: Color(0xfff2f2f2),
+                              ),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    item,
+                                    style: TextStyle(fontSize: 13),
+                                  ),
+                                  Image(
+                                    image: AssetImage('assets/images/img.png'),
+                                  )
+                                ],
+                              )),
+                          Container(
+                            margin: EdgeInsets.only(left: 0, right: 11),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 5),
+                            width: 80,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(4),
+                                topRight: Radius.circular(4),
+                              ),
+                              border: Border.all(
+                                width: .5,
+                                color: const Color.fromRGBO(0, 0, 0, 0.15),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color.fromRGBO(242, 242, 242, 0.95),
+                                  spreadRadius: 0,
+                                  blurRadius: 4,
+                                  offset: Offset(
+                                      0, 4), // changes position of shadow
+                                ),
+                              ],
+                              color: Color(0xfff2f2f2),
+                            ),
+                            child: Text(
+                              subCategories[item][0],
+                              style: TextStyle(fontSize: 12),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Container(
+                            width: 80,
+                            height: 40,
+                            margin: EdgeInsets.only(left: 0, right: 11),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(4),
+                              ),
+                              border: Border.all(
+                                width: .5,
+                                color: const Color.fromRGBO(0, 0, 0, 0.15),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color.fromRGBO(242, 242, 242, 0.95),
+                                  spreadRadius: 0,
+                                  blurRadius: 4,
+                                  offset: Offset(
+                                      0, 4), // changes position of shadow
+                                ),
+                              ],
+                              color: Color(0xfff2f2f2),
+                            ),
+                            child: Text(
+                              subCategories[item][1],
+                              style: TextStyle(fontSize: 12),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Container(
+                            width: 80,
+                            height: 40,
+                            alignment: Alignment.center,
+                            margin: EdgeInsets.only(left: 0, right: 19),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(4),
+                              ),
+                              border: Border.all(
+                                width: .5,
+                                color: const Color.fromRGBO(0, 0, 0, 0.15),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color.fromRGBO(242, 242, 242, 0.95),
+                                  spreadRadius: 0,
+                                  blurRadius: 4,
+                                  offset: Offset(
+                                      0, 4), // changes position of shadow
+                                ),
+                              ],
+                              color: Color(0xfff2f2f2),
+                            ),
+                            child: Text(
+                              subCategories[item][2],
+                              style: TextStyle(fontSize: 12),
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        ],
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                            top: 18, left: 8, right: 8, bottom: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Featured Gigs',
+                              style: TextStyle(
+                                  color: Color.fromRGBO(0, 0, 0, 0.5),
+                                  fontFamily: 'Roboto',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              'See All',
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontFamily: 'Roboto',
+                                  color: Color(0xff4EB5B5),
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: 140,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: <Widget>[
+                            for (var i = 0; i < times; i++)
+                              Container(
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(5),
+                                  ),
+                                  border: Border.all(
+                                    width: .5,
+                                    color: const Color.fromRGBO(0, 0, 0, 0.15),
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color:
+                                          Color.fromRGBO(242, 242, 242, 0.95),
+                                      spreadRadius: 0,
+                                      blurRadius: 4,
+                                      offset: Offset(
+                                          0, 4), // changes position of shadow
+                                    ),
+                                  ],
+                                  color: Colors.teal,
+                                ),
+                                margin: EdgeInsets.all(12),
+                              ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
-                ),
-              ],
-            ),
-            Container(
-              height: 85,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(11),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color.fromRGBO(0, 0, 0, 0.15),
-                    spreadRadius: 0,
-                    blurRadius: 4,
-                    offset: Offset(0, 4), // changes position of shadow
-                  ),
-                ],
-                color: Colors.white,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  for (var item in categories.keys)
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircleAvatar(
-                          backgroundImage: NetworkImage(categories[item]),
-                          radius: 25,
-                        ),
-                        SizedBox(
-                          height: 6,
-                        ),
-                        Text(
-                          item,
-                          style: TextStyle(fontSize: 12, fontFamily: 'Roboto'),
-                        )
-                      ],
-                    )
-                ],
-              ),
-            )
-          ],
+                )
+            ],
+          ),
         ),
       ),
       // body: RefreshIndicator(
