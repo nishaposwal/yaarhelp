@@ -1,3 +1,4 @@
+import 'package:fiverr_clone/pages/create-post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
@@ -42,7 +43,7 @@ class _MainTabsState extends State<MainTabs>
   static List<Widget> _listOfPagesForBottomNavigationBar = <Widget>[
     HomePage(),
     MessageInboxPage(),
-    ManageSales(),
+    CreatePost(),
     Notifications(),
     ManageAccount(),
   ];

@@ -161,14 +161,15 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> signInWithGoogle() async {
-    setState(() {
-      googleLoading = true;
-    });
-    // Trigger the authentication flow
-    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+    try {
+      setState(() {
+        googleLoading = true;
+      });
+      // Trigger the authentication flow
+      final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
 
-    // Obtain the auth details from the request
-    if (googleUser != null) {
+      // Obtain the auth details from the request
+      // if (googleUser != null) {
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
       final credential = GoogleAuthProvider.credential(
@@ -176,21 +177,20 @@ class _LoginPageState extends State<LoginPage> {
         idToken: googleAuth.idToken,
       );
 
-      try {
-        final authUser =
-            await FirebaseAuth.instance.signInWithCredential(credential);
-        showdialogBox('Success', 'loagged in', false);
-      } catch (err) {
-        showdialogBox('Error has occured', err.message, true);
-      } finally {
-        setState(() {
-          googleLoading = false;
-        });
-      }
-    } else {
-      showdialogBox('Error has occured', 'No google account found ', true);
-      googleLoading = false;
+      final authUser =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      showdialogBox('Success', 'loagged in', false);
+    } catch (err) {
+      showdialogBox('Error has occured', err.message, true);
+    } finally {
+      setState(() {
+        googleLoading = false;
+      });
     }
+    // } else {
+    //   showdialogBox('Error has occured', 'No google account found ', true);
+    //   googleLoading = false;
+    // }
   }
 
   Widget _facebookButton() {
