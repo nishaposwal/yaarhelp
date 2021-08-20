@@ -5,7 +5,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:fiverr_clone/pages/home.dart';
 import 'package:fiverr_clone/pages/manage_account.dart';
 import 'package:fiverr_clone/pages/manage_sales.dart';
-import 'package:fiverr_clone/pages/message_inbox.dart';
+import 'package:fiverr_clone/pages/explore.dart';
 import 'package:fiverr_clone/pages/notifications.dart';
 
 class MainTabs extends StatefulWidget {
@@ -42,7 +42,7 @@ class _MainTabsState extends State<MainTabs>
 
   static List<Widget> _listOfPagesForBottomNavigationBar = <Widget>[
     HomePage(),
-    MessageInboxPage(),
+    ExplorePage(),
     CreatePost(),
     Notifications(),
     ManageAccount(),
@@ -59,29 +59,29 @@ class _MainTabsState extends State<MainTabs>
         // this will be set when a new tab is tapped
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Feather.home),
+            icon: Icon(Icons.home, size: 35,),
             title: Text('Home'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Feather.mail),
+            icon: Icon(Icons.explore, size: 35,),
             title: Text('Messages'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Feather.clipboard),
+            icon: Icon(Icons.add_box_rounded, size: 35,),
             title: Text('Sales'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Feather.bell),
+            icon: Icon(Icons.notifications_rounded, size: 35,),
             title: Text('Notifications'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Feather.user),
+            icon: Icon(Icons.person, size: 38,),
             title: Text('Profile'),
           ),
         ],
         currentIndex: _selectedIndexForBottomNavigationBar,
         selectedItemColor: Theme.of(context).accentColor,
-        unselectedItemColor: Color(0xFF404040),
+        unselectedItemColor: Colors.grey[700],
         showSelectedLabels: false,
         showUnselectedLabels: false,
       ),

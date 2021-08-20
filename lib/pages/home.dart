@@ -210,7 +210,7 @@ class _HomePageState extends State<HomePage>
                           style: TextStyle(
                               fontSize: 12,
                               fontFamily: 'Roboto',
-                              color: Color(0xff4EB5B5),
+                              color: Theme.of(context).accentColor,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -367,7 +367,7 @@ class _HomePageState extends State<HomePage>
                               style: TextStyle(
                                   fontSize: 12,
                                   fontFamily: 'Roboto',
-                                  color: Color(0xff4EB5B5),
+                                  color: Theme.of(context).accentColor,
                                   fontWeight: FontWeight.bold),
                             )
                           ],
@@ -399,7 +399,7 @@ class _HomePageState extends State<HomePage>
                                           0, 4), // changes position of shadow
                                     ),
                                   ],
-                                  color: Colors.teal,
+                                  color: Theme.of(context).accentColor,
                                 ),
                                 margin: EdgeInsets.all(12),
                               ),

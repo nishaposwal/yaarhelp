@@ -38,7 +38,7 @@ class _FiverrCloneState extends State<FiverrClone> {
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
                 primaryColor: Colors.white,
-                accentColor: Color(0xFF1DBF73),
+                accentColor: Color(0xFF7ED8D8),
               ),
               home: MainTabs(),
             );
