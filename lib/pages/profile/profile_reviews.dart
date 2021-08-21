@@ -88,106 +88,34 @@ class _ReviewsPageState extends State<ReviewsPage> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    "Overall Rating",
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.star,
-                        size: 12.0,
-                        color: Colors.amber,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 4.0),
-                        child: Text(
-                          "4.9",
-                          style: TextStyle(color: Colors.amber, fontSize: 14.0),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "Overall Rating",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.star,
+                          size: 18.0,
+                          color: Colors.yellow[800],
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text("Seller communication"),
-                  Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.star,
-                        size: 12.0,
-                        color: Colors.amber,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 4.0),
-                        child: Text(
-                          "4.9",
-                          style: TextStyle(color: Colors.amber, fontSize: 14.0),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4.0),
+                          child: Text(
+                            "4.9",
+                            style: TextStyle(color: Colors.yellow[800], fontSize: 16.0, fontWeight: FontWeight.bold),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text("Service as described"),
-                  Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.star,
-                        size: 12.0,
-                        color: Colors.amber,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 4.0),
-                        child: Text(
-                          "4.9",
-                          style: TextStyle(color: Colors.amber, fontSize: 14.0),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text("Would recommend"),
-                  Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.star,
-                        size: 12.0,
-                        color: Colors.amber,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 4.0),
-                        child: Text(
-                          "4.9",
-                          style: TextStyle(color: Colors.amber, fontSize: 14.0),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -201,13 +129,9 @@ class _ReviewsPageState extends State<ReviewsPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    "Sorted by most relevant",
+                    "Ratings",
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
-                  ),
-                  Icon(
-                    Icons.sort,
-                    size: 24.0,
                   ),
                 ],
               ),
@@ -225,9 +149,9 @@ class _ReviewsPageState extends State<ReviewsPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           CircleAvatar(
-                            radius: 15.0,
-                            backgroundImage: NetworkImage(
-                              reviews[index]["image"],
+                            radius: 22.0,
+                            backgroundImage: AssetImage(
+                              'assets/images/nouser.jpeg',
                             ),
                           ),
                           Column(
@@ -278,14 +202,15 @@ class _ReviewsPageState extends State<ReviewsPage> {
                                   Icon(
                                     Icons.star,
                                     size: 12.0,
-                                    color: Colors.amber,
+                                    color: Colors.yellow[800],
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 4.0),
                                     child: Text(
                                       reviews[index]["rating"].toString(),
                                       style: TextStyle(
-                                        color: Colors.amber,
+                                        color: Colors.yellow[800],
+                                        fontWeight: FontWeight.bold
                                       ),
                                     ),
                                   ),

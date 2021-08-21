@@ -19,17 +19,25 @@ class _ManageAccountState extends State<ManageAccount> {
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              FontAwesomeIcons.cog,
-              color: Colors.grey,
+          InkWell(
+            onTap: () {},
+            child: Row(
+              children: [
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 15.0),
+                    child: Text(
+                      "Logout",
+                      style: TextStyle(
+                        color: Colors.redAccent,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SettingsPage()),
-              );
-            },
           ),
         ],
       ),
@@ -41,7 +49,7 @@ class _ManageAccountState extends State<ManageAccount> {
               Column(
                 children: <Widget>[
                   Container(
-                    color: Color(0xFF313131),
+                    color: Colors.blueGrey[800],
                     height: 200.0,
                     width: MediaQuery.of(context).size.width,
                     child: Padding(
@@ -58,8 +66,8 @@ class _ManageAccountState extends State<ManageAccount> {
                               children: <Widget>[
                                 CircleAvatar(
                                   radius: 40.0,
-                                  backgroundImage: AssetImage(
-                                      "assets/images/nouser.jpeg"),
+                                  backgroundImage:
+                                      AssetImage("assets/images/nouser.jpeg"),
                                 ),
                               ],
                             ),
@@ -105,17 +113,17 @@ class _ManageAccountState extends State<ManageAccount> {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EarningsPage(),
-                      ),
-                    );
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ProfilePage()));
                   },
                   child: ListTile(
-                    leading: Text(' \u{20B9}', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 28, color: Colors.blue[500]),),
+                    leading: Icon(
+                      Icons.person,
+                      color: Colors.blue[200],
+                      size: 28,
+                    ),
                     title: Text(
-                      "Earnings",
+                      "My profile",
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -126,35 +134,13 @@ class _ManageAccountState extends State<ManageAccount> {
                 InkWell(
                   onTap: () {},
                   child: ListTile(
-                    leading: Icon(Icons.list_alt_rounded, size: 28, color: Colors.orange[700],),
+                    leading: Icon(
+                      Icons.list_alt_rounded,
+                      size: 25,
+                      color: Colors.orange[700],
+                    ),
                     title: Text(
                       "My Orders",
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: ListTile(
-                    leading: Icon(Icons.check_circle, color: Colors.green, size: 28),
-                    title: Text(
-                      "Completed Orders",
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: ListTile(
-                    leading: Icon(Icons.pending_actions, size: 25, color: Colors.yellow[800],),
-                    title: Text(
-                      "Pending Orders",
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -175,66 +161,48 @@ class _ManageAccountState extends State<ManageAccount> {
                   ),
                 ),
                 InkWell(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ProfilePage()));
-                  },
-                  child: ListTile(
-                    leading: Icon(FontAwesomeIcons.user),
-                    title: Text(
-                      "My profile",
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                InkWell(
                   onTap: () {},
                   child: ListTile(
-                    leading: Icon(FontAwesomeIcons.circleNotch),
-                    title: Text(
-                      "Online status",
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    trailing: Switch(
-                      value: isOnline,
-                      onChanged: (value) {
-                        setState(() {
-                          isOnline = value;
-                        });
-                      },
-                      activeTrackColor: Color(0xFF8bd9ad),
-                      activeColor: Theme.of(context).accentColor,
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: ListTile(
-                    leading: Icon(FontAwesomeIcons.paperPlane),
-                    title: Text(
-                      "Invite friends",
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: ListTile(
-                    leading: Icon(FontAwesomeIcons.lifeRing),
+                    leading: Icon(Icons.support, color: Colors.green[400]),
                     title: Text(
                       "Support",
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {},
+                  child: ListTile(
+                    leading: Icon(Icons.privacy_tip_outlined,
+                        color: Colors.red[400]),
+                    title: Text(
+                      "Privacy Policy",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                Divider(),
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    height: 60.0,
+                    width: MediaQuery.of(context).size.width,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15.0),
+                      child: Text(
+                        "Logout",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.0,
+                        ),
                       ),
                     ),
                   ),

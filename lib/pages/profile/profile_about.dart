@@ -11,48 +11,24 @@ class _AboutPageState extends State<AboutPage> {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        ListTile(
-          leading: CircleAvatar(
-            radius: 15.0,
-            backgroundImage: AssetImage("assets/images/fiverr_logo.png"),
-          ),
-          title: Text(
-            "bruce",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 14.0,
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: ListTile(
+            leading: CircleAvatar(
+              radius: 30.0,
+              backgroundImage: AssetImage("assets/images/nouser.jpeg"),
             ),
-          ),
-          subtitle: Row(
-            children: <Widget>[
-              Icon(
-                Icons.star,
-                size: 12.0,
-                color: Colors.amber,
+            title: Text(
+              "Madan Mohan",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 14.0,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 4.0),
-                child: Text(
-                  "4.9",
-                  style: TextStyle(
-                    color: Colors.amber,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 4.0),
-                child: Text(
-                  "(56)",
-                  style: TextStyle(
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 15.0),
+          padding: const EdgeInsets.only(left: 15.0, top: 10),
           child: Text(
             "User information",
             style: TextStyle(
@@ -69,23 +45,7 @@ class _AboutPageState extends State<AboutPage> {
             ),
           ),
           subtitle: Text(
-            "Sri Lanka (10:21 p.m.)",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-        ),
-        ListTile(
-          leading: Icon(FontAwesomeIcons.award),
-          title: Text(
-            "Seller level",
-            style: TextStyle(
-              color: Colors.grey,
-            ),
-          ),
-          subtitle: Text(
-            "Level 1 seller",
+            "Jaipur, India",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.black,
@@ -102,54 +62,6 @@ class _AboutPageState extends State<AboutPage> {
           ),
           subtitle: Text(
             "Jul 2018",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-        ),
-        ListTile(
-          leading: Icon(Icons.watch_later),
-          title: Text(
-            "Avg. response time",
-            style: TextStyle(
-              color: Colors.grey,
-            ),
-          ),
-          subtitle: Text(
-            "1 hour",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-        ),
-        ListTile(
-          leading: Icon(FontAwesomeIcons.solidPaperPlane),
-          title: Text(
-            "Recent delivery",
-            style: TextStyle(
-              color: Colors.grey,
-            ),
-          ),
-          subtitle: Text(
-            "About 2 days ago",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-        ),
-        ListTile(
-          leading: Icon(Icons.remove_red_eye),
-          title: Text(
-            "Last active",
-            style: TextStyle(
-              color: Colors.grey,
-            ),
-          ),
-          subtitle: Text(
-            "Online",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.black,
@@ -184,13 +96,13 @@ class _AboutPageState extends State<AboutPage> {
         ListTile(
           leading: Icon(FontAwesomeIcons.globeAsia),
           title: Text(
-            "Sinhala, Sinhalese",
+            "Hindi",
             style: TextStyle(
               fontWeight: FontWeight.bold,
             ),
           ),
           subtitle: Text(
-            "Native/Bilingual",
+            "Native, Fluent",
             style: TextStyle(
               color: Colors.black,
             ),
@@ -206,10 +118,9 @@ class _AboutPageState extends State<AboutPage> {
             ),
           ),
           subtitle: Text(
-            "Hi. I'm Bruce, freelance developer and designer "
-            "working part time on Fiverr. I have over 9 years of experience in the "
-            "fields of computing. I will guarantee a 100% customer satisfaction. Drop me a "
-            "message I'll reply asap!",
+            "Hi. I'm Madan Mohan, Interior designer and latest designs expert "
+            "working part time on Yaar Help. I have over 9 years of experience in the "
+            "fields of Interior Design. I will guarantee a 100% customer satisfaction.",
             style: TextStyle(
               color: Colors.black,
             ),
@@ -243,7 +154,7 @@ class _AboutPageState extends State<AboutPage> {
                       padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                       child: Center(
                         child: Text(
-                          "programming",
+                          "Interior Designing",
                           style: TextStyle(color: Colors.black),
                         ),
                       ),
@@ -267,7 +178,7 @@ class _AboutPageState extends State<AboutPage> {
                       padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                       child: Center(
                         child: Text(
-                          "development",
+                          "Modular Kitchen",
                           style: TextStyle(color: Colors.black),
                         ),
                       ),

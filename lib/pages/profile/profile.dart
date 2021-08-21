@@ -7,11 +7,11 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       initialIndex: 0,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("bruce"),
+          title: Text("Madan Mohan"),
           bottom: TabBar(
             labelColor: Theme.of(context).accentColor,
             unselectedLabelColor: Colors.grey,
@@ -20,16 +20,13 @@ class ProfilePage extends StatelessWidget {
                 text: "ABOUT",
               ),
               Tab(
-                text: "GIGS",
-              ),
-              Tab(
-                text: "REVIEWS",
+                text: "ORDERS",
               ),
             ],
           ),
         ),
         body: TabBarView(
-          children: <Widget>[AboutPage(), GigsPage(), ReviewsPage()],
+          children: <Widget>[AboutPage(), GigsPage()],
         ),
       ),
     );
