@@ -40,7 +40,7 @@ class _FiverrCloneState extends State<FiverrClone> {
                 primaryColor: Colors.white,
                 accentColor: Color(0xFF7ED8D8),
               ),
-              home: MainTabs(),
+              home: LoginPage(),
             );
           }
 

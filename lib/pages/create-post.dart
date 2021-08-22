@@ -2,6 +2,10 @@ import 'package:fiverr_clone/pages/dropDown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart'; // new
+
+import 'package:firebase_auth/firebase_auth.dart';
+
 class CreatePost extends StatefulWidget {
   // const CreatePost({ Key? key }) : super(key: key);
 
@@ -74,6 +78,16 @@ class _CreatePostState extends State<CreatePost> {
   final addressController = new TextEditingController();
   final categoryList = ['one', 'two', 'three', 'four'];
 
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    timerequiredController.dispose();
+    budgetController.dispose();
+    descriptionController.dispose();
+    addressController.dispose();
+    super.dispose();
+  }
+
   Widget categories() {
     return Container(
       width: double.infinity,
@@ -94,11 +108,21 @@ class _CreatePostState extends State<CreatePost> {
             value: category,
             hint: 'Select a category',
             itemsList: categoryList,
+            onChanged: (value) {
+              setState(() {
+                category = value;
+              });
+            },
           ),
           DropDown(
             value: subCategory,
             hint: 'Select a  sub-category',
             itemsList: categoryList,
+            onChanged: (value) {
+              setState(() {
+                subCategory = value;
+              });
+            },
           ),
         ],
       ),
@@ -148,47 +172,6 @@ class _CreatePostState extends State<CreatePost> {
     );
   }
 
-  Widget budget() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      width: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            'What is your budget',
-            style: TextStyle(
-                color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          // Row(
-          //   children: [
-          //     Text('Budget'),
-          //     Row(
-          //       children: [
-          //         Text('rupees'),
-          //         TextField(
-          //           controller: timerequiredController,
-          //           decoration: new InputDecoration(
-          //               labelText: "Enter number of hours required"),
-          //           keyboardType: TextInputType.number,
-          //           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          //         ),
-          //       ],
-          //     )
-          //   ],
-          // )
-        ],
-      ),
-    );
-  }
-
   Widget stringInput(
       TextEditingController controller, String header, String hint) {
     return Container(
@@ -218,6 +201,7 @@ class _CreatePostState extends State<CreatePost> {
               ),
             ),
             child: TextField(
+              controller: controller,
               decoration: InputDecoration(
                 hintText: hint,
                 border: OutlineInputBorder(
@@ -231,15 +215,51 @@ class _CreatePostState extends State<CreatePost> {
     );
   }
 
+  Future<DocumentReference> addGig() {
+    if (FirebaseAuth.instance.currentUser == null) {
+      print('not logged in');
+    } else {
+      print('logged in');
+    }
+
+    return FirebaseFirestore.instance.collection('gigs').add(<String, dynamic>{
+      'category': category,
+      'subCategory': subCategory,
+      'timeRequired': timerequiredController.text,
+      'budget': budgetController.text,
+      'description': descriptionController.text,
+      'address': addressController.text,
+      'timestamp': DateTime.now().millisecondsSinceEpoch,
+      'userId': FirebaseAuth.instance.currentUser.uid,
+    });
+  }
+
   Widget post() {
+    bool loading = false;
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: ElevatedButton(
-        onPressed: () => {},
-        child: Text(
-          'Post A Request',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
+        onPressed: () async {
+          setState(() {
+            loading = true;
+          });
+          try {
+            await addGig();
+          } catch (e) {
+            print(e);
+          } finally {
+            setState(() {
+              loading = false;
+            });
+          }
+        },
+        child: loading
+            ? CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white))
+            : Text(
+                'Post A Request',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
       ),
     );
   }
@@ -257,13 +277,11 @@ class _CreatePostState extends State<CreatePost> {
               categories(),
               inputNumber(timerequiredController, 'Service Delivary time',
                   'Enter time required to complete task'),
-              // budget(),
               inputNumber(budgetController, 'What is your budget',
                   'Enter yur budget in rupees'),
               stringInput(
                   descriptionController, 'Add Description', 'Description'),
               stringInput(addressController, 'Add Address', 'Address'),
-
               post(),
             ],
           ),
