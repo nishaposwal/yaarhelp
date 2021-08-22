@@ -4,8 +4,9 @@ class DropDown extends StatefulWidget {
   String value;
   String hint;
   List<String> itemsList;
+  final void Function(String) onChanged;
   // DropDown({Key key, this.value, this.hint}) : super(key: key);
-  DropDown({this.value, this.hint, this.itemsList});
+  DropDown({this.value, this.hint, this.itemsList, this.onChanged});
   @override
   _DropDownState createState() => _DropDownState();
 }
@@ -31,11 +32,14 @@ class _DropDownState extends State<DropDown> {
           height: 0,
           color: Colors.white,
         ),
-        onChanged: (String newValue) {
-          setState(() {
-            widget.value = newValue;
-          });
+        onChanged: (value) {
+          widget.onChanged(value);
         },
+        // (String newValue) {
+        //   setState(() {
+        //     widget.value = newValue;
+        //   });
+        // },
         hint: Text(
           widget.hint,
           style: TextStyle(color: Colors.grey),

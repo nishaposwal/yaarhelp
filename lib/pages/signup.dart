@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'bezierContainer.dart';
 import 'loginPage.dart';
+import 'main_tabs.dart';
 
 class SignUpPage extends StatefulWidget {
   SignUpPage({Key key, this.title}) : super(key: key);
@@ -53,6 +54,8 @@ class _SignUpPageState extends State<SignUpPage> {
       await auth.createUserWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
       showdialogBox('Success', 'Your account has been created', false);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => MainTabs()));
     } catch (err) {
       print('error has occured ${err.message}');
       showdialogBox('Error has occured', err.message, true);

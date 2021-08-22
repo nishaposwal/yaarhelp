@@ -1,3 +1,4 @@
+import 'package:fiverr_clone/pages/main_tabs.dart';
 import 'package:fiverr_clone/pages/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -69,6 +70,8 @@ class _LoginPageState extends State<LoginPage> {
       await auth.signInWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
       showdialogBox('Success', 'Logged in successfully', false);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => MainTabs()));
     } catch (err) {
       print('error has occured ${err.message}');
       showdialogBox('Error has occured', err.message, true);
@@ -98,6 +101,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  void navigateToHome() {}
   Widget _submitButton() {
     return Container(
         width: MediaQuery.of(context).size.width,
