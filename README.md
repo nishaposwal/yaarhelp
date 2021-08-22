@@ -16,7 +16,7 @@ Fiverr mobile app made with [Flutter](https://flutter.dev/)
 
 More updates are yet to come :heart_eyes:
 
-## Screenshots  
+## Screenshots
 
 <table>
   <tr>

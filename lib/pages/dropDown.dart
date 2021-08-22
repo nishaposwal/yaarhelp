@@ -1,0 +1,53 @@
+import 'package:flutter/material.dart';
+
+class DropDown extends StatefulWidget {
+  String value;
+  String hint;
+  List<String> itemsList;
+  // DropDown({Key key, this.value, this.hint}) : super(key: key);
+  DropDown({this.value, this.hint, this.itemsList});
+  @override
+  _DropDownState createState() => _DropDownState();
+}
+
+class _DropDownState extends State<DropDown> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      margin: EdgeInsets.only(bottom: 10),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      child: DropdownButton<String>(
+        elevation: 20,
+        iconEnabledColor: Color(0xffB5EAEA),
+        value: widget.value,
+        isExpanded: true,
+        underline: Container(
+          height: 0,
+          color: Colors.white,
+        ),
+        onChanged: (String newValue) {
+          setState(() {
+            widget.value = newValue;
+          });
+        },
+        hint: Text(
+          widget.hint,
+          style: TextStyle(color: Colors.grey),
+        ),
+        items: widget.itemsList.map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+      ),
+    );
+    ;
+  }
+}
