@@ -1,8 +1,15 @@
+import 'package:fiverr_clone/pages/home.dart';
 import 'package:fiverr_clone/pages/main_tabs.dart';
 import 'package:fiverr_clone/pages/signup.dart';
+import 'package:fiverr_clone/pages/user_details.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'bezierContainer.dart';
 // import 'package:google_fonts/google_fonts.dart';
@@ -70,8 +77,22 @@ class _LoginPageState extends State<LoginPage> {
       await auth.signInWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
       showdialogBox('Success', 'Logged in successfully', false);
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => MainTabs()));
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser.uid)
+          .get()
+          .then((value) => {
+                if (value.data() == null)
+                  {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => UserDetails()))
+                  }
+                else
+                  {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomePage()))
+                  }
+              });
     } catch (err) {
       print('error has occured ${err.message}');
       showdialogBox('Error has occured', err.message, true);
