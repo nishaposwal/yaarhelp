@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="./assets/images/fiverr_logo.png" width="150"/>
+  <img src="./assets/images/ic_launcher.png" width="150"/>
   
 </p>
-<h1 align="center">FiverrClone</h1>
+<h1 align="center">Yaar help</h1>
 
-<p align="center">
+<!-- <p align="center">
     <img src="https://img.shields.io/badge/Awesome-Flutter-%231389fd?style=for-the-badge"/>
     <img src="https://img.shields.io/github/issues/pasanjg/FiverrClone?style=for-the-badge"/>
     <img src="https://img.shields.io/github/forks/pasanjg/FiverrClone?style=for-the-badge"/>
@@ -33,4 +33,4 @@ More updates are yet to come :heart_eyes:
     <td><img src="./assets/screenshots/9.png"/></td>
     <td><img src="./assets/screenshots/10.png"/></td>
   </tr>
-</table>
+</table> -->
