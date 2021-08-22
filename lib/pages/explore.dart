@@ -58,9 +58,9 @@ class _ExplorePageState extends State<ExplorePage>
     },
   ];
 
-  var _completedOrders = [
+  var gigs = [
     {
-      "username": "brad",
+      "username": "Madan Mohan",
       "online": true,
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2L-Zfe-iYizglLDH55UD3wXBJre7V98QwKfsBCfR_8YfvXPnN&s",
@@ -69,7 +69,7 @@ class _ExplorePageState extends State<ExplorePage>
       "price": "₹5"
     },
     {
-      "username": "femmertz",
+      "username": "Munshi Desai",
       "online": false,
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2L-Zfe-iYizglLDH55UD3wXBJre7V98QwKfsBCfR_8YfvXPnN&s",
@@ -78,7 +78,7 @@ class _ExplorePageState extends State<ExplorePage>
       "price": "₹35"
     },
     {
-      "username": "beep",
+      "username": "Deep Jandu",
       "online": true,
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2L-Zfe-iYizglLDH55UD3wXBJre7V98QwKfsBCfR_8YfvXPnN&s",
@@ -87,7 +87,7 @@ class _ExplorePageState extends State<ExplorePage>
       "price": "₹150"
     },
     {
-      "username": "alex",
+      "username": "Alex Willber",
       "online": false,
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2L-Zfe-iYizglLDH55UD3wXBJre7V98QwKfsBCfR_8YfvXPnN&s",
@@ -96,7 +96,7 @@ class _ExplorePageState extends State<ExplorePage>
       "price": "₹15"
     },
     {
-      "username": "ninny",
+      "username": "Nanny Poswal",
       "online": false,
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2L-Zfe-iYizglLDH55UD3wXBJre7V98QwKfsBCfR_8YfvXPnN&s",
@@ -256,7 +256,7 @@ class _ExplorePageState extends State<ExplorePage>
                 controller: _tabController,
                 children: <Widget>[
                   ListView.builder(
-                    itemCount: _completedOrders.length,
+                    itemCount: gigs.length,
                     itemBuilder: (context, int index) {
                       return Padding(
                         padding: const EdgeInsets.only(left: 8.0, right: 8.0),
@@ -284,13 +284,13 @@ class _ExplorePageState extends State<ExplorePage>
                                       MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Text(
-                                      _completedOrders[index]['username'],
+                                      gigs[index]['username'],
                                       style: TextStyle(
                                         fontSize: 15.0,
                                       ),
                                     ),
                                     Text(
-                                      _completedOrders[index]['date'],
+                                      gigs[index]['date'],
                                       style: TextStyle(
                                         color: Colors.grey,
                                         fontSize: 15.0,
@@ -307,7 +307,7 @@ class _ExplorePageState extends State<ExplorePage>
                                       child: Container(
                                         height: 40.0,
                                         child: Text(
-                                          _completedOrders[index]['gigTitle'],
+                                          gigs[index]['gigTitle'],
                                           style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 16.0,
@@ -334,7 +334,7 @@ class _ExplorePageState extends State<ExplorePage>
                                                 padding:
                                                     const EdgeInsets.all(4.0),
                                                 child: Text(
-                                                  _completedOrders[index]['price'],
+                                                  gigs[index]['price'],
                                                   style: TextStyle(
                                                       color:
                                                       Theme.of(context).accentColor,
@@ -393,12 +393,6 @@ class _ExplorePageState extends State<ExplorePage>
                                           fontFamily: 'Roboto'
                                         ),
                                       ),
-                                      Row(
-                                        children: [
-                                          Icon(Icons.favorite, color: Colors.red, ),
-                                          Text(" 11")
-                                        ],
-                                      )
                                     ],
                                   ),
                                 ),

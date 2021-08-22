@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:fiverr_clone/pages/earnings.dart';
 import 'package:fiverr_clone/pages/settings.dart';
 import 'package:fiverr_clone/pages/profile/profile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
