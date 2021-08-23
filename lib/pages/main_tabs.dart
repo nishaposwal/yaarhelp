@@ -60,23 +60,23 @@ class _MainTabsState extends State<MainTabs>
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home, size: 35,),
-            title: Text('Home'),
+            label: 'Home'
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.explore, size: 35,),
-            title: Text('Messages'),
+            label: 'Messages'
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add_box_rounded, size: 35,),
-            title: Text('Sales'),
+            label: 'Sales'
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications_rounded, size: 35,),
-            title: Text('Notifications'),
+            label: 'Notifications'
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person, size: 38,),
-            title: Text('Profile'),
+            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndexForBottomNavigationBar,

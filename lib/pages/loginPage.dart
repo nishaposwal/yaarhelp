@@ -89,8 +89,11 @@ class _LoginPageState extends State<LoginPage> {
                   }
                 else
                   {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomePage()))
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainTabs()),
+                      (Route<dynamic> route) => false,
+                    )
                   }
               });
     } catch (err) {

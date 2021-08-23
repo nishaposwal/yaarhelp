@@ -7,19 +7,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:async';
+import 'package:fiverr_clone/pages/main_tabs.dart';
 
 File imageFile;
-var imageUrl;
+String imageUrl;
 
 class UserDetails extends StatefulWidget {
   // const CreatePost({ Key? key }) : super(key: key);
   @override
   _UserDetailsState createState() => _UserDetailsState();
-
-  void initState() {
-    imageFile = null;
-    imageUrl = "";
-  }
 }
 
 Widget top(BuildContext context) {
@@ -44,6 +40,17 @@ class _UserDetailsState extends State<UserDetails> {
   final addressController = new TextEditingController();
   final skillsController = new TextEditingController();
   final languagesController = new TextEditingController();
+
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    nameController.dispose();
+    phoneNumberController.dispose();
+    descriptionController.dispose();
+    addressController.dispose();
+    skillsController.dispose();
+    languagesController.dispose();
+    super.dispose();
+  }
 
   Widget inputNumber(
       TextEditingController controller, String header, String hint) {
@@ -124,6 +131,7 @@ class _UserDetailsState extends State<UserDetails> {
               ),
             ),
             child: TextField(
+              controller: controller,
               decoration: InputDecoration(
                 hintText: hint,
                 hintStyle: TextStyle(color: Colors.grey[400]),
@@ -183,9 +191,11 @@ class _UserDetailsState extends State<UserDetails> {
             onPressed: () {
               _openGallery(context);
             },
-            child: Text("Select Image"),
+            child: Text(
+                imageFile == null ? "Select Image" : basename(imageFile.path)),
             style: ElevatedButton.styleFrom(
-              primary: Theme.of(context).accentColor,
+              shadowColor: Theme.of(context).accentColor,
+              textStyle: TextStyle(color: Colors.black, fontSize: 12),
               onSurface: Colors.blue,
             ),
           )
@@ -208,10 +218,10 @@ class _UserDetailsState extends State<UserDetails> {
     String fileName = basename(imageFile.path);
     Reference ref = FirebaseStorage.instance.ref().child(
         "Profile_Pics/${FirebaseAuth.instance.currentUser.uid}/${fileName}");
-    TaskSnapshot snap = await ref.putFile(imageFile);
-    final String url = snap.ref.getDownloadURL().toString();
+    UploadTask uploadTask = ref.putFile(imageFile);
+    var url = await (await uploadTask).ref.getDownloadURL();
     setState(() {
-      imageUrl = url;
+      imageUrl = url.toString();
     });
   }
 
@@ -236,6 +246,11 @@ class _UserDetailsState extends State<UserDetails> {
             setState(() {
               loading = false;
             });
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => MainTabs()),
+              (Route<dynamic> route) => false,
+            );
           }
         },
         style: ElevatedButton.styleFrom(
