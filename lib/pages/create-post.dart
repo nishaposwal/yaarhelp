@@ -1,12 +1,14 @@
 import 'package:fiverr_clone/pages/dropDown.dart';
+import 'package:fiverr_clone/pages/main_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart'; // new
-
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class CreatePost extends StatefulWidget {
+
   // const CreatePost({ Key? key }) : super(key: key);
 
   @override
@@ -78,6 +80,19 @@ class _CreatePostState extends State<CreatePost> {
   final addressController = new TextEditingController();
   final categoryList = ['one', 'two', 'three', 'four'];
 
+  static const platform = const MethodChannel("razorpay_flutter");
+
+  Razorpay _razorpay = Razorpay();
+
+  @override
+  void initState() {
+    super.initState();
+    _razorpay = Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
+
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -86,6 +101,41 @@ class _CreatePostState extends State<CreatePost> {
     descriptionController.dispose();
     addressController.dispose();
     super.dispose();
+    _razorpay.clear();
+  }
+
+  void openCheckout(amount) async {
+    var options = {
+      'key': 'rzp_test_eqfjo7B0yh51Nh',
+      'amount': amount,
+      'name': 'Yaar Help',
+      'description': 'Post a help',
+      'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
+
+    };
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    Fluttertoast.showToast(
+        msg: "SUCCESS: " + response.paymentId, toastLength: Toast.LENGTH_SHORT);
+    await addGig();
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    Fluttertoast.showToast(
+        msg: "ERROR: " + response.code.toString() + " - " + response.message,
+        toastLength: Toast.LENGTH_SHORT);
+    throw Exception('Payment Failure');
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    Fluttertoast.showToast(
+        msg: "EXTERNAL_WALLET: " + response.walletName, toastLength: Toast.LENGTH_SHORT);
   }
 
   Widget categories() {
@@ -232,6 +282,7 @@ class _CreatePostState extends State<CreatePost> {
       'timestamp': DateTime.now().millisecondsSinceEpoch,
       'userId': FirebaseAuth.instance.currentUser.uid,
     });
+
   }
 
   Widget post() {
@@ -244,20 +295,25 @@ class _CreatePostState extends State<CreatePost> {
             loading = true;
           });
           try {
-            await addGig();
+            await openCheckout(budgetController.text + "00");
           } catch (e) {
             print(e);
           } finally {
             setState(() {
               loading = false;
             });
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => MainTabs()),
+                  (Route<dynamic> route) => false,
+            );
           }
         },
         child: loading
             ? CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white))
             : Text(
-                'Post A Request',
+                'Checkout',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
       ),
