@@ -101,7 +101,7 @@ class _SignUpPageState extends State<SignUpPage> {
           gradient: LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
-              colors: [Colors.green, Colors.greenAccent])),
+              colors: [Color(0xff7ED8D8), Color(0xff49BABA)])),
       child: loading
           ? CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
@@ -139,7 +139,7 @@ class _SignUpPageState extends State<SignUpPage> {
             Text(
               'Login',
               style: TextStyle(
-                  color: Colors.green,
+                  color:Color(0xff49BABA),
                   fontSize: 13,
                   fontWeight: FontWeight.w600),
             ),
