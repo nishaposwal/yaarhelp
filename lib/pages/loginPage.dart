@@ -1,22 +1,15 @@
-import 'package:fiverr_clone/pages/home.dart';
 import 'package:fiverr_clone/pages/main_tabs.dart';
 import 'package:fiverr_clone/pages/signup.dart';
 import 'package:fiverr_clone/pages/user_details.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:math';
 
 import 'bezierContainer.dart';
-// import 'package:google_fonts/google_fonts.dart';
-
-// import 'bezierContainer.dart';
-
-// import 'Widget/bezierContainer.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
@@ -25,6 +18,48 @@ class LoginPage extends StatefulWidget {
 
   @override
   _LoginPageState createState() => _LoginPageState();
+}
+
+class ClipPainter extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var height = size.height;
+    var width = size.width;
+    var path = new Path();
+
+    path.lineTo(0, size.height);
+    path.lineTo(size.width, height);
+    path.lineTo(size.width, 0);
+
+    /// [Top Left corner]
+    var secondControlPoint = Offset(0, 0);
+    var secondEndPoint = Offset(width * .2, height * .3);
+    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
+        secondEndPoint.dx, secondEndPoint.dy);
+
+    /// [Left Middle]
+    var fifthControlPoint = Offset(width * .3, height * .5);
+    var fiftEndPoint = Offset(width * .23, height * .6);
+    path.quadraticBezierTo(fifthControlPoint.dx, fifthControlPoint.dy,
+        fiftEndPoint.dx, fiftEndPoint.dy);
+
+    /// [Bottom Left corner]
+    var thirdControlPoint = Offset(0, height);
+    var thirdEndPoint = Offset(width, height);
+    path.quadraticBezierTo(thirdControlPoint.dx, thirdControlPoint.dy,
+        thirdEndPoint.dx, thirdEndPoint.dy);
+
+    path.lineTo(0, size.height);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    // TODO: implement shouldReclip
+    return true;
+  }
 }
 
 class _LoginPageState extends State<LoginPage> {
@@ -72,7 +107,6 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       loading = true;
     });
-    print(emailController.text + ' ' + passwordController.text);
     try {
       await auth.signInWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
@@ -142,7 +176,9 @@ class _LoginPageState extends State<LoginPage> {
             gradient: LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
-                colors: [Colors.green, Colors.greenAccent])),
+                colors: [
+                  Color(0xff7ED8D8), Color(0xff49BABA)
+                ])),
         child: TextButton(
           onPressed: () => login(),
           child: loading
@@ -229,12 +265,13 @@ class _LoginPageState extends State<LoginPage> {
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Expanded(
             flex: 1,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.green,
+                color: Theme.of(context).accentColor,
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(5),
                     topLeft: Radius.circular(5)),
@@ -251,7 +288,7 @@ class _LoginPageState extends State<LoginPage> {
             flex: 5,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.lightGreen,
+                color: Theme.of(context).accentColor,
                 borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(5),
                     topRight: Radius.circular(5)),
@@ -298,7 +335,7 @@ class _LoginPageState extends State<LoginPage> {
             Text(
               'Register',
               style: TextStyle(
-                  color: Colors.green,
+                  color: Theme.of(context).accentColor,
                   fontSize: 13,
                   fontWeight: FontWeight.w600),
             ),
@@ -334,9 +371,24 @@ class _LoginPageState extends State<LoginPage> {
       child: Stack(
         children: <Widget>[
           Positioned(
-              top: -height * .15,
-              right: -MediaQuery.of(context).size.width * .4,
-              child: BezierContainer()),
+            top: -height * .15,
+            right: -MediaQuery.of(context).size.width * .4,
+            child: Transform.rotate(
+              angle: -pi / 3.5,
+              child: ClipPath(
+                clipper: ClipPainter(),
+                child: Container(
+                  height: MediaQuery.of(context).size.height * .5,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [Color(0xff7ED8D8), Color(0xff49BABA)])),
+                ),
+              ),
+            ),
+          ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20),
             height: double.infinity,
@@ -357,8 +409,8 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.w500)),
                   ),
-                  _divider(),
-                  _facebookButton(),
+                  // _divider(),
+                  // _facebookButton(),
                   _createAccountLabel(),
                 ],
               ),
