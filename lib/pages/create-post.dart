@@ -71,13 +71,39 @@ Widget top(BuildContext context) {
 }
 
 class _CreatePostState extends State<CreatePost> {
-  String category;
+  String category = null;
   String subCategory;
   final timerequiredController = new TextEditingController();
   final budgetController = new TextEditingController();
   final descriptionController = new TextEditingController();
   final addressController = new TextEditingController();
-  final categoryList = ['one', 'two', 'three', 'four'];
+  final categoryList = [
+    'Online Help',
+    'Offline Help',
+    'Learn English',
+    'Volunteering'
+  ];
+  Map<String, List<String>> subCategoryList = {
+    'Online Help': [
+      'Assignment Help',
+      'Social Help',
+      'Art & Design Help',
+      'Questions Help'
+    ],
+    'Offline Help': [
+      "General Help",
+      "Technical Help",
+      "Organise/Decor Help",
+      "Interior Help"
+    ],
+    'Learn English': [],
+    'Volunteering': [
+      'Donate Blood',
+      'Clean Your City',
+      'Feed poor',
+      'Educate girls'
+    ],
+  };
   bool isPostPressed = false;
   bool loading = false;
 
@@ -161,19 +187,24 @@ class _CreatePostState extends State<CreatePost> {
             onChanged: (value) {
               setState(() {
                 category = value;
+                subCategory = null;
               });
             },
           ),
-          DropDown(
-            value: subCategory,
-            hint: 'Select a  sub-category',
-            itemsList: categoryList,
-            onChanged: (value) {
-              setState(() {
-                subCategory = value;
-              });
-            },
-          ),
+          category != null && subCategoryList[category].length != 0
+              ? DropDown(
+                  value: subCategory,
+                  hint: 'Select a sub-category',
+                  itemsList: subCategoryList[category],
+                  onChanged: (value) {
+                    setState(() {
+                      subCategory = value;
+                    });
+                  },
+                )
+              : SizedBox(
+                  height: 1,
+                ),
         ],
       ),
     );

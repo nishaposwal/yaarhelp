@@ -33,7 +33,7 @@ class _ExplorePageState extends State<ExplorePage>
       "name": "Offline Help",
       "domains": [
         "General Help",
-        "echnical Help",
+        "Technical Help",
         "Organise/Decor Help",
         "Interior Help"
       ]
@@ -41,19 +41,15 @@ class _ExplorePageState extends State<ExplorePage>
     {
       "name": "Learn English",
       "domains": [
-        "Basic Grammar",
-        "American English",
-        "Advance English",
-        "Native English"
       ]
     },
     {
       "name": "Volunteering",
       "domains": [
-        "Donate Blood",
-        "Clean India",
-        "Feed India",
-        "Educate Children"
+        'Donate Blood',
+        'Clean Your City',
+        'Feed poor',
+        'Educate girls'
       ]
     },
   ];
