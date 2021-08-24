@@ -15,13 +15,12 @@ class _DropDownState extends State<DropDown> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      margin: EdgeInsets.only(bottom: 10),
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
-        ),
+        border: Border(
+            bottom: BorderSide(
+          color: Colors.grey,
+        )),
       ),
       child: DropdownButton<String>(
         elevation: 20,

@@ -37,7 +37,7 @@ Widget top() {
                       'Post a help',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Color(0xffB5EAEA),
+                          color: Color(0xff0bd9ce),
                           fontSize: 24),
                     ),
                   ),
@@ -79,6 +79,8 @@ class _CreatePostState extends State<CreatePost> {
   final descriptionController = new TextEditingController();
   final addressController = new TextEditingController();
   final categoryList = ['one', 'two', 'three', 'four'];
+  bool isPostPressed = false;
+  bool loading = false;
 
   static const platform = const MethodChannel("razorpay_flutter");
 
@@ -149,7 +151,7 @@ class _CreatePostState extends State<CreatePost> {
           Text(
             'Choose a Category',
             style: TextStyle(
-                color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold),
+                color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
           ),
           SizedBox(
             height: 10,
@@ -179,11 +181,11 @@ class _CreatePostState extends State<CreatePost> {
     );
   }
 
-  Widget inputNumber(
-      TextEditingController controller, String header, String hint) {
+  Widget inputNumber(TextEditingController controller, String header,
+      String hint, String errorText) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,25 +196,19 @@ class _CreatePostState extends State<CreatePost> {
           Text(
             header,
             style: TextStyle(
-                color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold),
+                color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
           ),
           SizedBox(
             height: 10,
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.grey,
-              ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ),
-            ),
+            // padding: EdgeInsets.symmetric(horizontal: 10),
             width: double.infinity,
             child: TextField(
               controller: controller,
-              decoration: new InputDecoration(labelText: hint),
+              decoration: new InputDecoration(
+                  labelText: hint,
+                  errorText: controller.value == null ? errorText : null),
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             ),
@@ -225,7 +221,7 @@ class _CreatePostState extends State<CreatePost> {
   Widget stringInput(
       TextEditingController controller, String header, String hint) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -236,27 +232,16 @@ class _CreatePostState extends State<CreatePost> {
           Text(
             header,
             style: TextStyle(
-                color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold),
+                color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
           ),
           SizedBox(
             height: 10,
           ),
           Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.grey,
-              ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ),
-            ),
             child: TextField(
               controller: controller,
               decoration: InputDecoration(
                 hintText: hint,
-                border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                ),
               ),
             ),
           )
@@ -285,15 +270,27 @@ class _CreatePostState extends State<CreatePost> {
 
   }
 
+  bool validate() {
+    if (category != null &&
+        subCategory != null &&
+        descriptionController.text != null &&
+        addressController != null &&
+        budgetController != null &&
+        timerequiredController.text != null) {
+      return true;
+    }
+    return false;
+  }
+
   Widget post() {
-    bool loading = false;
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: ElevatedButton(
         onPressed: () async {
           setState(() {
-            loading = true;
+            isPostPressed = true;
           });
+<<<<<<< Updated upstream
           try {
             await openCheckout(budgetController.text + "00");
           } catch (e) {
@@ -307,6 +304,14 @@ class _CreatePostState extends State<CreatePost> {
               MaterialPageRoute(builder: (context) => MainTabs()),
                   (Route<dynamic> route) => false,
             );
+=======
+          if (isPostPressed && validate()) {
+            try {
+              await addGig();
+            } catch (e) {
+              print(e);
+            }
+>>>>>>> Stashed changes
           }
         },
         child: loading
@@ -331,10 +336,13 @@ class _CreatePostState extends State<CreatePost> {
             children: [
               top(),
               categories(),
-              inputNumber(timerequiredController, 'Service Delivary time',
-                  'Enter time required to complete task'),
+              inputNumber(
+                  timerequiredController,
+                  'Service Delivary time',
+                  'Enter time required to complete task',
+                  'Please enter time required ih hours'),
               inputNumber(budgetController, 'What is your budget',
-                  'Enter yur budget in rupees'),
+                  'Enter yur budget in rupees', 'Please Enter your budget'),
               stringInput(
                   descriptionController, 'Add Description', 'Description'),
               stringInput(addressController, 'Add Address', 'Address'),
