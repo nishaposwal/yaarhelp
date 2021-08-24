@@ -8,7 +8,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class CreatePost extends StatefulWidget {
-
   // const CreatePost({ Key? key }) : super(key: key);
 
   @override
@@ -113,7 +112,6 @@ class _CreatePostState extends State<CreatePost> {
       'name': 'Yaar Help',
       'description': 'Post a help',
       'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
-
     };
     try {
       _razorpay.open(options);
@@ -137,7 +135,8 @@ class _CreatePostState extends State<CreatePost> {
 
   void _handleExternalWallet(ExternalWalletResponse response) {
     Fluttertoast.showToast(
-        msg: "EXTERNAL_WALLET: " + response.walletName, toastLength: Toast.LENGTH_SHORT);
+        msg: "EXTERNAL_WALLET: " + response.walletName,
+        toastLength: Toast.LENGTH_SHORT);
   }
 
   Widget categories() {
@@ -267,7 +266,6 @@ class _CreatePostState extends State<CreatePost> {
       'timestamp': DateTime.now().millisecondsSinceEpoch,
       'userId': FirebaseAuth.instance.currentUser.uid,
     });
-
   }
 
   bool validate() {
@@ -290,29 +288,23 @@ class _CreatePostState extends State<CreatePost> {
           setState(() {
             isPostPressed = true;
           });
-<<<<<<< Updated upstream
-          try {
-            await openCheckout(budgetController.text + "00");
-          } catch (e) {
-            print(e);
-          } finally {
-            setState(() {
-              loading = false;
-            });
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => MainTabs()),
-                  (Route<dynamic> route) => false,
-            );
-=======
           if (isPostPressed && validate()) {
             try {
-              await addGig();
+              await openCheckout(budgetController.text + "00");
             } catch (e) {
               print(e);
+            } finally {
+              setState(() {
+                loading = false;
+              });
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => MainTabs()),
+                (Route<dynamic> route) => false,
+              );
             }
->>>>>>> Stashed changes
           }
+          ;
         },
         child: loading
             ? CircularProgressIndicator(
