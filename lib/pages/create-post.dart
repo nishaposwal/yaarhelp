@@ -359,7 +359,7 @@ class _CreatePostState extends State<CreatePost> {
                   'Enter time required to complete task',
                   'Please enter time required ih hours'),
               inputNumber(budgetController, 'What is your budget',
-                  'Enter yur budget in rupees', 'Please Enter your budget'),
+                  'Enter your budget in rupees', 'Please Enter your budget'),
               stringInput(
                   descriptionController, 'Add Description', 'Description'),
               stringInput(addressController, 'Add Address', 'Address'),
