@@ -33,6 +33,7 @@ class _AboutPageState extends State<AboutPage> {
         var languages = snapshot.data.docs.first.get('languages');
         var phoneNumber = snapshot.data.docs.first.get('phoneNumber');
         var skills = snapshot.data.docs.first.get('skills');
+        var joiningDate = snapshot.data.docs.first.get('joiningDate');
         return ListView(
           children: <Widget>[
             Padding(
@@ -61,7 +62,7 @@ class _AboutPageState extends State<AboutPage> {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.call),
+              leading: Icon(Icons.call_rounded),
               title: Text(
                 "Phone Number",
                 style: TextStyle(
@@ -101,7 +102,7 @@ class _AboutPageState extends State<AboutPage> {
                 ),
               ),
               subtitle: Text(
-                "Jul 2018",
+                joiningDate,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,

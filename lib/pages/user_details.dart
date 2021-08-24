@@ -8,9 +8,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:async';
 import 'package:fiverr_clone/pages/main_tabs.dart';
+import 'package:intl/intl.dart';
 
 File imageFile;
 String imageUrl;
+final uid = FirebaseAuth.instance.currentUser.uid;
+bool loading = false;
 
 class UserDetails extends StatefulWidget {
   // const CreatePost({ Key? key }) : super(key: key);
@@ -40,6 +43,25 @@ class _UserDetailsState extends State<UserDetails> {
   final addressController = new TextEditingController();
   final skillsController = new TextEditingController();
   final languagesController = new TextEditingController();
+
+  void initState() {
+    var data = FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .get()
+        .then((value) => {
+              if (value.data() != null)
+                {
+                  nameController.text = value.data()['displayName'],
+                  addressController.text = value.data()['address'],
+                  descriptionController.text = value.data()['description'],
+                  languagesController.text = value.data()['languages'],
+                  phoneNumberController.text = value.data()['phoneNumber'],
+                  skillsController.text = value.data()['skills'],
+                }
+            });
+    super.initState();
+  }
 
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -154,6 +176,8 @@ class _UserDetailsState extends State<UserDetails> {
     final uid = FirebaseAuth.instance.currentUser.uid;
     CollectionReference users = FirebaseFirestore.instance.collection('users');
 
+    final now = new DateTime.now();
+    String formatter = DateFormat.yMMMM('en_US').format(now);
     users.doc(uid).set({
       'displayName': nameController.text,
       'phoneNumber': phoneNumberController.text,
@@ -162,7 +186,7 @@ class _UserDetailsState extends State<UserDetails> {
       'languages': languagesController.text,
       'description': descriptionController.text,
       'address': addressController.text,
-      'timestamp': DateTime.now().millisecondsSinceEpoch,
+      'joiningDate': formatter,
       'userId': uid,
     });
   }
@@ -226,7 +250,6 @@ class _UserDetailsState extends State<UserDetails> {
   }
 
   Widget submit(BuildContext context) {
-    bool loading = false;
     return Container(
       margin: EdgeInsets.symmetric(vertical: 20),
       child: ElevatedButton(
@@ -257,7 +280,7 @@ class _UserDetailsState extends State<UserDetails> {
           primary: Theme.of(context).accentColor,
           onSurface: Colors.blue,
         ),
-        child: loading
+        child: loading == true
             ? CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white))
             : Text(
@@ -282,8 +305,8 @@ class _UserDetailsState extends State<UserDetails> {
             child: Column(
               children: [
                 top(context),
-                stringInput(
-                    nameController, 'Your Name', 'Please enter your name'),
+                stringInput(nameController, 'Your Name',
+                    'Please enter your name'),
                 chooseFile(context),
                 inputNumber(phoneNumberController, 'Your Contact Number',
                     'Please enter your contact number'),
