@@ -140,7 +140,7 @@ class _CreatePostState extends State<CreatePost> {
       'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
     };
     try {
-      _razorpay.open(options);
+      await _razorpay.open(options);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -148,21 +148,21 @@ class _CreatePostState extends State<CreatePost> {
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
     Fluttertoast.showToast(
-        msg: "SUCCESS: " + response.paymentId, toastLength: Toast.LENGTH_SHORT);
+        msg: "Help Posted Successfully!", toastLength: Toast.LENGTH_LONG, backgroundColor: Colors.green);
     await addGig();
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
     Fluttertoast.showToast(
         msg: "ERROR: " + response.code.toString() + " - " + response.message,
-        toastLength: Toast.LENGTH_SHORT);
+        toastLength: Toast.LENGTH_LONG);
     throw Exception('Payment Failure');
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
     Fluttertoast.showToast(
         msg: "EXTERNAL_WALLET: " + response.walletName,
-        toastLength: Toast.LENGTH_SHORT);
+        toastLength: Toast.LENGTH_LONG);
   }
 
   Widget categories() {
@@ -302,8 +302,8 @@ class _CreatePostState extends State<CreatePost> {
     if (category != null &&
         subCategory != null &&
         descriptionController.text != null &&
-        addressController != null &&
-        budgetController != null &&
+        addressController.text != null &&
+        budgetController.text != null &&
         timerequiredController.text != null) {
       return true;
     }
@@ -387,7 +387,7 @@ class _CreatePostState extends State<CreatePost> {
               inputNumber(
                   timerequiredController,
                   'Service Delivery time',
-                  'Enter time required to complete task',
+                  'Enter time required in hours to complete task',
                   'Please enter time required ih hours'),
               inputNumber(budgetController, 'What is your budget',
                   'Enter your budget in rupees', 'Please Enter your budget'),
