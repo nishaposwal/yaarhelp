@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:fiverr_clone/pages/dropDown.dart';
 import 'package:fiverr_clone/pages/main_tabs.dart';
 import 'package:flutter/material.dart';
@@ -150,12 +152,38 @@ class _CreatePostState extends State<CreatePost> {
     Fluttertoast.showToast(
         msg: "Help Posted Successfully!", toastLength: Toast.LENGTH_LONG, backgroundColor: Colors.green);
     await addGig();
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => MainTabs()),
+          (Route<dynamic> route) => false,
+    );
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
-    Fluttertoast.showToast(
-        msg: "ERROR: " + response.code.toString() + " - " + response.message,
-        toastLength: Toast.LENGTH_LONG);
+     print("ERROR: " + response.code.toString() + " - " + response.message);
+     var error = "";
+     var code = response.code.toString();
+     switch (code) {
+       case "0":
+         error = "There was a network error. Payment Unsuccessful.";
+         break;
+       case "1":
+         error = "An issue with options passed in Razorpay.open. Payment Unsuccessful.";
+         break;
+       case "2":
+         error = "Payment Cancelled. Please complete the payment to checkout.";
+         break;
+       case "3":
+         error = "Unsupported device. Please try to create a post from some other device.";
+         break;
+       case "4":
+         error = "An unknown error occurred. Payment Unsuccessful.";
+         break;
+       default:
+         error = "Payment Failure.";
+         break;
+     }
+     showdialogBox(code + error, true);
     throw Exception('Payment Failure');
   }
 
@@ -300,8 +328,11 @@ class _CreatePostState extends State<CreatePost> {
 
   bool validate() {
     if (category != null &&
-        subCategory != null &&
-        descriptionController.text != null &&
+        (subCategory != null || category == "Learn English") &&
+        descriptionController.text != "" &&
+        addressController.text != "" &&
+        budgetController.text != "" &&
+        timerequiredController.text != "" && descriptionController.text != null &&
         addressController.text != null &&
         budgetController.text != null &&
         timerequiredController.text != null) {
@@ -350,11 +381,6 @@ class _CreatePostState extends State<CreatePost> {
               setState(() {
                 loading = false;
               });
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => MainTabs()),
-                (Route<dynamic> route) => false,
-              );
             }
           }
         },
