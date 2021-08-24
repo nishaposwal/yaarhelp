@@ -41,7 +41,7 @@ class _DropDownState extends State<DropDown> {
         // },
         hint: Text(
           widget.hint,
-          style: TextStyle(color: Colors.grey),
+          style: TextStyle(color: Colors.grey[400]),
         ),
         items: widget.itemsList.map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(

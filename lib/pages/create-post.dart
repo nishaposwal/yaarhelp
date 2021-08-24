@@ -14,7 +14,7 @@ class CreatePost extends StatefulWidget {
   _CreatePostState createState() => _CreatePostState();
 }
 
-Widget top() {
+Widget top(BuildContext context) {
   return Material(
     elevation: 5,
     child: Container(
@@ -36,14 +36,14 @@ Widget top() {
                       'Post a help',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Color(0xff0bd9ce),
+                          color: Theme.of(context).accentColor,
                           fontSize: 24),
                     ),
                   ),
                   Text(
-                    'Ask for anykind of help',
+                    'Ask for any kind of help',
                     style: TextStyle(
-                        color: Color(0xff000000).withOpacity(0.7),
+                        color: Color(0xff000000).withOpacity(0.8),
                         fontSize: 18,
                         fontWeight: FontWeight.bold),
                   ),
@@ -57,9 +57,9 @@ Widget top() {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Text(
-              'Tell us what do you need done we’ll help you find some-one who can help you in your work',
+              'Tell us what do you need done we’ll help you find someone who can help you in your work',
               style: TextStyle(
-                color: Color(0xffC4C4C4),
+                color: Colors.grey[900],
                 fontSize: 14,
               ),
             ),
@@ -142,7 +142,7 @@ class _CreatePostState extends State<CreatePost> {
   Widget categories() {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.only(left: 20, top: 25, bottom: 5, right: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -150,10 +150,9 @@ class _CreatePostState extends State<CreatePost> {
           Text(
             'Choose a Category',
             style: TextStyle(
-                color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 10,
+                color: Colors.blueGrey[900],
+                fontSize: 18,
+                fontWeight: FontWeight.w500),
           ),
           DropDown(
             value: category,
@@ -190,15 +189,14 @@ class _CreatePostState extends State<CreatePost> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 10,
+            height: 5,
           ),
           Text(
             header,
             style: TextStyle(
-                color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 10,
+                color: Colors.blueGrey[900],
+                fontSize: 18,
+                fontWeight: FontWeight.w500),
           ),
           Container(
             // padding: EdgeInsets.symmetric(horizontal: 10),
@@ -207,6 +205,7 @@ class _CreatePostState extends State<CreatePost> {
               controller: controller,
               decoration: new InputDecoration(
                   labelText: hint,
+                  labelStyle: TextStyle(color: Colors.grey[400]),
                   errorText: controller.value == null ? errorText : null),
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -226,21 +225,21 @@ class _CreatePostState extends State<CreatePost> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
-            height: 10,
+            height: 5,
           ),
           Text(
             header,
             style: TextStyle(
-                color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 10,
+                color: Colors.blueGrey[900],
+                fontSize: 18,
+                fontWeight: FontWeight.w500),
           ),
           Container(
             child: TextField(
               controller: controller,
               decoration: InputDecoration(
                 hintText: hint,
+                hintStyle: TextStyle(color: Colors.grey[400]),
               ),
             ),
           )
@@ -277,7 +276,30 @@ class _CreatePostState extends State<CreatePost> {
         timerequiredController.text != null) {
       return true;
     }
+    showdialogBox('Please fill all the fields before checkout', true);
     return false;
+  }
+
+  void showdialogBox(String subTitle, bool isError) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        contentPadding: EdgeInsets.all(20),
+        content: Text(
+          subTitle,
+          style: isError
+              ? TextStyle(color: Colors.red)
+              : TextStyle(color: Colors.green),
+        ),
+        actionsPadding: EdgeInsets.all(5),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget post() {
@@ -304,8 +326,11 @@ class _CreatePostState extends State<CreatePost> {
               );
             }
           }
-          ;
         },
+        style: ElevatedButton.styleFrom(
+          primary: Theme.of(context).accentColor,
+          onSurface: Colors.blue,
+        ),
         child: loading
             ? CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white))
@@ -326,11 +351,11 @@ class _CreatePostState extends State<CreatePost> {
           scrollDirection: Axis.vertical,
           child: Column(
             children: [
-              top(),
+              top(context),
               categories(),
               inputNumber(
                   timerequiredController,
-                  'Service Delivary time',
+                  'Service Delivery time',
                   'Enter time required to complete task',
                   'Please enter time required ih hours'),
               inputNumber(budgetController, 'What is your budget',
