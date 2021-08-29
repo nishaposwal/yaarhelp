@@ -1,5 +1,5 @@
+import 'package:fiverr_clone/pages/gig.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ExplorePage extends StatefulWidget {
   @override
@@ -38,11 +38,7 @@ class _ExplorePageState extends State<ExplorePage>
         "Interior Help"
       ]
     },
-    {
-      "name": "Learn English",
-      "domains": [
-      ]
-    },
+    {"name": "Learn English", "domains": []},
     {
       "name": "Volunteering",
       "domains": [
@@ -124,306 +120,362 @@ class _ExplorePageState extends State<ExplorePage>
 
   Future<void> _refreshMessages() async {}
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        toolbarHeight: 180,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              "EXPLORE",
-              style: TextStyle(
-                  fontFamily: 'Rowdies',
-                  color: Color(0xff7ED8D8),
-                  fontSize: 35),
+  Widget exploreHeader() {
+    return Container(
+      width: double.infinity,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "EXPLORE",
+            style: TextStyle(
+                fontFamily: 'Rowdies', color: Color(0xff7ED8D8), fontSize: 25),
+          ),
+          Image(
+            image: AssetImage('assets/images/fashion.png'),
+            height: 60,
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget categoryTab(Object mode, int i) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          currentMode = i;
+        });
+      },
+      child: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(11)),
+              color: Colors.teal,
             ),
-            Image(image: AssetImage('assets/images/fashion.png'))
-          ],
+            height: 60,
+            width: 75,
+            margin: EdgeInsets.all(14),
+          ),
+          Text(
+            modes[i]["name"],
+            style: TextStyle(
+                color: currentMode == i
+                    ? Theme.of(context).accentColor
+                    : Colors.black),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget categories() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: List.generate(
+          modes.length,
+          (index) => categoryTab(modes[index], index),
         ),
       ),
-      body: Container(
+    );
+  }
+
+  Widget subcategories() {
+    List<dynamic> list = modes[currentMode]['domains'];
+    return Material(
+        elevation: 5,
+        child: list.length > 0
+            ? SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: List.generate(
+                    list.length,
+                    (index) => subCategoryTab(list[index]),
+                  ),
+                ),
+              )
+            : SizedBox(
+                height: 0,
+              ));
+  }
+
+  Widget top() {
+    return Material(
+      elevation: 5,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Container(
-                child: Row(
-                  children: [
-                    for (var i = 0; i < modes.length; i++)
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            currentMode = i;
-                          });
-                        },
-                        child: Column(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(11)),
-                                color: Colors.teal,
-                              ),
-                              height: 60,
-                              width: 75,
-                              margin: EdgeInsets.all(14),
-                            ),
-                            Text(
-                              modes[i]["name"],
-                              style: TextStyle(
-                                  color: currentMode == i
-                                      ? Theme.of(context).accentColor
-                                      : Colors.black),
-                            )
-                          ],
-                        ),
-                      )
-                  ],
-                ),
-              ),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Container(
-                child: Row(
-                  children: [
-                    for (var item in modes[currentMode]["domains"])
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            currentCat = item;
-                          });
-                        },
-                        child: Container(
-
-                          height: 100,
-                          width: 75,
-                          margin: EdgeInsets.all(14),
-                          child: Column(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(11)),
-                                  color: Colors.teal,
-                                ),
-                                margin: EdgeInsets.only(bottom: 5),
-                                height: 60,
-                                width: 75,
-                              ),
-                              Text(
-
-                                item,
-                                textAlign: TextAlign.center,
-                                // style: TextStyle(
-                                //     color: currentMode == i
-                                //         ? Theme.of(context).accentColor
-                                //         : Colors.black),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                  ],
-                ),
-              ),
-            ),
-            TabBar(
-              labelColor: Theme.of(context).accentColor,
-              unselectedLabelColor: Colors.grey,
-              controller: _tabController,
-              indicatorSize: TabBarIndicatorSize.tab,
-              tabs: <Widget>[
-                Tab(
-                  text: "Gigs",
-                ),
-                Tab(
-                  text: "Helpers",
-                ),
-              ],
-            ),
-            Expanded(
-              child: TabBarView(
-                controller: _tabController,
-                children: <Widget>[
-                  ListView.builder(
-                    itemCount: gigs.length,
-                    itemBuilder: (context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                        child: Card(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                            child: InkWell(
-                              onTap: () {},
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              child: ListTile(
-                                leading: Stack(
-                                  alignment: Alignment.bottomRight,
-                                  children: <Widget>[
-                                    CircleAvatar(
-                                      radius: 20.0,
-                                      backgroundImage: AssetImage(
-                                          'assets/images/nouser.jpeg'),
-                                    ),
-                                  ],
-                                ),
-                                title: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text(
-                                      gigs[index]['username'],
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                      ),
-                                    ),
-                                    Text(
-                                      gigs[index]['date'],
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 15.0,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 8.0, bottom: 8.0),
-                                      child: Container(
-                                        height: 40.0,
-                                        child: Text(
-                                          gigs[index]['gigTitle'],
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16.0,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Container(
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  width: 1.0,
-                                                  color: Theme.of(context).accentColor),
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(5.0),
-                                              ),
-                                            ),
-                                            child: Center(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(4.0),
-                                                child: Text(
-                                                  gigs[index]['price'],
-                                                  style: TextStyle(
-                                                      color:
-                                                      Theme.of(context).accentColor,
-                                                      fontWeight: FontWeight.bold),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  ListView.builder(
-                    itemCount: helpers.length,
-                    itemBuilder: (context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                        child: Card(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                            child: InkWell(
-                              onTap: () {},
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              child: ListTile(
-                                leading: Stack(
-                                  alignment: Alignment.bottomRight,
-                                  children: <Widget>[
-                                    CircleAvatar(
-                                      radius: 35.0,
-                                      backgroundImage: AssetImage(
-                                          'assets/images/nouser.jpeg'),
-                                    ),
-                                  ],
-                                ),
-                                title: Padding(
-                                  padding: const EdgeInsets.only(top: 16.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Text(
-                                        helpers[index]['username'],
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'Roboto'
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 8.0, bottom: 8.0),
-                                      child: Container(
-                                        height: 40.0,
-                                        child: Text(
-                                          helpers[index]['gigTitle'],
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16.0,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
+            exploreHeader(),
+            categories(),
           ],
         ),
       ),
     );
+  }
+
+  Widget subCategoryTab(String item) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          currentCat = item;
+        });
+      },
+      child: Container(
+        height: 100,
+        width: 75,
+        margin: EdgeInsets.all(14),
+        child: Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(11)),
+                color: Colors.teal,
+              ),
+              margin: EdgeInsets.only(bottom: 5),
+              height: 60,
+              width: 75,
+            ),
+            Text(
+              item,
+              textAlign: TextAlign.center,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget tabBar() {
+    return TabBar(
+      labelColor: Theme.of(context).accentColor,
+      unselectedLabelColor: Colors.black,
+      controller: _tabController,
+      indicatorSize: TabBarIndicatorSize.tab,
+      tabs: <Widget>[
+        Tab(
+          text: "Gigs",
+        ),
+        Tab(
+          text: "Helpers",
+        ),
+      ],
+    );
+  }
+
+  Widget tabs() {
+    return Expanded(
+      child: TabBarView(
+        controller: _tabController,
+        children: <Widget>[
+          ListView.builder(
+            itemCount: gigs.length,
+            itemBuilder: (context, int index) {
+              return Padding(
+                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                    child: InkWell(
+                      onTap: () {},
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      child: ListTile(
+                        leading: Stack(
+                          alignment: Alignment.bottomRight,
+                          children: <Widget>[
+                            CircleAvatar(
+                              radius: 20.0,
+                              backgroundImage:
+                                  AssetImage('assets/images/nouser.jpeg'),
+                            ),
+                          ],
+                        ),
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              gigs[index]['username'],
+                              style: TextStyle(
+                                fontSize: 15.0,
+                              ),
+                            ),
+                            Text(
+                              gigs[index]['date'],
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 15.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                              child: Container(
+                                height: 40.0,
+                                child: Text(
+                                  gigs[index]['gigTitle'],
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Container(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 1.0,
+                                          color: Theme.of(context).accentColor),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(5.0),
+                                      ),
+                                    ),
+                                    child: Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                          gigs[index]['price'],
+                                          style: TextStyle(
+                                              color:
+                                                  Theme.of(context).accentColor,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+          ListView.builder(
+            itemCount: helpers.length,
+            itemBuilder: (context, int index) {
+              return Padding(
+                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                    child: InkWell(
+                      onTap: () {},
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      child: ListTile(
+                        leading: Stack(
+                          alignment: Alignment.bottomRight,
+                          children: <Widget>[
+                            CircleAvatar(
+                              radius: 35.0,
+                              backgroundImage:
+                                  AssetImage('assets/images/nouser.jpeg'),
+                            ),
+                          ],
+                        ),
+                        title: Padding(
+                          padding: const EdgeInsets.only(top: 16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                helpers[index]['username'],
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Roboto'),
+                              ),
+                            ],
+                          ),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                              child: Container(
+                                height: 40.0,
+                                child: Text(
+                                  helpers[index]['gigTitle'],
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Widget gig(String name, St) {
+  //   return Card(
+  //     child: Container(
+  //       width: double.infinity,
+  //       child: Text(gig['username']),
+  //     ),
+  //   );
+  // }
+  Widget gigList() {
+    return Column(
+      children: List.generate(
+        gigs.length,
+        (i) => Gig(
+            name: gigs[i]['username'],
+            title: gigs[i]['gigTitle'],
+            budget: gigs[i]['price'],
+            date: gigs[i]['date']),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+        child: Padding(
+      padding: EdgeInsets.symmetric(vertical: 10),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: [
+            top(),
+            SizedBox(
+              height: 5,
+            ),
+            subcategories(),
+            tabBar(),
+            gigList()
+          ],
+        ),
+      ),
+    ));
   }
 }
