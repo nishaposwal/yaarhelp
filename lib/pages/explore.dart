@@ -448,11 +448,7 @@ class _ExplorePageState extends State<ExplorePage>
     return Column(
       children: List.generate(
         gigs.length,
-        (i) => Gig(
-            name: gigs[i]['username'],
-            title: gigs[i]['gigTitle'],
-            budget: gigs[i]['price'],
-            date: gigs[i]['date']),
+        (i) => Gig(gig: gigs[i]),
       ),
     );
   }

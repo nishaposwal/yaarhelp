@@ -1,23 +1,11 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 class Gig extends StatefulWidget {
   // const Gig({ Key? key }) : super(key: key);
-  String name;
-  String description;
-  String imageUrl;
-  String budget;
-  String date;
-  String title;
 
-  Gig(
-      {this.budget,
-      this.date,
-      this.description,
-      this.imageUrl,
-      this.name,
-      this.title});
+  Map<String, dynamic> gig;
+
+  Gig({this.gig});
 
   @override
   _GigState createState() => _GigState();
@@ -104,25 +92,25 @@ class _GigState extends State<Gig> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        widget.name,
+                        widget.gig['username'],
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      Text(widget.date),
+                      Text(widget.gig['date']),
                     ],
                   ),
                   Text(
-                    widget.title,
+                    widget.gig['gigTitle'],
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  budget('23', context),
+                  budget(widget.gig['price'], context),
                   actions(context),
                 ],
               ),
