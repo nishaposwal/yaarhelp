@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:flutter/material.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fiverr_clone/pages/settings.dart';
 import 'package:fiverr_clone/pages/profile/profile.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ManageAccount extends StatefulWidget {
   @override
@@ -13,7 +10,6 @@ class ManageAccount extends StatefulWidget {
 }
 
 final uid = FirebaseAuth.instance.currentUser.uid;
-StreamSubscription<QuerySnapshot> _guestBookSubscription;
 var data;
 
 class _ManageAccountState extends State<ManageAccount> {

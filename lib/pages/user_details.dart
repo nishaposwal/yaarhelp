@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'dart:async';
+
 import 'package:fiverr_clone/pages/main_tabs.dart';
 import 'package:intl/intl.dart';
 
@@ -305,8 +305,8 @@ class _UserDetailsState extends State<UserDetails> {
             child: Column(
               children: [
                 top(context),
-                stringInput(nameController, 'Your Name',
-                    'Please enter your name'),
+                stringInput(
+                    nameController, 'Your Name', 'Please enter your name'),
                 chooseFile(context),
                 inputNumber(phoneNumberController, 'Your Contact Number',
                     'Please enter your contact number'),

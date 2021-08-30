@@ -1,4 +1,5 @@
 import 'package:fiverr_clone/pages/gig.dart';
+import 'package:fiverr_clone/pages/helperCard.dart';
 import 'package:flutter/material.dart';
 
 class ExplorePage extends StatefulWidget {
@@ -267,172 +268,22 @@ class _ExplorePageState extends State<ExplorePage>
   }
 
   Widget tabs() {
-    return Expanded(
-      child: TabBarView(
-        controller: _tabController,
-        children: <Widget>[
-          ListView.builder(
-            itemCount: gigs.length,
-            itemBuilder: (context, int index) {
-              return Padding(
-                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                    child: InkWell(
-                      onTap: () {},
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      child: ListTile(
-                        leading: Stack(
-                          alignment: Alignment.bottomRight,
-                          children: <Widget>[
-                            CircleAvatar(
-                              radius: 20.0,
-                              backgroundImage:
-                                  AssetImage('assets/images/nouser.jpeg'),
-                            ),
-                          ],
-                        ),
-                        title: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              gigs[index]['username'],
-                              style: TextStyle(
-                                fontSize: 15.0,
-                              ),
-                            ),
-                            Text(
-                              gigs[index]['date'],
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 15.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                              child: Container(
-                                height: 40.0,
-                                child: Text(
-                                  gigs[index]['gigTitle'],
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Container(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 1.0,
-                                          color: Theme.of(context).accentColor),
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(5.0),
-                                      ),
-                                    ),
-                                    child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Text(
-                                          gigs[index]['price'],
-                                          style: TextStyle(
-                                              color:
-                                                  Theme.of(context).accentColor,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-          ListView.builder(
-            itemCount: helpers.length,
-            itemBuilder: (context, int index) {
-              return Padding(
-                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                    child: InkWell(
-                      onTap: () {},
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      child: ListTile(
-                        leading: Stack(
-                          alignment: Alignment.bottomRight,
-                          children: <Widget>[
-                            CircleAvatar(
-                              radius: 35.0,
-                              backgroundImage:
-                                  AssetImage('assets/images/nouser.jpeg'),
-                            ),
-                          ],
-                        ),
-                        title: Padding(
-                          padding: const EdgeInsets.only(top: 16.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                helpers[index]['username'],
-                                style: TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Roboto'),
-                              ),
-                            ],
-                          ),
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                              child: Container(
-                                height: 40.0,
-                                child: Text(
-                                  helpers[index]['gigTitle'],
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+    return TabBarView(
+      controller: _tabController,
+      children: <Widget>[
+        ListView.builder(
+          itemCount: gigs.length,
+          itemBuilder: (context, int index) {
+            return Gig(gig: gigs[index]);
+          },
+        ),
+        ListView.builder(
+          itemCount: helpers.length,
+          itemBuilder: (context, int index) {
+            return HelperCard(helper: helpers[index]);
+          },
+        ),
+      ],
     );
   }
 
@@ -453,6 +304,13 @@ class _ExplorePageState extends State<ExplorePage>
     );
   }
 
+  Widget helperList() {
+    return Column(
+      children:
+          List.generate(helpers.length, (i) => HelperCard(helper: helpers[i])),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -469,6 +327,7 @@ class _ExplorePageState extends State<ExplorePage>
             subcategories(),
             tabBar(),
             gigList()
+            // tabs()
           ],
         ),
       ),

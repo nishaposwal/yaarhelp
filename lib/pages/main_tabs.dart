@@ -1,10 +1,8 @@
 import 'package:fiverr_clone/pages/create-post.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 
 import 'package:fiverr_clone/pages/home.dart';
 import 'package:fiverr_clone/pages/manage_account.dart';
-import 'package:fiverr_clone/pages/manage_sales.dart';
 import 'package:fiverr_clone/pages/explore.dart';
 import 'package:fiverr_clone/pages/notifications.dart';
 
@@ -59,23 +57,34 @@ class _MainTabsState extends State<MainTabs>
         // this will be set when a new tab is tapped
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home, size: 35,),
-            label: 'Home'
-          ),
+              icon: Icon(
+                Icons.home,
+                size: 35,
+              ),
+              label: 'Home'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.explore, size: 35,),
-            label: 'Messages'
-          ),
+              icon: Icon(
+                Icons.explore,
+                size: 35,
+              ),
+              label: 'Messages'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add_box_rounded, size: 35,),
-            label: 'Sales'
-          ),
+              icon: Icon(
+                Icons.add_box_rounded,
+                size: 35,
+              ),
+              label: 'Sales'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications_rounded, size: 35,),
-            label: 'Notifications'
-          ),
+              icon: Icon(
+                Icons.notifications_rounded,
+                size: 35,
+              ),
+              label: 'Notifications'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person, size: 38,),
+            icon: Icon(
+              Icons.person,
+              size: 38,
+            ),
             label: 'Profile',
           ),
         ],
