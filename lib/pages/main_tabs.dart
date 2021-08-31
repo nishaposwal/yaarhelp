@@ -1,10 +1,12 @@
 import 'package:fiverr_clone/pages/create-post.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fiverr_clone/pages/home.dart';
 import 'package:fiverr_clone/pages/manage_account.dart';
 import 'package:fiverr_clone/pages/explore.dart';
 import 'package:fiverr_clone/pages/notifications.dart';
+import 'loginPage.dart';
 
 class MainTabs extends StatefulWidget {
   @override
@@ -48,6 +50,10 @@ class _MainTabsState extends State<MainTabs>
 
   @override
   Widget build(BuildContext context) {
+    var currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null && (_selectedIndexForBottomNavigationBar == 2 || _selectedIndexForBottomNavigationBar == 4) ) {
+      return LoginPage();
+    }
     return Scaffold(
       body: _listOfPagesForBottomNavigationBar[
           _selectedIndexForBottomNavigationBar],

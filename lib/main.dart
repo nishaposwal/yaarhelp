@@ -2,6 +2,7 @@ import 'package:fiverr_clone/pages/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fiverr_clone/pages/post.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,7 +39,8 @@ class _FiverrCloneState extends State<FiverrClone> {
                 primaryColor: Colors.white,
                 accentColor: Color(0xFF7ED8D8),
               ),
-              home: LoginPage(),
+              // home: LoginPage(),
+              home: MainTabs(),
             );
           }
 

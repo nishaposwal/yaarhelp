@@ -1,6 +1,8 @@
 import 'package:fiverr_clone/pages/gig.dart';
 import 'package:fiverr_clone/pages/helperCard.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class ExplorePage extends StatefulWidget {
   @override
@@ -25,7 +27,7 @@ class _ExplorePageState extends State<ExplorePage>
       "name": "Online Help",
       "domains": [
         "Assignment Help",
-        "Spcial Media Help",
+        "Social Media Help",
         "Art & Design Help",
         "Questions Help"
       ]
@@ -295,11 +297,32 @@ class _ExplorePageState extends State<ExplorePage>
   //     ),
   //   );
   // }
-  Widget gigList() {
-    return Column(
-      children: List.generate(
-        gigs.length,
-        (i) => Gig(gig: gigs[i]),
+  Widget gigList(BuildContext context) {
+    return Container(
+      child: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('gigs').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Container(
+              padding: EdgeInsets.all(100),
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: Theme.of(context).accentColor,
+                ),
+              ),
+            );
+          }
+          return Column(
+            children: [
+              for (DocumentSnapshot doc in snapshot.data.docs)
+                Gig(gig: doc.data() as Map<String, dynamic>, id: doc.reference.id,)
+            ],
+          );
+        },
       ),
     );
   }
@@ -325,9 +348,8 @@ class _ExplorePageState extends State<ExplorePage>
               height: 5,
             ),
             subcategories(),
-            tabBar(),
-            gigList()
-            // tabs()
+            // tabBar(),
+            gigList(context)
           ],
         ),
       ),

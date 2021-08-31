@@ -1,3 +1,6 @@
+
+import 'dart:convert';
+import 'package:intl/intl.dart';
 import 'package:fiverr_clone/pages/dropDown.dart';
 import 'package:fiverr_clone/pages/main_tabs.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +79,7 @@ class _CreatePostState extends State<CreatePost> {
   final timerequiredController = new TextEditingController();
   final budgetController = new TextEditingController();
   final descriptionController = new TextEditingController();
+  final titleController = new TextEditingController();
   final addressController = new TextEditingController();
   final categoryList = [
     'Online Help',
@@ -147,16 +151,18 @@ class _CreatePostState extends State<CreatePost> {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
-    Fluttertoast.showToast(
-        msg: "Help Posted Successfully!",
-        toastLength: Toast.LENGTH_LONG,
-        backgroundColor: Colors.green);
-    await addGig();
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => MainTabs()),
-      (Route<dynamic> route) => false,
-    );
+    try {
+      await addGig();
+      Fluttertoast.showToast(
+          msg: "Help Posted Successfully!", toastLength: Toast.LENGTH_LONG, backgroundColor: Colors.green);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => MainTabs()),
+            (Route<dynamic> route) => false,
+      );
+    } catch (e) {
+      showdialogBox(e, true);
+    }
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -315,6 +321,8 @@ class _CreatePostState extends State<CreatePost> {
     } else {
       print('logged in');
     }
+    final now = new DateTime.now();
+    String formatter = DateFormat.yMMMMd('en_US').format(now);
 
     return FirebaseFirestore.instance.collection('gigs').add(<String, dynamic>{
       'category': category,
@@ -322,9 +330,12 @@ class _CreatePostState extends State<CreatePost> {
       'timeRequired': timerequiredController.text,
       'budget': budgetController.text,
       'description': descriptionController.text,
+      'title': titleController.text,
       'address': addressController.text,
-      'timestamp': DateTime.now().millisecondsSinceEpoch,
+      'postedOn': formatter,
       'userId': FirebaseAuth.instance.currentUser.uid,
+      'userName': FirebaseAuth.instance.currentUser.displayName,
+      'userImageUrl': FirebaseAuth.instance.currentUser.photoURL
     });
   }
 
@@ -377,7 +388,8 @@ class _CreatePostState extends State<CreatePost> {
           });
           if (isPostPressed && validate()) {
             try {
-              await openCheckout(budgetController.text + "00");
+              // await openCheckout(budgetController.text + "00");
+              await addGig();
             } catch (e) {
               print(e);
             } finally {
@@ -413,6 +425,10 @@ class _CreatePostState extends State<CreatePost> {
             children: [
               top(context),
               categories(),
+              stringInput(
+                  titleController, 'Add Title', 'Title'),
+              stringInput(
+                  descriptionController, 'Add Description', 'Description'),
               inputNumber(
                   timerequiredController,
                   'Service Delivery time',
@@ -420,8 +436,6 @@ class _CreatePostState extends State<CreatePost> {
                   'Please enter time required ih hours'),
               inputNumber(budgetController, 'What is your budget',
                   'Enter your budget in rupees', 'Please Enter your budget'),
-              stringInput(
-                  descriptionController, 'Add Description', 'Description'),
               stringInput(addressController, 'Add Address', 'Address'),
               post(),
             ],
