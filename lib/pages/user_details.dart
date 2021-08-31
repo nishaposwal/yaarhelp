@@ -6,7 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
 import 'package:fiverr_clone/pages/main_tabs.dart';
 import 'package:intl/intl.dart';
 
@@ -168,7 +167,7 @@ class _UserDetailsState extends State<UserDetails> {
     );
   }
 
-  void addDetails() {
+  Future<dynamic> addDetails() {
     if (FirebaseAuth.instance.currentUser == null) {
       throw Exception("User not logged in");
     }
@@ -178,7 +177,7 @@ class _UserDetailsState extends State<UserDetails> {
 
     final now = new DateTime.now();
     String formatter = DateFormat.yMMMM('en_US').format(now);
-    users.doc(uid).set({
+    return users.doc(uid).set({
       'displayName': nameController.text,
       'phoneNumber': phoneNumberController.text,
       'imageUrl': imageUrl,
@@ -238,7 +237,7 @@ class _UserDetailsState extends State<UserDetails> {
     });
   }
 
-  void addImageToFirebase() async {
+  Future<dynamic> addImageToFirebase() async {
     String fileName = basename(imageFile.path);
     Reference ref = FirebaseStorage.instance.ref().child(
         "Profile_Pics/${FirebaseAuth.instance.currentUser.uid}/${fileName}");

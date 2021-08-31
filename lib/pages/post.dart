@@ -2,26 +2,6 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-var data = [
-  {
-    "address": "Noida, india",
-    "budget": "3600",
-    "category": "Online Help",
-    "title":
-        "Want help in home made scrunchies. Want help in home made scrunchiesWant help in home made",
-    "description":
-        "Want help in home made scrunchies. Want help in home made scrunchies. Want help in home made scrunchies. Want help in home made scrunchies. Want help in home made scrunchies. Want help in home made scrunchies. Want help in home made scrunchies. Want help in home made scrunchies. Want help in home made scrunchies. Want help in home made scrunchies. Want help in home made scrunchies. Want help in home made scrunchies. ",
-    "subCategory": "Art & Design Help",
-    "timeRequired": "23",
-    "timestamp": 1629959516109,
-    "userId": "uWeCin037XWpA3PPRcYiUZum2so2",
-    "userImageUrl":
-        "https://firebasestorage.googleapis.com/v0/b/yaarhelp-479bd.appspot.com/o/Profile_Pics%2FuWeCin037XWpA3PPRcYiUZum2so2%2Fimage_picker117262331307007787.png?alt=media&token=100885ee-802c-466a-b092-801647f1d0fd",
-    "userName": "Simran 23",
-    "requestsToWork": ["123", "234"],
-    "requests": 0
-  }
-];
 bool hasRequested = false;
 
 class Post extends StatefulWidget {
@@ -108,16 +88,16 @@ Widget description(String description) {
   );
 }
 
-Widget button (String text, BuildContext context) {
+Widget button (String text, BuildContext context, bool disable) {
   return Padding(
     padding: const EdgeInsets.all(12.0),
     child: ElevatedButton(
-      onPressed: () {
+      onPressed: disable ? null : () {
 
       },
       child: Text(text, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),),
       style: ElevatedButton.styleFrom(
-        primary: Color(0xff49BABA),
+        primary: disable ? Colors.grey[300] : Color(0xff49BABA),
       ),
     ),
   );
@@ -127,8 +107,8 @@ class _PostState extends State<Post> {
   @override
   Widget build(BuildContext context) {
     var uid = FirebaseAuth.instance.currentUser?.uid;
-    for( var i in data[0]["requestsToWork"]) {
-      if (i == uid) {
+    for( var item in widget.data["requests"]) {
+      if (item['userId'] == uid) {
         hasRequested = true;
         break;
       }
@@ -140,26 +120,26 @@ class _PostState extends State<Post> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              title(data[0]['title']),
-              userProfile(data[0]['userImageUrl'], data[0]['userName']),
-              rowInfo('Budget', 'INR ' + data[0]['budget']),
+              title(widget.data['title']),
+              userProfile(widget.data['userImageUrl'], widget.data['userName']),
+              rowInfo('Budget', 'INR ' + widget.data['budget']),
               rowInfo(
-                  'Time Required', data[0]['timeRequired'].toString() + ' Hours'),
-              rowInfo('Address', data[0]['address']),
+                  'Time Required', widget.data['timeRequired'].toString() + ' Hours'),
+              rowInfo('Address', widget.data['address']),
               rowInfo(
                   'Category',
-                  data[0]['category'].toString() +
+                  widget.data['category'].toString() +
                       ' (' +
-                      data[0]['subCategory'].toString() +
+                      widget.data['subCategory'].toString() +
                       ')'),
               Row(
                 children: [
-                  button('Request To Work', context),
-                  button('View User Profile', context),
+                  hasRequested ? button('Applied', context, true) : button('Apply', context, false),
+                  button('View User Profile', context, false),
                 ],
               ),
-              description(data[0]['description']),
-               hasRequested ? button('Requested To Work', context) : button('Request To Work', context),
+              description(widget.data['description']),
+               hasRequested ? button('Applied', context, true) : button('Apply', context, false),
             ],
           ),
         ),
