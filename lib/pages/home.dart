@@ -93,23 +93,16 @@ class _HomePageState extends State<HomePage>
                 ),
               );
             },
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: 45.0,
-                height: 45.0,
-                child: Stack(
-                  alignment: Alignment.bottomRight,
-                  children: <Widget>[
-                    CircleAvatar(
-                      radius: 45.0,
-                      backgroundImage: AssetImage("assets/images/nouser.jpeg"),
-                    ),
-                  ],
+            child: Column(
+              children: [
+                Container(
+                  width: 70,
+                  height: 30,
+                  decoration:
+                      BoxDecoration(color: Theme.of(context).accentColor),
                 ),
-              ),
+                Text('How It Works')
+              ],
             ),
           ),
         ],
