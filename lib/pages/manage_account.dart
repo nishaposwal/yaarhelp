@@ -1,3 +1,5 @@
+import 'package:fiverr_clone/pages/home.dart';
+import 'package:fiverr_clone/pages/main_tabs.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -36,12 +38,15 @@ class _ManageAccountState extends State<ManageAccount> {
                 Container(
                   child: Padding(
                     padding: const EdgeInsets.only(right: 15.0),
-                    child: Text(
-                      "Logout",
-                      style: TextStyle(
-                        color: Colors.redAccent,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
+                    child: TextButton(
+                      onPressed: _signOut,
+                      child: Text(
+                        "Logout",
+                        style: TextStyle(
+                          color: Colors.redAccent,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0,
+                        ),
                       ),
                     ),
                   ),
@@ -225,12 +230,15 @@ class _ManageAccountState extends State<ManageAccount> {
                         width: MediaQuery.of(context).size.width,
                         child: Padding(
                           padding: const EdgeInsets.only(left: 15.0),
-                          child: Text(
-                            "Logout",
-                            style: TextStyle(
-                              color: Colors.redAccent,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15.0,
+                          child: TextButton(
+                            onPressed: _signOut,
+                            child: Text(
+                              "Logout",
+                              style: TextStyle(
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15.0,
+                              ),
                             ),
                           ),
                         ),
@@ -244,6 +252,42 @@ class _ManageAccountState extends State<ManageAccount> {
         },
       ),
     );
+  }
+
+  void showdialogBox(String title, String subTitle, bool isError, Function fn) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(title),
+        content: Text(
+          subTitle,
+          style: isError
+              ? TextStyle(color: Colors.red)
+              : TextStyle(color: Colors.green),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => {Navigator.pop(context, 'OK'), fn()},
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void navigateToHome() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => MainTabs()));
+  }
+
+  Future<void> _signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      this.showdialogBox(
+          'Success', 'Sign out successFully', false, navigateToHome);
+    } catch (e) {
+      this.showdialogBox('Error', e.message, true, () {});
+    }
   }
 
   @override

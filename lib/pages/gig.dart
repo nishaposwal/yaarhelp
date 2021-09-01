@@ -58,14 +58,17 @@ Widget actions(BuildContext context, data, id) {
     children: [
       OutlinedButton(
         style: OutlinedButton.styleFrom(
-  backgroundColor: applied ? Colors.grey[400] : Theme.of(context).accentColor,
-  ),
-        onPressed: applied ? null : () => {
-          apply(data, id)
-  },
+          backgroundColor:
+              applied ? Colors.grey[400] : Theme.of(context).accentColor,
+        ),
+        onPressed: applied ? null : () => {apply(data, id)},
         child: Text(
           applied ? 'Applied' : 'Apply',
-          style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Lato', fontSize: 16),
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Lato',
+              fontSize: 16,
+              color: Colors.white),
         ),
       ),
       SizedBox(
@@ -74,13 +77,15 @@ Widget actions(BuildContext context, data, id) {
       OutlinedButton(
         onPressed: () => viewGigDetail(context, data, id),
         style: OutlinedButton.styleFrom(
-  side: BorderSide(width: 2, color: Theme.of(context).accentColor),
-  ),
+          side: BorderSide(width: 2, color: Theme.of(context).accentColor),
+        ),
         child: Text(
           'View Details',
           style: TextStyle(
               color: Theme.of(context).accentColor,
-              fontWeight: FontWeight.bold, fontFamily: 'Lato', fontSize: 16),
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Lato',
+              fontSize: 16),
         ),
       )
     ],
@@ -99,7 +104,11 @@ Widget budget(String budget, BuildContext context) {
     ),
     child: Text(
       budget,
-      style: TextStyle(color: Theme.of(context).accentColor, fontWeight: FontWeight.bold, fontSize: 16, fontFamily: 'Lato'),
+      style: TextStyle(
+          color: Theme.of(context).accentColor,
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+          fontFamily: 'Lato'),
     ),
   );
 }
@@ -109,6 +118,7 @@ class _GigState extends State<Gig> {
   void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     double c_width = MediaQuery.of(context).size.width * 0.8;
@@ -141,13 +151,15 @@ class _GigState extends State<Gig> {
                       Text(
                         widget.gig['userName'],
                         style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Lato'
-                        ),
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: 'Lato'),
                       ),
-                      Text(widget.gig['postedOn'], style: TextStyle(fontFamily: 'Lato'),),
+                      Text(
+                        widget.gig['postedOn'],
+                        style: TextStyle(fontFamily: 'Lato'),
+                      ),
                     ],
                   ),
                 ),
@@ -159,11 +171,10 @@ class _GigState extends State<Gig> {
                   child: Text(
                     widget.gig['title'],
                     style: TextStyle(
-                      color: Colors.blueGrey[900],
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Lato'
-                    ),
+                        color: Colors.blueGrey[900],
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Lato'),
                   ),
                 ),
                 SizedBox(
