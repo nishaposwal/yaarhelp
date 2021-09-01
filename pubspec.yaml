@@ -66,6 +66,7 @@ flutter:
     - family: Roboto
       fonts:
         - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Bold.ttf
     - family: Lato
       fonts:
         - asset: assets/fonts/Lato-Regular.ttf

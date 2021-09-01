@@ -5,43 +5,43 @@ import 'post.dart';
 
 class Gig extends StatefulWidget {
   // const Gig({ Key? key }) : super(key: key);
-
-  Map<String, dynamic> gig;
-  String id;
-
-  Gig({this.gig, this.id});
-
-  @override
-  _GigState createState() => _GigState();
-}
-
-void viewGigDetail(BuildContext context, data, id) {
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => Post(data),
-    ),
-  );
-}
-
-void apply(data, id) {
-  var currentUser = FirebaseAuth.instance.currentUser;
-  if (currentUser != null) {
-    var userData = {
-      'userId': currentUser.uid,
-      'userName': currentUser.displayName,
-      'userImageUrl': currentUser.photoURL
-    };
-    List<dynamic> requests = data['requests'] == null ? [] : data['requests'];
+  Future<void> apply(data, id) {
+    var currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      var userData = {
+        'userId': currentUser.uid,
+        'userName': currentUser.displayName,
+        'userImageUrl': currentUser.photoURL
+      };
+      List<dynamic> requests = data['requests'] == null ? [] : data['requests'];
     requests.add(userData);
     FirebaseFirestore.instance
         .collection('gigs')
         .doc(id)
         .update({'requests': requests});
   }
+  }
+
+  Map<String, dynamic> gig;
+  String id;
+  String source;
+
+  Gig({this.gig, this.id, this.source});
+
+  @override
+  _GigState createState() => _GigState();
 }
 
-Widget actions(BuildContext context, data, id) {
+void viewGigDetail(BuildContext context, Map<String, dynamic> data, String id) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => new Post(data: data, id: id),
+    ),
+  );
+}
+
+Widget actions(BuildContext context, data, id, source, widget) {
   var currentUser = FirebaseAuth.instance.currentUser;
   bool applied = false;
 
@@ -54,33 +54,39 @@ Widget actions(BuildContext context, data, id) {
     }
   }
 
+  var disableActions = (source == "explore" && applied) || (source == "notification" && data['helper'] != null);
+
   return Row(
     children: [
       OutlinedButton(
         style: OutlinedButton.styleFrom(
           backgroundColor:
-              applied ? Colors.grey[400] : Theme.of(context).accentColor,
+              disableActions ? Colors.grey[400] : Theme.of(context).accentColor,
         ),
-        onPressed: applied ? null : () => {apply(data, id)},
+        onPressed: disableActions ? null : () async => {await widget.apply(data, id)},
         child: Text(
-          applied ? 'Applied' : 'Apply',
+          source == "explore"
+              ? applied
+                  ? 'Applied'
+                  : 'Apply'
+              : 'Accept',
           style: TextStyle(
               fontWeight: FontWeight.bold,
+              color: Colors.white,
               fontFamily: 'Lato',
-              fontSize: 16,
-              color: Colors.white),
+              fontSize: 16),
         ),
       ),
       SizedBox(
         width: 10,
       ),
       OutlinedButton(
-        onPressed: () => viewGigDetail(context, data, id),
+        onPressed: () => disableActions &&   source != "explore" ? null : viewGigDetail(context, data, id),
         style: OutlinedButton.styleFrom(
           side: BorderSide(width: 2, color: Theme.of(context).accentColor),
         ),
         child: Text(
-          'View Details',
+          source == 'explore' ? 'View Details' : 'Reject',
           style: TextStyle(
               color: Theme.of(context).accentColor,
               fontWeight: FontWeight.bold,
@@ -180,11 +186,15 @@ class _GigState extends State<Gig> {
                 SizedBox(
                   height: 6,
                 ),
-                budget('₹ ' + widget.gig['budget'], context),
+                widget.source == "explore"
+                    ? budget('₹ ' + widget.gig['budget'], context)
+                    : SizedBox(
+                        height: 0,
+                      ),
                 SizedBox(
                   height: 4,
                 ),
-                actions(context, widget.gig, widget.id),
+                actions(context, widget.gig, widget.id, widget.source, widget),
               ],
             ),
           ),

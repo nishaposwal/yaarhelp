@@ -333,6 +333,7 @@ class _CreatePostState extends State<CreatePost> {
       'title': titleController.text,
       'address': addressController.text,
       'postedOn': formatter,
+      'timeStamp': new DateTime.now().microsecondsSinceEpoch,
       'userId': FirebaseAuth.instance.currentUser.uid,
       'userName': FirebaseAuth.instance.currentUser.displayName,
       'userImageUrl': FirebaseAuth.instance.currentUser.photoURL

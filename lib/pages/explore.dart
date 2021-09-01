@@ -319,7 +319,7 @@ class _ExplorePageState extends State<ExplorePage>
           return Column(
             children: [
               for (DocumentSnapshot doc in snapshot.data.docs)
-                Gig(gig: doc.data() as Map<String, dynamic>, id: doc.reference.id,)
+                Gig(gig: doc.data() as Map<String, dynamic>, id: doc.reference.id, source: 'explore',)
             ],
           );
         },
