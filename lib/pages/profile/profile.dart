@@ -4,7 +4,7 @@ import 'profile_orders.dart';
 
 class ProfilePage extends StatefulWidget {
   final uid;
-  final index;
+  int index;
   ProfilePage({this.uid, this.index});
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -13,6 +13,9 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
+    if (widget.index == null) {
+      widget.index = 0;
+    }
     return DefaultTabController(
       length: 2,
       initialIndex: widget.index,
