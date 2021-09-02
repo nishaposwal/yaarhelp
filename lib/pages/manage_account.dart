@@ -136,7 +136,7 @@ class _ManageAccountState extends State<ManageAccount> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ProfilePage(uid: id,)));
+                                builder: (context) => ProfilePage(uid: id, index: 0,)));
                       },
                       child: ListTile(
                         leading: Icon(
@@ -154,7 +154,12 @@ class _ManageAccountState extends State<ManageAccount> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProfilePage(uid: id, index: 1)));
+                      },
                       child: ListTile(
                         leading: Icon(
                           Icons.list_alt_rounded,
