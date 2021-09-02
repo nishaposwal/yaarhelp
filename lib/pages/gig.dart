@@ -35,8 +35,9 @@ class Gig extends StatefulWidget {
   final Map<String, dynamic> gig;
   final String id;
   final String source;
+  final String subsource;
 
-  Gig({this.gig, this.id, this.source});
+  Gig({this.gig, this.id, this.source, this.subsource});
 
   @override
   _GigState createState() => _GigState();
@@ -181,10 +182,9 @@ class _GigState extends State<Gig> {
   @override
   Widget build(BuildContext context) {
     double cWidth = MediaQuery.of(context).size.width * 0.8;
-    if (widget.gig['title'] == null)
-      return SizedBox(
-        height: 0,
-      );
+    if (widget.subsource == "home" && widget.gig['title'].length >= 35) {
+      widget.gig['title'] = widget.gig['title'].substring(0, 30) + '...';
+    }
     return Card(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),

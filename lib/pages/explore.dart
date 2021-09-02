@@ -233,7 +233,8 @@ class _ExplorePageState extends State<ExplorePage>
 
   Widget gigList(BuildContext context) {
     return Container(
-      child: StreamBuilder<QuerySnapshot>(
+      child:
+      StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('gigs').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {

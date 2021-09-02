@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fiverr_clone/pages/profile/profile.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'gig.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -47,8 +49,11 @@ class _HomePageState extends State<HomePage>
 
   Widget carousel(List<dynamic> list) {
     return CarouselSlider(
-      options: CarouselOptions(height: 150.0,autoPlay: true,
-          autoPlayInterval: Duration(seconds: 3), viewportFraction: 1.0),
+      options: CarouselOptions(
+          height: 150.0,
+          autoPlay: true,
+          autoPlayInterval: Duration(seconds: 3),
+          viewportFraction: 1.0),
       items: list.map((url) {
         return Builder(
           builder: (BuildContext context) {
@@ -60,13 +65,16 @@ class _HomePageState extends State<HomePage>
                     Radius.circular(10),
                   ),
                 ),
-                child: Image(image: NetworkImage(url), fit: BoxFit.fill,)
-            );
+                child: Image(
+                  image: NetworkImage(url),
+                  fit: BoxFit.fill,
+                ));
           },
         );
       }).toList(),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -322,38 +330,59 @@ class _HomePageState extends State<HomePage>
                           ],
                         ),
                       ),
-                      Container(
-                        height: 140,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: <Widget>[
-                            for (var i = 0; i < times; i++)
-                              Container(
-                                width: 150,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(5),
-                                  ),
-                                  border: Border.all(
-                                    width: .5,
-                                    color: const Color.fromRGBO(0, 0, 0, 0.15),
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color:
-                                          Color.fromRGBO(242, 242, 242, 0.95),
-                                      spreadRadius: 0,
-                                      blurRadius: 4,
-                                      offset: Offset(
-                                          0, 4), // changes position of shadow
-                                    ),
-                                  ],
+                      StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('gigs')
+                            .where('category', isEqualTo: item)
+                            .limit(5)
+                            .snapshots(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (snapshot.hasError) {
+                            return Text('Something went wrong');
+                          }
+
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Container(
+                              padding: EdgeInsets.all(100),
+                              child: Center(
+                                child: CircularProgressIndicator(
                                   color: Theme.of(context).accentColor,
                                 ),
-                                margin: EdgeInsets.all(12),
                               ),
-                          ],
-                        ),
+                            );
+                          }
+                          return CarouselSlider(
+                            options: CarouselOptions(
+                                height: 190.0,
+                                autoPlay: true,
+                                autoPlayInterval: Duration(seconds: 3),
+                                viewportFraction: 1.0),
+                            items: snapshot.data.docs.map((doc) {
+                              return Builder(
+                                builder: (BuildContext context) {
+                                  return Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 2),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10),
+                                      ),
+                                    ),
+                                    child: Gig(
+                                      gig: doc.data() as Map<String, dynamic>,
+                                      id: doc.reference.id,
+                                      source: 'explore',
+                                      subsource: 'home'
+                                    ),
+                                  );
+                                },
+                              );
+                            }).toList(),
+                          );
+                        },
                       ),
                     ],
                   ),
