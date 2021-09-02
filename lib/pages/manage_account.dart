@@ -14,33 +14,108 @@ final uid = FirebaseAuth.instance.currentUser.uid;
 var data;
 
 class _ManageAccountState extends State<ManageAccount> {
+
+  Widget title(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(
+          top: 18.0, left: 20.0, bottom: 8.0),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Widget logout() {
+    return InkWell(
+      onTap: () {},
+      child: Row(
+        children: [
+          Container(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 15.0),
+              child: TextButton(
+                onPressed: _signOut,
+                child: Text(
+                  "Logout",
+                  style: TextStyle(
+                    color: Colors.redAccent,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget top(name, address, imageUrl) {
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            Container(
+              color: Colors.blueGrey[600],
+              height: 200.0,
+              width: MediaQuery.of(context).size.width,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 20.0, right: 20.0, bottom: 40.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Stack(
+                        alignment: Alignment.bottomRight,
+                        children: <Widget>[
+                          CircleAvatar(
+                            radius: 40.0,
+                            backgroundImage: NetworkImage(imageUrl),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Text(
+                      name,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18.0,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 6.0,
+                    ),
+                    Text(
+                      address,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14.0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
   Widget user(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: <Widget>[
-          InkWell(
-            onTap: () {},
-            child: Row(
-              children: [
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 15.0),
-                    child: TextButton(
-                      onPressed: _signOut,
-                      child: Text(
-                        "Logout",
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+        actions: [
+          logout(),
         ],
       ),
       body: StreamBuilder(
@@ -60,83 +135,20 @@ class _ManageAccountState extends State<ManageAccount> {
           var id = snapshot.data.docs.first.reference.id;
           return Column(
             children: <Widget>[
-              Stack(
-                alignment: Alignment.bottomCenter,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        color: Colors.blueGrey[800],
-                        height: 200.0,
-                        width: MediaQuery.of(context).size.width,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0, right: 20.0, bottom: 40.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
-                                child: Stack(
-                                  alignment: Alignment.bottomRight,
-                                  children: <Widget>[
-                                    CircleAvatar(
-                                      radius: 40.0,
-                                      child: CircleAvatar(
-                                        child: Image(
-                                            image: NetworkImage(imageUrl),
-                                            fit: BoxFit.scaleDown),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Text(
-                                name,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18.0,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 6.0,
-                              ),
-                              Text(
-                                address,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              top(name, address, imageUrl),
               Expanded(
                 child: ListView(
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          top: 20.0, left: 20.0, bottom: 5.0),
-                      child: Text(
-                        "Yaar Help",
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                    title("Yaar Help"),
                     InkWell(
                       onTap: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ProfilePage(uid: id, index: 0,)));
+                                builder: (context) => ProfilePage(
+                                      uid: id,
+                                      index: 0,
+                                    )));
                       },
                       child: ListTile(
                         leading: Icon(
@@ -158,7 +170,8 @@ class _ManageAccountState extends State<ManageAccount> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ProfilePage(uid: id, index: 1)));
+                                builder: (context) =>
+                                    ProfilePage(uid: id, index: 1)));
                       },
                       child: ListTile(
                         leading: Icon(
@@ -176,17 +189,7 @@ class _ManageAccountState extends State<ManageAccount> {
                       ),
                     ),
                     Divider(),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          top: 10.0, left: 20.0, bottom: 5.0),
-                      child: Text(
-                        "General",
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                    title("General"),
                     InkWell(
                       onTap: () {},
                       child: ListTile(
@@ -277,7 +280,7 @@ class _ManageAccountState extends State<ManageAccount> {
     try {
       await FirebaseAuth.instance.signOut();
       this.showdialogBox(
-          'Success', 'Sign out successFully', false, navigateToHome);
+          'Success', 'Signed out successfully', false, navigateToHome);
     } catch (e) {
       this.showdialogBox('Error', e.message, true, () {});
     }
