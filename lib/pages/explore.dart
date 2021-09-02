@@ -8,6 +8,8 @@ class ExplorePage extends StatefulWidget {
   _ExplorePageState createState() => _ExplorePageState();
 }
 
+int selected = 0;
+
 class _ExplorePageState extends State<ExplorePage>
     with TickerProviderStateMixin {
   TabController _tabController;
@@ -15,7 +17,7 @@ class _ExplorePageState extends State<ExplorePage>
   var currentCat;
   @override
   void initState() {
-    _tabController = new TabController(length: 2, vsync: this);
+    _tabController = new TabController(initialIndex: 0, length: 2, vsync: this);
     currentMode = 0;
     currentCat = "Assignment Help";
     super.initState();
@@ -51,55 +53,6 @@ class _ExplorePageState extends State<ExplorePage>
       ]
     },
   ];
-
-  var gigs = [
-    {
-      "username": "Madan Mohan",
-      "online": true,
-      "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2L-Zfe-iYizglLDH55UD3wXBJre7V98QwKfsBCfR_8YfvXPnN&s",
-      "gigTitle": "Create a react application",
-      "date": "20 Jan 2020",
-      "price": "₹5"
-    },
-    {
-      "username": "Munshi Desai",
-      "online": false,
-      "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2L-Zfe-iYizglLDH55UD3wXBJre7V98QwKfsBCfR_8YfvXPnN&s",
-      "gigTitle": "Create an angular application",
-      "date": "18 Jan 2020",
-      "price": "₹35"
-    },
-    {
-      "username": "Deep Jandu",
-      "online": true,
-      "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2L-Zfe-iYizglLDH55UD3wXBJre7V98QwKfsBCfR_8YfvXPnN&s",
-      "gigTitle": "Create an amazing flutter app",
-      "date": "12 Jan 2020",
-      "price": "₹150"
-    },
-    {
-      "username": "Alex Willber",
-      "online": false,
-      "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2L-Zfe-iYizglLDH55UD3wXBJre7V98QwKfsBCfR_8YfvXPnN&s",
-      "gigTitle": "Create a prototype with adobe xd",
-      "date": "15 Jan 2020",
-      "price": "₹15"
-    },
-    {
-      "username": "Nanny Poswal",
-      "online": false,
-      "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2L-Zfe-iYizglLDH55UD3wXBJre7V98QwKfsBCfR_8YfvXPnN&s",
-      "gigTitle": "Create a nodejs rest api",
-      "date": "15 Jan 2020",
-      "price": "₹5"
-    },
-  ];
-
   var helpers = [
     {
       "username": "Mohan Malviya",
@@ -251,6 +204,11 @@ class _ExplorePageState extends State<ExplorePage>
 
   Widget tabBar() {
     return TabBar(
+      onTap: (val) {
+        setState(() {
+          selected = val;
+        });
+      },
       labelColor: Theme.of(context).accentColor,
       unselectedLabelColor: Colors.black,
       controller: _tabController,
@@ -269,31 +227,10 @@ class _ExplorePageState extends State<ExplorePage>
   Widget tabs() {
     return TabBarView(
       controller: _tabController,
-      children: <Widget>[
-        ListView.builder(
-          itemCount: gigs.length,
-          itemBuilder: (context, int index) {
-            return Gig(gig: gigs[index]);
-          },
-        ),
-        ListView.builder(
-          itemCount: helpers.length,
-          itemBuilder: (context, int index) {
-            return HelperCard(helper: helpers[index]);
-          },
-        ),
-      ],
+      children: <Widget>[gigList(context), helperList()],
     );
   }
 
-  // Widget gig(String name, St) {
-  //   return Card(
-  //     child: Container(
-  //       width: double.infinity,
-  //       child: Text(gig['username']),
-  //     ),
-  //   );
-  // }
   Widget gigList(BuildContext context) {
     return Container(
       child: StreamBuilder<QuerySnapshot>(
@@ -316,7 +253,11 @@ class _ExplorePageState extends State<ExplorePage>
           return Column(
             children: [
               for (DocumentSnapshot doc in snapshot.data.docs)
-                Gig(gig: doc.data() as Map<String, dynamic>, id: doc.reference.id, source: 'explore',)
+                Gig(
+                  gig: doc.data() as Map<String, dynamic>,
+                  id: doc.reference.id,
+                  source: 'explore',
+                )
             ],
           );
         },
@@ -345,8 +286,8 @@ class _ExplorePageState extends State<ExplorePage>
               height: 5,
             ),
             subcategories(),
-            // tabBar(),
-            gigList(context)
+            tabBar(),
+            selected == 0 ? gigList(context) : helperList()
           ],
         ),
       ),
