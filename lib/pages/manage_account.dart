@@ -15,18 +15,6 @@ var data;
 
 class _ManageAccountState extends State<ManageAccount> {
   Widget user(BuildContext context) {
-    // _guestBookSubscription = FirebaseFirestore.instance
-    //     .collection('users')
-    //     .where('uid', isEqualTo: uid)
-    //     .snapshots()
-    //     .listen((snapshot) {
-    //   snapshot.docs.forEach((document) {
-    //     setState(() {
-    //       data = document.data();
-    //     });
-    //   });
-    // });
-
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
@@ -67,8 +55,9 @@ class _ManageAccountState extends State<ManageAccount> {
             );
           }
           var imageUrl = snapshot.data.docs.first.get('imageUrl');
-          print(imageUrl);
           var name = snapshot.data.docs.first.get('displayName');
+          var address = snapshot.data.docs.first.get('address');
+          var id = snapshot.data.docs.first.reference.id;
           return Column(
             children: <Widget>[
               Stack(
@@ -114,7 +103,7 @@ class _ManageAccountState extends State<ManageAccount> {
                                 height: 6.0,
                               ),
                               Text(
-                                "My personal balance: ₹3336.90",
+                                address,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 14.0,
@@ -147,7 +136,7 @@ class _ManageAccountState extends State<ManageAccount> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ProfilePage()));
+                                builder: (context) => ProfilePage(uid: id,)));
                       },
                       child: ListTile(
                         leading: Icon(

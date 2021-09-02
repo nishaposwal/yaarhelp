@@ -53,6 +53,7 @@ class _NotificationsState extends State<Notifications> {
                       .collection('gigs')
                       .where('userId', isEqualTo: currentUser.uid)
                       .where('helper', isNull: true)
+                      .orderBy('timeStamp', descending: true)
                       .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -101,10 +102,9 @@ class _NotificationsState extends State<Notifications> {
                       children: [
                         for (var item in requests)
                           Gig(
-                            gig: item,
-                            id: item['gigId'],
-                            source: 'notification'
-                          )
+                              gig: item,
+                              id: item['gigId'],
+                              source: 'notification')
                       ],
                     );
                   },

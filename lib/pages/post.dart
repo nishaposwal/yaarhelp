@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fiverr_clone/pages/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'gig.dart';
 
@@ -126,6 +127,13 @@ Widget button(String text, BuildContext context, bool disable, widget) {
           } catch (e) {
             print('Error in applying for gig :: ' + widget.id + e);
           }
+        } else if (text == "View User Profile") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProfilePage(uid: widget.data['userId'],),
+            ),
+          );
         }
       },
       child: Text(

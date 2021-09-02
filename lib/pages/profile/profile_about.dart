@@ -1,23 +1,36 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fiverr_clone/pages/user_details.dart';
 
 class AboutPage extends StatefulWidget {
+  final uid;
+  AboutPage({this.uid});
   @override
   _AboutPageState createState() => _AboutPageState();
 }
 
-final uid = FirebaseAuth.instance.currentUser.uid;
+var userId = "";
 
 class _AboutPageState extends State<AboutPage> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      userId = currentUser.uid;
+    }
+    print(widget.uid);
+    print('jeh');
     return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('users')
-          .where('userId', isEqualTo: uid)
+          .where('userId', isEqualTo: widget.uid)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (!snapshot.hasData) {
@@ -26,7 +39,6 @@ class _AboutPageState extends State<AboutPage> {
           );
         }
         var imageUrl = snapshot.data.docs.first.get('imageUrl');
-        print(imageUrl);
         var name = snapshot.data.docs.first.get('displayName');
         var address = snapshot.data.docs.first.get('address');
         var description = snapshot.data.docs.first.get('description');
@@ -157,64 +169,9 @@ class _AboutPageState extends State<AboutPage> {
                 skills,
                 style: TextStyle(color: Colors.grey[900]),
               ),
-              // subtitle: Flex(
-              //   direction: Axis.horizontal,
-              //   children: <Widget>[
-              //     Padding(
-              //       padding: const EdgeInsets.only(right: 8.0),
-              //       child: InkWell(
-              //         onTap: () {},
-              //         child: Container(
-              //           height: 35.0,
-              //           decoration: BoxDecoration(
-              //             color: Colors.black12,
-              //             borderRadius: BorderRadius.all(
-              //               Radius.circular(20.0),
-              //             ),
-              //           ),
-              //           child: Padding(
-              //             padding:
-              //                 const EdgeInsets.only(left: 10.0, right: 10.0),
-              //             child: Center(
-              //               child: Text(
-              //                 "Interior Designing",
-              //                 style: TextStyle(color: Colors.black),
-              //               ),
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //     Padding(
-              //       padding: const EdgeInsets.only(right: 8.0),
-              //       child: InkWell(
-              //         onTap: () {},
-              //         child: Container(
-              //           height: 35.0,
-              //           decoration: BoxDecoration(
-              //             color: Colors.black12,
-              //             borderRadius: BorderRadius.all(
-              //               Radius.circular(20.0),
-              //             ),
-              //           ),
-              //           child: Padding(
-              //             padding:
-              //                 const EdgeInsets.only(left: 10.0, right: 10.0),
-              //             child: Center(
-              //               child: Text(
-              //                 "Modular Kitchen",
-              //                 style: TextStyle(color: Colors.black),
-              //               ),
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
             ),
             Divider(),
-            Container(
+            widget.uid == userId ? Container(
               width: 50,
               margin: EdgeInsets.only(bottom: 0),
               child: ElevatedButton(
@@ -231,7 +188,7 @@ class _AboutPageState extends State<AboutPage> {
                   onSurface: Colors.blue,
                 ),
               ),
-            )
+            ) : SizedBox(height: 0,)
           ],
         );
       },
