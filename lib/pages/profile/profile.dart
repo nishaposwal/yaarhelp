@@ -57,6 +57,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     );
                   }
+                  if (snapshot.data.docs.length == 0) {
+                    return Center(
+                      child: Text('No orders',style: TextStyle(color: Theme.of(context).accentColor, fontSize: 16),),
+                    );
+                  }
                   return Column(
                     children: [
                       for (DocumentSnapshot doc in snapshot.data.docs)

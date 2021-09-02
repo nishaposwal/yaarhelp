@@ -25,8 +25,6 @@ class _AboutPageState extends State<AboutPage> {
     if (currentUser != null) {
       userId = currentUser.uid;
     }
-    print(widget.uid);
-    print('jeh');
     return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('users')
@@ -36,6 +34,11 @@ class _AboutPageState extends State<AboutPage> {
         if (!snapshot.hasData) {
           return Center(
             child: CircularProgressIndicator(),
+          );
+        }
+        if (snapshot.data.docs.length == 0) {
+          return Center(
+            child: Text('Profile unavailable',style: TextStyle(color: Theme.of(context).accentColor, fontSize: 16),),
           );
         }
         var imageUrl = snapshot.data.docs.first.get('imageUrl');
