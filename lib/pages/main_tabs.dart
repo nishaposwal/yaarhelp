@@ -1,6 +1,5 @@
 import 'package:fiverr_clone/pages/create-post.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fiverr_clone/pages/home.dart';
 import 'package:fiverr_clone/pages/manage_account.dart';

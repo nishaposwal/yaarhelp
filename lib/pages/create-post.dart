@@ -1,5 +1,3 @@
-
-import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:fiverr_clone/pages/dropDown.dart';
 import 'package:fiverr_clone/pages/main_tabs.dart';
@@ -111,7 +109,7 @@ class _CreatePostState extends State<CreatePost> {
   bool isPostPressed = false;
   bool loading = false;
 
-  static const platform = const MethodChannel("razorpay_flutter");
+  // static const platform = const MethodChannel("razorpay_flutter");
 
   Razorpay _razorpay = Razorpay();
 
@@ -144,7 +142,7 @@ class _CreatePostState extends State<CreatePost> {
       'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
     };
     try {
-      await _razorpay.open(options);
+       _razorpay.open(options);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -336,7 +334,8 @@ class _CreatePostState extends State<CreatePost> {
       'timeStamp': new DateTime.now().microsecondsSinceEpoch,
       'userId': FirebaseAuth.instance.currentUser.uid,
       'userName': FirebaseAuth.instance.currentUser.displayName,
-      'userImageUrl': FirebaseAuth.instance.currentUser.photoURL
+      'userImageUrl': FirebaseAuth.instance.currentUser.photoURL,
+      'helper': null
     });
   }
 

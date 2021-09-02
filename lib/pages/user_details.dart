@@ -44,7 +44,7 @@ class _UserDetailsState extends State<UserDetails> {
   final languagesController = new TextEditingController();
 
   void initState() {
-    var data = FirebaseFirestore.instance
+    FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser.uid)
         .get()
@@ -240,7 +240,7 @@ class _UserDetailsState extends State<UserDetails> {
   Future<dynamic> addImageToFirebase() async {
     String fileName = basename(imageFile.path);
     Reference ref = FirebaseStorage.instance.ref().child(
-        "Profile_Pics/${FirebaseAuth.instance.currentUser.uid}/${fileName}");
+        "Profile_Pics/${FirebaseAuth.instance.currentUser.uid}/$fileName");
     UploadTask uploadTask = ref.putFile(imageFile);
     var url = await (await uploadTask).ref.getDownloadURL();
     setState(() {

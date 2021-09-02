@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'gig.dart';
 
 class Post extends StatefulWidget {
-  Map<String, dynamic> data;
-  String id;
+  final Map<String, dynamic> data;
+  final String id;
 
   Post({this.data, this.id});
   @override

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:async';
-import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'bezierContainer.dart';
 
@@ -152,38 +151,38 @@ class _LoginPageState extends State<LoginPage> {
         ));
   }
 
-  Widget _divider() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        children: <Widget>[
-          SizedBox(
-            width: 20,
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(
-                thickness: 1,
-              ),
-            ),
-          ),
-          Text('or'),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(
-                thickness: 1,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 20,
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _divider() {
+  //   return Container(
+  //     margin: EdgeInsets.symmetric(vertical: 10),
+  //     child: Row(
+  //       children: <Widget>[
+  //         SizedBox(
+  //           width: 20,
+  //         ),
+  //         Expanded(
+  //           child: Padding(
+  //             padding: EdgeInsets.symmetric(horizontal: 10),
+  //             child: Divider(
+  //               thickness: 1,
+  //             ),
+  //           ),
+  //         ),
+  //         Text('or'),
+  //         Expanded(
+  //           child: Padding(
+  //             padding: EdgeInsets.symmetric(horizontal: 10),
+  //             child: Divider(
+  //               thickness: 1,
+  //             ),
+  //           ),
+  //         ),
+  //         SizedBox(
+  //           width: 20,
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Future<void> signInWithGoogle() async {
     try {
@@ -202,8 +201,7 @@ class _LoginPageState extends State<LoginPage> {
         idToken: googleAuth.idToken,
       );
 
-      final authUser =
-          await FirebaseAuth.instance.signInWithCredential(credential);
+      await FirebaseAuth.instance.signInWithCredential(credential);
       showdialogBox('Success', 'loagged in', false);
     } catch (err) {
       showdialogBox('Error has occured', err.message, true);
@@ -218,60 +216,60 @@ class _LoginPageState extends State<LoginPage> {
     // }
   }
 
-  Widget _facebookButton() {
-    return Container(
-      height: 50,
-      margin: EdgeInsets.symmetric(vertical: 20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).accentColor,
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(5),
-                    topLeft: Radius.circular(5)),
-              ),
-              alignment: Alignment.center,
-              child: Text('G',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w400)),
-            ),
-          ),
-          Expanded(
-            flex: 5,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).accentColor,
-                borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(5),
-                    topRight: Radius.circular(5)),
-              ),
-              alignment: Alignment.center,
-              child: TextButton(
-                onPressed: signInWithGoogle,
-                child: googleLoading
-                    ? CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white))
-                    : Text('Log in with Google',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400)),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget _facebookButton() {
+  //   return Container(
+  //     height: 50,
+  //     margin: EdgeInsets.symmetric(vertical: 20),
+  //     decoration: BoxDecoration(
+  //       borderRadius: BorderRadius.all(Radius.circular(10)),
+  //     ),
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: <Widget>[
+  //         Expanded(
+  //           flex: 1,
+  //           child: Container(
+  //             decoration: BoxDecoration(
+  //               color: Theme.of(context).accentColor,
+  //               borderRadius: BorderRadius.only(
+  //                   bottomLeft: Radius.circular(5),
+  //                   topLeft: Radius.circular(5)),
+  //             ),
+  //             alignment: Alignment.center,
+  //             child: Text('G',
+  //                 style: TextStyle(
+  //                     color: Colors.white,
+  //                     fontSize: 25,
+  //                     fontWeight: FontWeight.w400)),
+  //           ),
+  //         ),
+  //         Expanded(
+  //           flex: 5,
+  //           child: Container(
+  //             decoration: BoxDecoration(
+  //               color: Theme.of(context).accentColor,
+  //               borderRadius: BorderRadius.only(
+  //                   bottomRight: Radius.circular(5),
+  //                   topRight: Radius.circular(5)),
+  //             ),
+  //             alignment: Alignment.center,
+  //             child: TextButton(
+  //               onPressed: signInWithGoogle,
+  //               child: googleLoading
+  //                   ? CircularProgressIndicator(
+  //                       valueColor: AlwaysStoppedAnimation<Color>(Colors.white))
+  //                   : Text('Log in with Google',
+  //                       style: TextStyle(
+  //                           color: Colors.white,
+  //                           fontSize: 18,
+  //                           fontWeight: FontWeight.w400)),
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget _createAccountLabel() {
     return InkWell(

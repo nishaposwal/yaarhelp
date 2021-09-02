@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class DropDown extends StatefulWidget {
-  String value;
-  String hint;
-  List<String> itemsList;
+  final String value;
+  final String hint;
+  final List<String> itemsList;
   final void Function(String) onChanged;
   // DropDown({Key key, this.value, this.hint}) : super(key: key);
   DropDown({this.value, this.hint, this.itemsList, this.onChanged});
@@ -51,6 +51,5 @@ class _DropDownState extends State<DropDown> {
         }).toList(),
       ),
     );
-    ;
   }
 }

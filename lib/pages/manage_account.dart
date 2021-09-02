@@ -1,4 +1,3 @@
-import 'package:fiverr_clone/pages/home.dart';
 import 'package:fiverr_clone/pages/main_tabs.dart';
 import 'package:flutter/material.dart';
 

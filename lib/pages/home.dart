@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
-
 import 'package:fiverr_clone/pages/profile/profile.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,38 +8,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  double _requirementsTapMinHeight = 60.0;
-  double _levelsHeight = 60.0;
-  double _levelsMaxHeight = 380.0;
-  double _defaultFontSize = 16.0;
-
-  AnimationController _controller;
-
-  final GlobalKey<AnimatedCircularChartState> _chartKeyResponse =
-      new GlobalKey<AnimatedCircularChartState>();
-  final GlobalKey<AnimatedCircularChartState> _chartKeyOrders =
-      new GlobalKey<AnimatedCircularChartState>();
-  final GlobalKey<AnimatedCircularChartState> _chartKeyDelivery =
-      new GlobalKey<AnimatedCircularChartState>();
-  final GlobalKey<AnimatedCircularChartState> _chartKeyRating =
-      new GlobalKey<AnimatedCircularChartState>();
-  final _chartSize = const Size(80.0, 80.0);
 
   @override
   void initState() {
     super.initState();
-    this._controller = AnimationController(
-      duration: Duration(milliseconds: 500),
-      vsync: this,
-    );
   }
 
   @override
   void dispose() {
     super.dispose();
   }
-
-  Future<void> _refreshHome() async {}
 
   List<String> list = [
     "https://prosesoft.com/images/e3.jpg",
@@ -66,16 +40,13 @@ class _HomePageState extends State<HomePage>
       "Spcial Media Help",
       "Art & Design Help"
     ],
-    "Offline Help": ["General Help", "echnical Help", "Organise/Decor Help"],
+    "Offline Help": ["General Help", "Technical Help", "Organise/Decor Help"],
   };
 
   var times = 6;
 
   @override
   Widget build(BuildContext context) {
-    final rotateAnimation = Tween(begin: 0.0, end: pi).animate(
-      CurvedAnimation(parent: this._controller, curve: Curves.easeInOut),
-    );
     return Scaffold(
       appBar: AppBar(
         title: Text(

@@ -2,29 +2,39 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'post.dart';
+import 'package:intl/intl.dart';
 
 class Gig extends StatefulWidget {
-  // const Gig({ Key? key }) : super(key: key);
   Future<void> apply(data, id) {
+    final now = new DateTime.now();
+    String formattedDate = DateFormat.yMMMMd('en_US').format(now);
+
     var currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
       var userData = {
         'userId': currentUser.uid,
         'userName': currentUser.displayName,
-        'userImageUrl': currentUser.photoURL
+        'userImageUrl': currentUser.photoURL,
+        'postedOn': formattedDate,
+        'timeStamp': new DateTime.now().microsecondsSinceEpoch,
       };
-      List<dynamic> requests = data['requests'] == null ? [] : data['requests'];
-    requests.add(userData);
-    FirebaseFirestore.instance
-        .collection('gigs')
-        .doc(id)
-        .update({'requests': requests});
-  }
+      List<dynamic> requests = data['requests'];
+      if (requests == null) {
+        requests = [];
+      }
+      requests.add(userData);
+
+      return FirebaseFirestore.instance
+          .collection('gigs')
+          .doc(id)
+          .update({'requests': requests});
+    }
+    return null;
   }
 
-  Map<String, dynamic> gig;
-  String id;
-  String source;
+  final Map<String, dynamic> gig;
+  final String id;
+  final String source;
 
   Gig({this.gig, this.id, this.source});
 
@@ -41,12 +51,51 @@ void viewGigDetail(BuildContext context, Map<String, dynamic> data, String id) {
   );
 }
 
+void reject(data, id) {
+  FirebaseFirestore.instance
+      .collection('gigs')
+      .doc(id)
+      .get()
+      .then((DocumentSnapshot documentSnapshot) {
+    if (documentSnapshot.exists) {
+      Map<String, dynamic> gig = documentSnapshot.data();
+      List<dynamic> requests = gig['requests'];
+      if (requests == null) {
+        requests = [];
+      }
+      if (requests.length == 0) {
+        return null;
+      }
+      List<dynamic>reqs = [];
+      for (var item in requests) {
+        if (data['userId'] != item['userId']) {
+          reqs.add(item);
+        }
+      }
+      FirebaseFirestore.instance
+          .collection('gigs')
+          .doc(id)
+          .update({'requests': reqs});
+    }
+  });
+}
+
+Future<void> accept(data, id) {
+  return FirebaseFirestore.instance
+      .collection('gigs')
+      .doc(id)
+      .update({'helper': data['userId']});
+}
+
 Widget actions(BuildContext context, data, id, source, widget) {
   var currentUser = FirebaseAuth.instance.currentUser;
   bool applied = false;
 
-  if (currentUser != null) {
-    List<dynamic> requests = data['requests'] == null ? [] : data['requests'];
+  if (currentUser != null && source == "explore") {
+    List<dynamic> requests = data['requests'];
+    if (requests == null) {
+      requests = [];
+    }
     for (var item in requests) {
       if (item['userId'] == currentUser.uid) {
         applied = true;
@@ -54,22 +103,24 @@ Widget actions(BuildContext context, data, id, source, widget) {
     }
   }
 
-  var disableActions = (source == "explore" && applied) || (source == "notification" && data['helper'] != null);
+  var disableApply = (source == "explore" && applied);
 
   return Row(
     children: [
       OutlinedButton(
         style: OutlinedButton.styleFrom(
           backgroundColor:
-              disableActions ? Colors.grey[400] : Theme.of(context).accentColor,
+              disableApply ? Colors.grey[400] : Theme.of(context).accentColor,
         ),
-        onPressed: disableActions ? null : () async => {await widget.apply(data, id)},
+        onPressed: disableApply
+            ? null
+            : () async => {
+                  (source == 'explore')
+                      ? await widget.apply(data, id)
+                      : await accept(data, id)
+                },
         child: Text(
-          source == "explore"
-              ? applied
-                  ? 'Applied'
-                  : 'Apply'
-              : 'Accept',
+          (source == "explore") ? (applied ? 'Applied' : 'Apply') : ('Accept'),
           style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -81,12 +132,14 @@ Widget actions(BuildContext context, data, id, source, widget) {
         width: 10,
       ),
       OutlinedButton(
-        onPressed: () => disableActions &&   source != "explore" ? null : viewGigDetail(context, data, id),
+        onPressed: () => (source == 'explore')
+            ? viewGigDetail(context, data, id)
+            : reject(data, id),
         style: OutlinedButton.styleFrom(
           side: BorderSide(width: 2, color: Theme.of(context).accentColor),
         ),
         child: Text(
-          source == 'explore' ? 'View Details' : 'Reject',
+          (source == 'explore') ? 'View Details' : 'Reject',
           style: TextStyle(
               color: Theme.of(context).accentColor,
               fontWeight: FontWeight.bold,
@@ -127,7 +180,7 @@ class _GigState extends State<Gig> {
 
   @override
   Widget build(BuildContext context) {
-    double c_width = MediaQuery.of(context).size.width * 0.8;
+    double cWidth = MediaQuery.of(context).size.width * 0.8;
     if (widget.gig['title'] == null)
       return SizedBox(
         height: 0,
@@ -149,7 +202,7 @@ class _GigState extends State<Gig> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  width: c_width,
+                  width: cWidth,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -173,7 +226,7 @@ class _GigState extends State<Gig> {
                   height: 4,
                 ),
                 Container(
-                  width: c_width,
+                  width: cWidth,
                   child: Text(
                     widget.gig['title'],
                     style: TextStyle(

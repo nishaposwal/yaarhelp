@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class HelperCard extends StatelessWidget {
   // const HelperCard({ Key? key }) : super(key: key);
 
-  Map<String, dynamic> helper;
+  final Map<String, dynamic> helper;
 
   HelperCard({this.helper});
 

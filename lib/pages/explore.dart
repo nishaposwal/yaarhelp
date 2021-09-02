@@ -2,7 +2,6 @@ import 'package:fiverr_clone/pages/gig.dart';
 import 'package:fiverr_clone/pages/helperCard.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 
 class ExplorePage extends StatefulWidget {
   @override
@@ -120,8 +119,6 @@ class _ExplorePageState extends State<ExplorePage>
       "price": "₹5"
     },
   ];
-
-  Future<void> _refreshMessages() async {}
 
   Widget exploreHeader() {
     return Container(
