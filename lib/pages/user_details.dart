@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:fiverr_clone/pages/multiselect.dart';
 import 'package:path/path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -187,7 +188,19 @@ class _UserDetailsState extends State<UserDetails> {
       'address': addressController.text,
       'joiningDate': formatter,
       'userId': uid,
+      'onlineHelp': findSelectedCategories(onlineCategories),
+      'offlineHelp': findSelectedCategories(offlineCategories)
     });
+  }
+
+  List<String> findSelectedCategories(List<Map<String, dynamic>> list) {
+    List<String> result = [];
+    list.forEach((element) {
+      if (element['selected']) {
+        result.add(element['name']);
+      }
+    });
+    return result;
   }
 
   Widget chooseFile(BuildContext context) {
@@ -293,6 +306,30 @@ class _UserDetailsState extends State<UserDetails> {
     );
   }
 
+  List<Map<String, dynamic>> onlineCategories = [
+    {'name': 'assignment help', 'selected': false},
+    {'name': 'art & design help', 'selected': false},
+    {'name': 'presentations  help', 'selected': false},
+    {'name': 'Social media help', 'selected': false},
+    {'name': 'programming help', 'selected': false},
+    {'name': 'Question solving help', 'selected': false},
+    {'name': ' writing help', 'selected': false},
+    {'name': 'tech  help', 'selected': false},
+    {'name': 'content research help', 'selected': false},
+    {'name': 'other  help', 'selected': false}
+  ];
+  List<Map<String, dynamic>> offlineCategories = [
+    {'name': 'personal assistant help', 'selected': false},
+    {'name': 'organize/decor help', 'selected': false},
+    {'name': 'Health/Therapy   help', 'selected': false},
+    {'name': 'technical  help', 'selected': false},
+    {'name': 'drop-ship/moving help', 'selected': false},
+    {'name': 'baby/pet care  help', 'selected': false},
+    {'name': 'cafe/hotel ', 'selected': false},
+    {'name': 'house help', 'selected': false},
+    {'name': 'repairing  help', 'selected': false},
+    {'name': 'other  help', 'selected': false}
+  ];
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -317,6 +354,14 @@ class _UserDetailsState extends State<UserDetails> {
                     'Please enter your skills'),
                 stringInput(languagesController, 'Languages you know?',
                     'Please enter the languages you know'),
+                MultuSelect(
+                  heading: 'Select Interest in Online Help',
+                  list: onlineCategories,
+                ),
+                MultuSelect(
+                  heading: 'Select Interest in Offline Help',
+                  list: offlineCategories,
+                ),
                 submit(context),
               ],
             ),

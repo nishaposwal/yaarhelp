@@ -10,6 +10,9 @@ import 'loginPage.dart';
 class MainTabs extends StatefulWidget {
   @override
   _MainTabsState createState() => _MainTabsState();
+
+  int selectedIndex;
+  MainTabs({this.selectedIndex});
 }
 
 class _MainTabsState extends State<MainTabs>
@@ -20,7 +23,8 @@ class _MainTabsState extends State<MainTabs>
   @override
   void initState() {
     super.initState();
-    _selectedIndexForBottomNavigationBar = 0;
+    _selectedIndexForBottomNavigationBar =
+        widget.selectedIndex != null ? widget.selectedIndex : 0;
     controller = TabController(
         vsync: this,
         length: _listOfPagesForBottomNavigationBar.length,
@@ -50,7 +54,9 @@ class _MainTabsState extends State<MainTabs>
   @override
   Widget build(BuildContext context) {
     var currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser == null && (_selectedIndexForBottomNavigationBar == 2 || _selectedIndexForBottomNavigationBar == 4) ) {
+    if (currentUser == null &&
+        (_selectedIndexForBottomNavigationBar == 2 ||
+            _selectedIndexForBottomNavigationBar == 4)) {
       return LoginPage();
     }
     return Scaffold(
