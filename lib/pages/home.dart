@@ -1,3 +1,4 @@
+import 'package:fiverr_clone/pages/main_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:fiverr_clone/pages/profile/profile.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -160,27 +161,57 @@ class _HomePageState extends State<HomePage>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Container(
-                        padding: EdgeInsets.only(right: 8, bottom: 2),
-                        child: Text(
-                          'See All',
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: 'Roboto',
-                              color: Theme.of(context).accentColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                              margin: EdgeInsets.only(left: 11),
-                              height: 50,
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            Container(
+                                margin: EdgeInsets.only(left: 11),
+                                height: 50,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 12, horizontal: 3),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(5),
+                                  ),
+                                  border: Border.all(
+                                    width: .5,
+                                    color: const Color.fromRGBO(0, 0, 0, 0.15),
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color:
+                                          Color.fromRGBO(242, 242, 242, 0.95),
+                                      spreadRadius: 0,
+                                      blurRadius: 4,
+                                      offset: Offset(
+                                          0, 4), // changes position of shadow
+                                    ),
+                                  ],
+                                  color: Color(0xfff2f2f2),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      item,
+                                      style: TextStyle(fontSize: 13),
+                                    ),
+                                    Image(
+                                      image:
+                                          AssetImage('assets/images/img.png'),
+                                    )
+                                  ],
+                                )),
+                            Container(
+                              margin: EdgeInsets.only(left: 0, right: 11),
                               padding: EdgeInsets.symmetric(
-                                  vertical: 12, horizontal: 3),
+                                  horizontal: 6, vertical: 5),
+                              width: 80,
+                              height: 40,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(5),
+                                borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(4),
+                                  topRight: Radius.circular(4),
                                 ),
                                 border: Border.all(
                                   width: .5,
@@ -197,113 +228,77 @@ class _HomePageState extends State<HomePage>
                                 ],
                                 color: Color(0xfff2f2f2),
                               ),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    item,
-                                    style: TextStyle(fontSize: 13),
+                              child: Text(
+                                subCategories[item][0],
+                                style: TextStyle(fontSize: 12),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            Container(
+                              width: 80,
+                              height: 40,
+                              margin: EdgeInsets.only(left: 0, right: 11),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 6, vertical: 5),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(4),
+                                ),
+                                border: Border.all(
+                                  width: .5,
+                                  color: const Color.fromRGBO(0, 0, 0, 0.15),
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color.fromRGBO(242, 242, 242, 0.95),
+                                    spreadRadius: 0,
+                                    blurRadius: 4,
+                                    offset: Offset(
+                                        0, 4), // changes position of shadow
                                   ),
-                                  Image(
-                                    image: AssetImage('assets/images/img.png'),
-                                  )
                                 ],
-                              )),
-                          Container(
-                            margin: EdgeInsets.only(left: 0, right: 11),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 6, vertical: 5),
-                            width: 80,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(4),
-                                topRight: Radius.circular(4),
+                                color: Color(0xfff2f2f2),
                               ),
-                              border: Border.all(
-                                width: .5,
-                                color: const Color.fromRGBO(0, 0, 0, 0.15),
+                              child: Text(
+                                subCategories[item][1],
+                                style: TextStyle(fontSize: 12),
+                                textAlign: TextAlign.center,
                               ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Color.fromRGBO(242, 242, 242, 0.95),
-                                  spreadRadius: 0,
-                                  blurRadius: 4,
-                                  offset: Offset(
-                                      0, 4), // changes position of shadow
+                            ),
+                            Container(
+                              width: 80,
+                              height: 40,
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.only(left: 0, right: 19),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 6, vertical: 5),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(4),
                                 ),
-                              ],
-                              color: Color(0xfff2f2f2),
-                            ),
-                            child: Text(
-                              subCategories[item][0],
-                              style: TextStyle(fontSize: 12),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          Container(
-                            width: 80,
-                            height: 40,
-                            margin: EdgeInsets.only(left: 0, right: 11),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 6, vertical: 5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(4),
-                              ),
-                              border: Border.all(
-                                width: .5,
-                                color: const Color.fromRGBO(0, 0, 0, 0.15),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Color.fromRGBO(242, 242, 242, 0.95),
-                                  spreadRadius: 0,
-                                  blurRadius: 4,
-                                  offset: Offset(
-                                      0, 4), // changes position of shadow
+                                border: Border.all(
+                                  width: .5,
+                                  color: const Color.fromRGBO(0, 0, 0, 0.15),
                                 ),
-                              ],
-                              color: Color(0xfff2f2f2),
-                            ),
-                            child: Text(
-                              subCategories[item][1],
-                              style: TextStyle(fontSize: 12),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          Container(
-                            width: 80,
-                            height: 40,
-                            alignment: Alignment.center,
-                            margin: EdgeInsets.only(left: 0, right: 19),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 6, vertical: 5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(4),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color.fromRGBO(242, 242, 242, 0.95),
+                                    spreadRadius: 0,
+                                    blurRadius: 4,
+                                    offset: Offset(
+                                        0, 4), // changes position of shadow
+                                  ),
+                                ],
+                                color: Color(0xfff2f2f2),
                               ),
-                              border: Border.all(
-                                width: .5,
-                                color: const Color.fromRGBO(0, 0, 0, 0.15),
+                              child: Text(
+                                subCategories[item][2],
+                                style: TextStyle(fontSize: 12),
+                                textAlign: TextAlign.center,
                               ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Color.fromRGBO(242, 242, 242, 0.95),
-                                  spreadRadius: 0,
-                                  blurRadius: 4,
-                                  offset: Offset(
-                                      0, 4), // changes position of shadow
-                                ),
-                              ],
-                              color: Color(0xfff2f2f2),
-                            ),
-                            child: Text(
-                              subCategories[item][2],
-                              style: TextStyle(fontSize: 12),
-                              textAlign: TextAlign.center,
-                            ),
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       ),
                       Container(
                         margin: EdgeInsets.only(
@@ -319,13 +314,22 @@ class _HomePageState extends State<HomePage>
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold),
                             ),
-                            Text(
-                              'See All',
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  fontFamily: 'Roboto',
-                                  color: Theme.of(context).accentColor,
-                                  fontWeight: FontWeight.bold),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            MainTabs(selectedIndex: 1)));
+                              },
+                              child: Text(
+                                'See All',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontFamily: 'Roboto',
+                                    color: Theme.of(context).accentColor,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             )
                           ],
                         ),
@@ -372,11 +376,10 @@ class _HomePageState extends State<HomePage>
                                       ),
                                     ),
                                     child: Gig(
-                                      gig: doc.data() as Map<String, dynamic>,
-                                      id: doc.reference.id,
-                                      source: 'explore',
-                                      subsource: 'home'
-                                    ),
+                                        gig: doc.data() as Map<String, dynamic>,
+                                        id: doc.reference.id,
+                                        source: 'explore',
+                                        subsource: 'home'),
                                   );
                                 },
                               );

@@ -67,7 +67,7 @@ void reject(data, id) {
       if (requests.length == 0) {
         return null;
       }
-      List<dynamic>reqs = [];
+      List<dynamic> reqs = [];
       for (var item in requests) {
         if (data['userId'] != item['userId']) {
           reqs.add(item);
@@ -211,7 +211,7 @@ class _GigState extends State<Gig> {
                         widget.gig['userName'],
                         style: TextStyle(
                             color: Colors.black,
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: FontWeight.w400,
                             fontFamily: 'Lato'),
                       ),
@@ -231,7 +231,7 @@ class _GigState extends State<Gig> {
                     widget.gig['title'],
                     style: TextStyle(
                         color: Colors.blueGrey[900],
-                        fontSize: 17,
+                        fontSize: 12,
                         fontWeight: FontWeight.w600,
                         fontFamily: 'Lato'),
                   ),
