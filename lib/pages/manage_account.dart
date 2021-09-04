@@ -1,4 +1,5 @@
 import 'package:fiverr_clone/pages/main_tabs.dart';
+import 'package:fiverr_clone/pages/user_details.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -63,11 +64,9 @@ class _ManageAccountState extends State<ManageAccount> {
           children: <Widget>[
             Container(
               color: Colors.blueGrey[600],
-              height: 200.0,
               width: MediaQuery.of(context).size.width,
               child: Padding(
-                padding: const EdgeInsets.only(
-                    left: 20.0, right: 20.0, bottom: 40.0),
+                padding: const EdgeInsets.all(25.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,6 +180,28 @@ class _ManageAccountState extends State<ManageAccount> {
                         ),
                         title: Text(
                           "My Orders",
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => UserDetails(true))
+                        );
+                      },
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.edit,
+                          size: 25,
+                          color: Colors.blueGrey[300],
+                        ),
+                        title: Text(
+                          "Edit profile",
                           style: TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,

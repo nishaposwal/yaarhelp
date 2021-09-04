@@ -173,25 +173,6 @@ class _AboutPageState extends State<AboutPage> {
                 style: TextStyle(color: Colors.grey[900]),
               ),
             ),
-            Divider(),
-            widget.uid == userId ? Container(
-              width: 50,
-              margin: EdgeInsets.only(bottom: 0),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => UserDetails()),
-                    (Route<dynamic> route) => false,
-                  );
-                },
-                child: Text('Edit Profile'),
-                style: ElevatedButton.styleFrom(
-                  primary: Theme.of(context).accentColor,
-                  onSurface: Colors.blue,
-                ),
-              ),
-            ) : SizedBox(height: 0,)
           ],
         );
       },

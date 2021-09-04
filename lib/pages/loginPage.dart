@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                 if (value.data() == null)
                   {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => UserDetails()))
+                        MaterialPageRoute(builder: (context) => UserDetails(false)))
                   }
                 else
                   {
