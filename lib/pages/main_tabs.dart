@@ -77,7 +77,7 @@ class _MainTabsState extends State<MainTabs>
         !_profileCompleted &&
         (_selectedIndexForBottomNavigationBar == 2 ||
             _selectedIndexForBottomNavigationBar == 4)) {
-      return UserDetails();
+      return UserDetails(false);
     }
     return Scaffold(
       body: _listOfPagesForBottomNavigationBar[

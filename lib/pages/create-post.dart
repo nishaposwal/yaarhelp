@@ -1,6 +1,6 @@
+import 'package:fiverr_clone/pages/profile/profile.dart';
 import 'package:intl/intl.dart';
 import 'package:fiverr_clone/pages/dropDown.dart';
-import 'package:fiverr_clone/pages/main_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -154,7 +154,7 @@ class _CreatePostState extends State<CreatePost> {
       'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
     };
     try {
-      _razorpay.open(options);
+      await _razorpay.open(options);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -169,7 +169,7 @@ class _CreatePostState extends State<CreatePost> {
           backgroundColor: Colors.green);
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => MainTabs()),
+        MaterialPageRoute(builder: (context) => ProfilePage(uid: FirebaseAuth.instance.currentUser.uid, )),
         (Route<dynamic> route) => false,
       );
     } catch (e) {
@@ -330,6 +330,7 @@ class _CreatePostState extends State<CreatePost> {
   Future<DocumentReference> addGig() {
     if (FirebaseAuth.instance.currentUser == null) {
       print('not logged in');
+      return null;
     } else {
       print('logged in');
     }
@@ -366,7 +367,6 @@ class _CreatePostState extends State<CreatePost> {
         timerequiredController.text != null) {
       return true;
     }
-    showdialogBox('Please fill all the fields before checkout', true);
     return false;
   }
 
@@ -397,13 +397,10 @@ class _CreatePostState extends State<CreatePost> {
       margin: EdgeInsets.symmetric(vertical: 10),
       child: ElevatedButton(
         onPressed: () async {
-          setState(() {
-            isPostPressed = true;
-          });
-          if (isPostPressed && validate()) {
+          if (validate()) {
             try {
-              // await openCheckout(budgetController.text + "00");
-              await addGig();
+              await openCheckout(budgetController.text + "00");
+              // await addGig();
             } catch (e) {
               print(e);
             } finally {
@@ -411,6 +408,8 @@ class _CreatePostState extends State<CreatePost> {
                 loading = false;
               });
             }
+          } else {
+            showdialogBox('Please fill all fields before checkout', true);
           }
         },
         style: ElevatedButton.styleFrom(

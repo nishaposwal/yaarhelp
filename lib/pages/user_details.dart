@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:fiverr_clone/pages/explore.dart';
+import 'package:fiverr_clone/pages/loginPage.dart';
 import 'package:fiverr_clone/pages/multiselect.dart';
 import 'package:path/path.dart';
 import 'package:flutter/material.dart';
@@ -8,16 +8,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:fiverr_clone/pages/main_tabs.dart';
 import 'package:intl/intl.dart';
 
 File imageFile;
 String imageUrl;
-final uid = FirebaseAuth.instance.currentUser.uid;
 bool loading = false;
+String oldImageUrl;
 
 class UserDetails extends StatefulWidget {
-  // const CreatePost({ Key? key }) : super(key: key);
+  final bool edit;
+  UserDetails(this.edit);
   @override
   _UserDetailsState createState() => _UserDetailsState();
 }
@@ -26,13 +26,26 @@ Widget top(BuildContext context) {
   return Container(
     width: double.infinity,
     padding: EdgeInsets.all(12),
-    child: Text(
-      'Enter your details',
-      textAlign: TextAlign.center,
-      style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Theme.of(context).accentColor,
-          fontSize: 24),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        InkWell(
+          child: Icon(Icons.arrow_back_outlined),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        Expanded(
+          child: Text(
+            'Enter your details',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).accentColor,
+                fontSize: 24),
+          ),
+        ),
+      ],
     ),
   );
 }
@@ -48,13 +61,18 @@ class _UserDetailsState extends State<UserDetails> {
   List<Map<String, dynamic>> selectedOfflineCats = [];
 
   void initState() {
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser.uid)
-        .get()
-        .then((value) {
-      print(selectedOfflineCats);
-      if (value.data() != null) {
+    imageFile = null;
+    imageUrl = null;
+    oldImageUrl = null;
+    if (FirebaseAuth.instance.currentUser != null) {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser.uid)
+          .get()
+          .then((value) {
+        if (value.data() == null) {
+          return;
+        }
         nameController.text = value.data()['displayName'];
         addressController.text = value.data()['address'];
         descriptionController.text = value.data()['description'];
@@ -62,13 +80,10 @@ class _UserDetailsState extends State<UserDetails> {
         phoneNumberController.text = value.data()['phoneNumber'];
         skillsController.text = value.data()['skills'];
         setState(() {
-          selectedOfflineCats = fun(value.data()['offlineHelp']);
-          selectedOnlineCats = fun(value.data()['onlineHelp']);
-          print(selectedOfflineCats);
-          print(selectedOnlineCats);
+          oldImageUrl = value.data()['imageUrl'];
         });
-      }
-    });
+      });
+    }
     super.initState();
   }
 
@@ -109,7 +124,7 @@ class _UserDetailsState extends State<UserDetails> {
             style: TextStyle(
                 color: Colors.blueGrey[900],
                 fontSize: 18,
-                fontWeight: FontWeight.w500),
+                fontWeight: FontWeight.w600),
           ),
           SizedBox(
             height: 10,
@@ -128,8 +143,8 @@ class _UserDetailsState extends State<UserDetails> {
             child: TextField(
               controller: controller,
               decoration: new InputDecoration(
-                labelText: hint,
-                labelStyle: TextStyle(color: Colors.grey[400]),
+                hintText: hint,
+                hintStyle: TextStyle(color: Colors.grey[400]),
               ),
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -156,7 +171,7 @@ class _UserDetailsState extends State<UserDetails> {
             style: TextStyle(
                 color: Colors.blueGrey[900],
                 fontSize: 18,
-                fontWeight: FontWeight.w500),
+                fontWeight: FontWeight.w600),
           ),
           SizedBox(
             height: 10,
@@ -186,29 +201,70 @@ class _UserDetailsState extends State<UserDetails> {
     );
   }
 
-  Future<dynamic> addDetails() {
+  bool validateControllers() {
+    return (nameController.text != null &&
+        phoneNumberController.text != null &&
+        descriptionController.text != null &&
+        addressController.text != null &&
+        skillsController.text != null &&
+        languagesController.text != null &&
+        nameController.text != "" &&
+        phoneNumberController.text != "" &&
+        descriptionController.text != "" &&
+        addressController.text != "" &&
+        skillsController.text != "" &&
+        languagesController.text != "");
+  }
+
+  Future<dynamic> addDetails(BuildContext context, bool editing) async {
     if (FirebaseAuth.instance.currentUser == null) {
-      throw Exception("User not logged in");
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => LoginPage()));
+      return null;
     }
 
+    if (!validateControllers()) {
+      showdialogBox("Please fill all the fields", true, context);
+      return null;
+    }
+
+    await addImageToFirebase(context);
+
+    if (imageUrl == null) {
+      imageUrl = oldImageUrl;
+    }
     final uid = FirebaseAuth.instance.currentUser.uid;
     CollectionReference users = FirebaseFirestore.instance.collection('users');
 
     final now = new DateTime.now();
     String formatter = DateFormat.yMMMM('en_US').format(now);
-    return users.doc(uid).set({
-      'displayName': nameController.text,
-      'phoneNumber': phoneNumberController.text,
-      'imageUrl': imageUrl,
-      'skills': skillsController.text,
-      'languages': languagesController.text,
-      'description': descriptionController.text,
-      'address': addressController.text,
-      'joiningDate': formatter,
-      'userId': uid,
-      'onlineHelp': selectedOnlineCats,
-      'offlineHelp': selectedOfflineCats
-    });
+    editing == true
+        ? await users.doc(uid).update({
+            'displayName': nameController.text,
+            'phoneNumber': phoneNumberController.text,
+            'imageUrl': imageUrl,
+            'skills': skillsController.text,
+            'languages': languagesController.text,
+            'description': descriptionController.text,
+            'address': addressController.text,
+            'onlineHelp': selectedOnlineCats,
+            'offlineHelp': selectedOfflineCats
+          })
+        : await users.doc(uid).set({
+            'displayName': nameController.text,
+            'phoneNumber': phoneNumberController.text,
+            'imageUrl': imageUrl,
+            'skills': skillsController.text,
+            'languages': languagesController.text,
+            'description': descriptionController.text,
+            'address': addressController.text,
+            'joiningDate': formatter,
+            'userId': uid,
+            'onlineHelp': selectedOnlineCats,
+            'offlineHelp': selectedOfflineCats
+          });
+    Navigator.pop(context);
+    return null;
   }
 
   Widget chooseFile(BuildContext context) {
@@ -226,7 +282,7 @@ class _UserDetailsState extends State<UserDetails> {
             style: TextStyle(
                 color: Colors.blueGrey[900],
                 fontSize: 18,
-                fontWeight: FontWeight.w500),
+                fontWeight: FontWeight.w600),
           ),
           SizedBox(
             height: 10,
@@ -235,13 +291,12 @@ class _UserDetailsState extends State<UserDetails> {
             onPressed: () {
               _openGallery(context);
             },
-            child: Text(
-                imageFile == null ? "Select Image" : basename(imageFile.path)),
+            child: Text(imageFile == null
+                ? (widget.edit == true ? "Update Image" : "Select Image")
+                : (basename(imageFile.path))),
             style: ElevatedButton.styleFrom(
-              shadowColor: Theme.of(context).accentColor,
-              textStyle: TextStyle(color: Colors.black, fontSize: 12),
-              onSurface: Colors.blue,
-            ),
+                textStyle: TextStyle(fontSize: 15),
+                primary: Theme.of(context).accentColor),
           )
         ],
       ),
@@ -258,18 +313,44 @@ class _UserDetailsState extends State<UserDetails> {
     });
   }
 
-  Future<dynamic> addImageToFirebase() async {
+  Future<dynamic> addImageToFirebase(BuildContext context) async {
+    if (imageFile == null) return;
+    if (FirebaseAuth.instance.currentUser == null) return;
     String fileName = basename(imageFile.path);
     Reference ref = FirebaseStorage.instance.ref().child(
         "Profile_Pics/${FirebaseAuth.instance.currentUser.uid}/$fileName");
     UploadTask uploadTask = ref.putFile(imageFile);
     var url = await (await uploadTask).ref.getDownloadURL();
+    url = url.toString();
     setState(() {
-      imageUrl = url.toString();
+      imageUrl = url;
     });
+    return FirebaseAuth.instance.currentUser.updatePhotoURL(url);
   }
 
-  Widget submit(BuildContext context) {
+  void showdialogBox(String subTitle, bool isError, BuildContext context) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        contentPadding: EdgeInsets.all(20),
+        content: Text(
+          subTitle,
+          style: isError
+              ? TextStyle(color: Colors.red)
+              : TextStyle(color: Colors.green),
+        ),
+        actionsPadding: EdgeInsets.all(5),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget submit(BuildContext context, edit) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 20),
       child: ElevatedButton(
@@ -278,22 +359,13 @@ class _UserDetailsState extends State<UserDetails> {
             loading = true;
           });
           try {
-            await addImageToFirebase();
-            await FirebaseAuth.instance.currentUser.updatePhotoURL(imageUrl);
-            await FirebaseAuth.instance.currentUser
-                .updateDisplayName(nameController.text);
-            await addDetails();
+            await addDetails(context, edit);
           } catch (e) {
             print(e);
           } finally {
             setState(() {
               loading = false;
             });
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => MainTabs()),
-              (Route<dynamic> route) => false,
-            );
           }
         },
         style: ElevatedButton.styleFrom(
@@ -302,7 +374,9 @@ class _UserDetailsState extends State<UserDetails> {
         ),
         child: loading == true
             ? CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white))
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                strokeWidth: 2,
+              )
             : Text(
                 'Submit',
                 style: TextStyle(
@@ -344,7 +418,7 @@ class _UserDetailsState extends State<UserDetails> {
     return Material(
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(10),
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
@@ -389,7 +463,7 @@ class _UserDetailsState extends State<UserDetails> {
                     },
                   ),
                 ),
-                submit(context),
+                submit(context, widget.edit),
               ],
             ),
           ),

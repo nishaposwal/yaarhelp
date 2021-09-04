@@ -64,7 +64,7 @@ class _SignUpPageState extends State<SignUpPage> {
         if (value.data() == null)
           {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => UserDetails()))
+                MaterialPageRoute(builder: (context) => UserDetails(false)))
           }
         else
           {

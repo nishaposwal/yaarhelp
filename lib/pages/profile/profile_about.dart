@@ -19,6 +19,30 @@ class _AboutPageState extends State<AboutPage> {
     super.initState();
   }
 
+  Widget showcategories(list, heading) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            heading,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(
+              list.length,
+              (index) => Text(list[index]['name']),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var currentUser = FirebaseAuth.instance.currentUser;
@@ -38,7 +62,11 @@ class _AboutPageState extends State<AboutPage> {
         }
         if (snapshot.data.docs.length == 0) {
           return Center(
-            child: Text('Profile unavailable',style: TextStyle(color: Theme.of(context).accentColor, fontSize: 16),),
+            child: Text(
+              'Profile unavailable',
+              style:
+                  TextStyle(color: Theme.of(context).accentColor, fontSize: 16),
+            ),
           );
         }
         var imageUrl = snapshot.data.docs.first.get('imageUrl');
@@ -49,6 +77,8 @@ class _AboutPageState extends State<AboutPage> {
         var phoneNumber = snapshot.data.docs.first.get('phoneNumber');
         var skills = snapshot.data.docs.first.get('skills');
         var joiningDate = snapshot.data.docs.first.get('joiningDate');
+        var onlineHelp = snapshot.data.docs.first.get('onlineHelp');
+        var offlineHelp = snapshot.data.docs.first.get('offlineHelp');
         return ListView(
           children: <Widget>[
             Padding(
@@ -173,25 +203,15 @@ class _AboutPageState extends State<AboutPage> {
                 style: TextStyle(color: Colors.grey[900]),
               ),
             ),
-            Divider(),
-            widget.uid == userId ? Container(
-              width: 50,
-              margin: EdgeInsets.only(bottom: 0),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => UserDetails()),
-                    (Route<dynamic> route) => false,
-                  );
-                },
-                child: Text('Edit Profile'),
-                style: ElevatedButton.styleFrom(
-                  primary: Theme.of(context).accentColor,
-                  onSurface: Colors.blue,
-                ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Text(
+                'Categories',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
-            ) : SizedBox(height: 0,)
+            ),
+            showcategories(onlineHelp, 'Online Help'),
+            showcategories(offlineHelp, 'Offline Help'),
           ],
         );
       },
