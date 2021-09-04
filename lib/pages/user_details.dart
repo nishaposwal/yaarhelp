@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:fiverr_clone/pages/explore.dart';
 import 'package:fiverr_clone/pages/multiselect.dart';
 import 'package:path/path.dart';
 import 'package:flutter/material.dart';
@@ -43,24 +44,41 @@ class _UserDetailsState extends State<UserDetails> {
   final addressController = new TextEditingController();
   final skillsController = new TextEditingController();
   final languagesController = new TextEditingController();
+  List<Map<String, dynamic>> selectedOnlineCats = [];
+  List<Map<String, dynamic>> selectedOfflineCats = [];
 
   void initState() {
     FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser.uid)
         .get()
-        .then((value) => {
-              if (value.data() != null)
-                {
-                  nameController.text = value.data()['displayName'],
-                  addressController.text = value.data()['address'],
-                  descriptionController.text = value.data()['description'],
-                  languagesController.text = value.data()['languages'],
-                  phoneNumberController.text = value.data()['phoneNumber'],
-                  skillsController.text = value.data()['skills'],
-                }
-            });
+        .then((value) {
+      print(selectedOfflineCats);
+      if (value.data() != null) {
+        nameController.text = value.data()['displayName'];
+        addressController.text = value.data()['address'];
+        descriptionController.text = value.data()['description'];
+        languagesController.text = value.data()['languages'];
+        phoneNumberController.text = value.data()['phoneNumber'];
+        skillsController.text = value.data()['skills'];
+        setState(() {
+          selectedOfflineCats = fun(value.data()['offlineHelp']);
+          selectedOnlineCats = fun(value.data()['onlineHelp']);
+          print(selectedOfflineCats);
+          print(selectedOnlineCats);
+        });
+      }
+    });
     super.initState();
+  }
+
+  List<Map<String, dynamic>> fun(List<dynamic> list) {
+    List<Map<String, dynamic>> res = [];
+    list.forEach((element) {
+      res.add({'name': element['name']});
+    });
+
+    return res;
   }
 
   void dispose() {
@@ -188,19 +206,9 @@ class _UserDetailsState extends State<UserDetails> {
       'address': addressController.text,
       'joiningDate': formatter,
       'userId': uid,
-      'onlineHelp': findSelectedCategories(onlineCategories),
-      'offlineHelp': findSelectedCategories(offlineCategories)
+      'onlineHelp': selectedOnlineCats,
+      'offlineHelp': selectedOfflineCats
     });
-  }
-
-  List<String> findSelectedCategories(List<Map<String, dynamic>> list) {
-    List<String> result = [];
-    list.forEach((element) {
-      if (element['selected']) {
-        result.add(element['name']);
-      }
-    });
-    return result;
   }
 
   Widget chooseFile(BuildContext context) {
@@ -307,28 +315,28 @@ class _UserDetailsState extends State<UserDetails> {
   }
 
   List<Map<String, dynamic>> onlineCategories = [
-    {'name': 'assignment help', 'selected': false},
-    {'name': 'art & design help', 'selected': false},
-    {'name': 'presentations help', 'selected': false},
-    {'name': 'Social media help', 'selected': false},
-    {'name': 'programming help', 'selected': false},
-    {'name': 'Question solving help', 'selected': false},
-    {'name': ' writing help', 'selected': false},
-    {'name': 'tech  help', 'selected': false},
-    {'name': 'content research help', 'selected': false},
-    {'name': 'other help', 'selected': false}
+    {'name': "Assignment Help"},
+    {'name': "Social Media Help"},
+    {'name': "Art & Design Help"},
+    {'name': 'Presentations Help'},
+    {'name': 'Programming Help'},
+    {'name': 'Question solving Help'},
+    {'name': 'Writing Help'},
+    {'name': 'Tech Help'},
+    {'name': 'Content research Help'},
+    {'name': 'Other Help'},
   ];
   List<Map<String, dynamic>> offlineCategories = [
-    {'name': 'personal assistant help', 'selected': false},
-    {'name': 'organize/decor help', 'selected': false},
-    {'name': 'Health/Therapy help', 'selected': false},
-    {'name': 'technical help', 'selected': false},
-    {'name': 'drop-ship/moving help', 'selected': false},
-    {'name': 'baby/pet care  help', 'selected': false},
-    {'name': 'cafe/hotel', 'selected': false},
-    {'name': 'house help', 'selected': false},
-    {'name': 'repairing help', 'selected': false},
-    {'name': 'other help', 'selected': false}
+    {'name': 'Personal Assistant Help'},
+    {'name': 'Organize/Decor Help'},
+    {'name': 'Health/Therapy Help'},
+    {'name': 'Technical Help'},
+    {'name': 'Drop-ship/Moving Help'},
+    {'name': 'Baby/Pet Care Help'},
+    {'name': 'Cafe/Hotel'},
+    {'name': 'Repairing Help'},
+    {'name': 'House Help'},
+    {'name': 'Other Help'}
   ];
 
   @override
@@ -360,6 +368,12 @@ class _UserDetailsState extends State<UserDetails> {
                   child: MultuSelect(
                     heading: 'Select Interest in Online Help',
                     list: onlineCategories,
+                    selectedValuse: selectedOnlineCats,
+                    fn: (value) {
+                      setState(() {
+                        selectedOnlineCats = value;
+                      });
+                    },
                   ),
                 ),
                 Padding(
@@ -367,6 +381,12 @@ class _UserDetailsState extends State<UserDetails> {
                   child: MultuSelect(
                     heading: 'Select Interest in Offline Help',
                     list: offlineCategories,
+                    selectedValuse: selectedOfflineCats,
+                    fn: (value) {
+                      setState(() {
+                        selectedOfflineCats = value;
+                      });
+                    },
                   ),
                 ),
                 submit(context),
