@@ -367,7 +367,6 @@ class _CreatePostState extends State<CreatePost> {
         timerequiredController.text != null) {
       return true;
     }
-    showdialogBox('Please fill all the fields before checkout', true);
     return false;
   }
 
@@ -398,10 +397,7 @@ class _CreatePostState extends State<CreatePost> {
       margin: EdgeInsets.symmetric(vertical: 10),
       child: ElevatedButton(
         onPressed: () async {
-          setState(() {
-            isPostPressed = true;
-          });
-          if (isPostPressed && validate()) {
+          if (validate()) {
             try {
               await openCheckout(budgetController.text + "00");
               // await addGig();
@@ -412,6 +408,8 @@ class _CreatePostState extends State<CreatePost> {
                 loading = false;
               });
             }
+          } else {
+            showdialogBox('Please fill all fields before checkout', true);
           }
         },
         style: ElevatedButton.styleFrom(

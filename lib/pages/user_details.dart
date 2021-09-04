@@ -26,13 +26,26 @@ Widget top(BuildContext context) {
   return Container(
     width: double.infinity,
     padding: EdgeInsets.all(12),
-    child: Text(
-      'Enter your details',
-      textAlign: TextAlign.center,
-      style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Theme.of(context).accentColor,
-          fontSize: 24),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        InkWell(
+          child: Icon(Icons.arrow_back_outlined),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        Expanded(
+          child: Text(
+            'Enter your details',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).accentColor,
+                fontSize: 24),
+          ),
+        ),
+      ],
     ),
   );
 }
@@ -425,7 +438,7 @@ class _UserDetailsState extends State<UserDetails> {
     return Material(
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(10),
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
