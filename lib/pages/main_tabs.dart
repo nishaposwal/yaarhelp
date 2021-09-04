@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fiverr_clone/pages/create-post.dart';
+import 'package:fiverr_clone/pages/user_details.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fiverr_clone/pages/home.dart';
@@ -19,9 +21,22 @@ class _MainTabsState extends State<MainTabs>
     with SingleTickerProviderStateMixin {
   TabController controller;
   int _selectedIndexForBottomNavigationBar;
+  bool _profileCompleted = false;
 
   @override
   void initState() {
+    if (FirebaseAuth.instance.currentUser != null) {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser.uid)
+          .get()
+          .then((value) => {
+                if (value.data() != null)
+                  {
+                    _profileCompleted = true,
+                  }
+              });
+    }
     super.initState();
     _selectedIndexForBottomNavigationBar =
         widget.selectedIndex != null ? widget.selectedIndex : 0;
@@ -58,6 +73,11 @@ class _MainTabsState extends State<MainTabs>
         (_selectedIndexForBottomNavigationBar == 2 ||
             _selectedIndexForBottomNavigationBar == 4)) {
       return LoginPage();
+    } else if (currentUser != null &&
+        !_profileCompleted &&
+        (_selectedIndexForBottomNavigationBar == 2 ||
+            _selectedIndexForBottomNavigationBar == 4)) {
+      return UserDetails();
     }
     return Scaffold(
       body: _listOfPagesForBottomNavigationBar[

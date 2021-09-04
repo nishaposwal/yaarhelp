@@ -19,8 +19,7 @@ class _OrdersState extends State<Orders> {
             .collection('gigs')
             .where('userId', isEqualTo: widget.uid)
             .snapshots(),
-        builder: (BuildContext context,
-            AsyncSnapshot<QuerySnapshot> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return Text('Something went wrong');
           }
@@ -37,7 +36,11 @@ class _OrdersState extends State<Orders> {
           }
           if (snapshot.data.docs.length == 0) {
             return Center(
-              child: Text('No orders',style: TextStyle(color: Theme.of(context).accentColor, fontSize: 16),),
+              child: Text(
+                'No orders',
+                style: TextStyle(
+                    color: Theme.of(context).accentColor, fontSize: 16),
+              ),
             );
           }
           return SingleChildScrollView(

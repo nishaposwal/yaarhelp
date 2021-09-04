@@ -87,16 +87,28 @@ class _CreatePostState extends State<CreatePost> {
   ];
   Map<String, List<String>> subCategoryList = {
     'Online Help': [
-      'Assignment Help',
-      'Social Help',
-      'Art & Design Help',
-      'Questions Help'
+      "Assignment Help",
+      "Social Media Help",
+      "Art & Design Help",
+      'presentations help',
+      'programming help',
+      'Question solving help',
+      'writing help',
+      'tech help',
+      'content research help',
+      'other help',
     ],
     'Offline Help': [
-      "General Help",
-      "Technical Help",
-      "Organise/Decor Help",
-      "Interior Help"
+      'personal assistant help',
+      'organize/decor help',
+      'Health/Therapy help',
+      'technical help',
+      'drop-ship/moving help',
+      'baby/pet care  help',
+      'cafe/hotel',
+      'repairing help',
+      'house help',
+      'other help'
     ],
     'Learn English': [],
     'Volunteering': [
@@ -142,7 +154,7 @@ class _CreatePostState extends State<CreatePost> {
       'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
     };
     try {
-       _razorpay.open(options);
+      _razorpay.open(options);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -152,11 +164,13 @@ class _CreatePostState extends State<CreatePost> {
     try {
       await addGig();
       Fluttertoast.showToast(
-          msg: "Help Posted Successfully!", toastLength: Toast.LENGTH_LONG, backgroundColor: Colors.green);
+          msg: "Help Posted Successfully!",
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.green);
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => MainTabs()),
-            (Route<dynamic> route) => false,
+        (Route<dynamic> route) => false,
       );
     } catch (e) {
       showdialogBox(e, true);
@@ -425,8 +439,7 @@ class _CreatePostState extends State<CreatePost> {
             children: [
               top(context),
               categories(),
-              stringInput(
-                  titleController, 'Add Title', 'Title'),
+              stringInput(titleController, 'Add Title', 'Title'),
               stringInput(
                   descriptionController, 'Add Description', 'Description'),
               inputNumber(

@@ -30,16 +30,28 @@ class _ExplorePageState extends State<ExplorePage>
         "Assignment Help",
         "Social Media Help",
         "Art & Design Help",
-        "Questions Help"
+        'presentations help',
+        'programming help',
+        'Question solving help',
+        'writing help',
+        'tech help',
+        'content research help',
+        'other help',
       ]
     },
     {
       "name": "Offline Help",
       "domains": [
-        "General Help",
-        "Technical Help",
-        "Organise/Decor Help",
-        "Interior Help"
+        'personal assistant help',
+        'organize/decor help',
+        'Health/Therapy help',
+        'technical help',
+        'drop-ship/moving help',
+        'baby/pet care  help',
+        'cafe/hotel',
+        'repairing help',
+        'house help',
+        'other help'
       ]
     },
     {"name": "Learn English", "domains": []},
@@ -51,25 +63,6 @@ class _ExplorePageState extends State<ExplorePage>
         'Feed poor',
         'Educate girls'
       ]
-    },
-  ];
-  var helpers = [
-    {
-      "username": "Mohan Malviya",
-      "online": true,
-      "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2L-Zfe-iYizglLDH55UD3wXBJre7V98QwKfsBCfR_8YfvXPnN&s",
-      "gigTitle": "Interior designer, modular kitchen expert",
-      "date": "02 Dec 2019",
-      "price": "₹25"
-    },
-    {
-      "username": "source",
-      "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2L-Zfe-iYizglLDH55UD3wXBJre7V98QwKfsBCfR_8YfvXPnN&s",
-      "gigTitle": "Web Application Designer, Experienced Graphic Designer",
-      "date": "15 Dec 2019",
-      "price": "₹5"
     },
   ];
 
@@ -99,6 +92,8 @@ class _ExplorePageState extends State<ExplorePage>
       onTap: () {
         setState(() {
           currentMode = i;
+          currentCat = modes[currentMode]['domains'];
+          currentCat = currentCat[0];
         });
       },
       child: Column(
@@ -144,6 +139,8 @@ class _ExplorePageState extends State<ExplorePage>
             ? SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: List.generate(
                     list.length,
                     (index) => subCategoryTab(list[index]),
@@ -178,7 +175,7 @@ class _ExplorePageState extends State<ExplorePage>
         });
       },
       child: Container(
-        height: 100,
+        // height: 100,
         width: 75,
         margin: EdgeInsets.all(14),
         child: Column(
@@ -195,6 +192,10 @@ class _ExplorePageState extends State<ExplorePage>
             Text(
               item,
               textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: currentCat == item
+                      ? Theme.of(context).accentColor
+                      : Colors.black),
             )
           ],
         ),
@@ -224,17 +225,9 @@ class _ExplorePageState extends State<ExplorePage>
     );
   }
 
-  Widget tabs() {
-    return TabBarView(
-      controller: _tabController,
-      children: <Widget>[gigList(context), helperList()],
-    );
-  }
-
   Widget gigList(BuildContext context) {
     return Container(
-      child:
-      StreamBuilder<QuerySnapshot>(
+      child: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('gigs').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
@@ -266,10 +259,35 @@ class _ExplorePageState extends State<ExplorePage>
     );
   }
 
-  Widget helperList() {
-    return Column(
-      children:
-          List.generate(helpers.length, (i) => HelperCard(helper: helpers[i])),
+  Widget helperList(BuildContext context) {
+    return Container(
+      child: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('users').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Container(
+              padding: EdgeInsets.all(100),
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: Theme.of(context).accentColor,
+                ),
+              ),
+            );
+          }
+          return Column(
+            children: [
+              for (DocumentSnapshot doc in snapshot.data.docs)
+                HelperCard(
+                  helper: doc.data() as Map<String, dynamic>,
+                )
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -288,7 +306,7 @@ class _ExplorePageState extends State<ExplorePage>
             ),
             subcategories(),
             tabBar(),
-            selected == 0 ? gigList(context) : helperList()
+            selected == 0 ? gigList(context) : helperList(context)
           ],
         ),
       ),
