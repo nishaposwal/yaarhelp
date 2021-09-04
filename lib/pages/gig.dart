@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fiverr_clone/pages/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'post.dart';
@@ -88,6 +89,18 @@ Future<void> accept(data, id) {
       .update({'helper': data['userId']});
 }
 
+void viewHelper(BuildContext context, helperUid) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => ProfilePage(
+        uid: helperUid,
+        index: 0,
+      ),
+    ),
+  );
+}
+
 Widget actions(BuildContext context, data, id, source, widget) {
   var currentUser = FirebaseAuth.instance.currentUser;
   bool applied = false;
@@ -106,22 +119,31 @@ Widget actions(BuildContext context, data, id, source, widget) {
 
   var disableApply = (source == "explore" && applied);
 
+  var helperAssigned = (source == "explore" && data['helper'] != null);
+
   return Row(
     children: [
       OutlinedButton(
         style: OutlinedButton.styleFrom(
-          backgroundColor:
-              disableApply ? Colors.grey[400] : Theme.of(context).accentColor,
+          backgroundColor: disableApply && !helperAssigned
+              ? Colors.grey[400]
+              : Theme.of(context).accentColor,
         ),
-        onPressed: disableApply
+        onPressed: disableApply && !helperAssigned
             ? null
             : () async => {
                   (source == 'explore')
-                      ? await widget.apply(data, id)
+                      ? (helperAssigned
+                          ? viewHelper(context, data['helper'])
+                          : await widget.apply(data, id))
                       : await accept(data, id)
                 },
         child: Text(
-          (source == "explore") ? (applied ? 'Applied' : 'Apply') : ('Accept'),
+          (source == "explore")
+              ? helperAssigned
+                  ? ('View Helper')
+                  : (applied ? 'Applied' : 'Apply')
+              : ('Accept'),
           style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -182,7 +204,7 @@ class _GigState extends State<Gig> {
   @override
   Widget build(BuildContext context) {
     double cWidth = MediaQuery.of(context).size.width * 0.8;
-    if (widget.subsource == "home" && widget.gig['title'].length >= 35) {
+    if (widget.subsource == "home" && widget.gig['title'].length >= 30) {
       widget.gig['title'] = widget.gig['title'].substring(0, 30) + '...';
     }
     return Card(

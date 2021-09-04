@@ -40,15 +40,18 @@ class _OrdersState extends State<Orders> {
               child: Text('No orders',style: TextStyle(color: Theme.of(context).accentColor, fontSize: 16),),
             );
           }
-          return Column(
-            children: [
-              for (DocumentSnapshot doc in snapshot.data.docs)
-                Gig(
-                  gig: doc.data() as Map<String, dynamic>,
-                  id: doc.reference.id,
-                  source: 'explore',
-                )
-            ],
+          return SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              children: [
+                for (DocumentSnapshot doc in snapshot.data.docs)
+                  Gig(
+                    gig: doc.data() as Map<String, dynamic>,
+                    id: doc.reference.id,
+                    source: 'explore',
+                  )
+              ],
+            ),
           );
         },
       ),
