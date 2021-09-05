@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fiverr_clone/pages/loginPage.dart';
+import 'package:yaarhelp/pages/loginPage.dart';
 import 'package:flutter/material.dart';
-import 'package:fiverr_clone/pages/profile/profile_about.dart';
+import 'package:yaarhelp/pages/profile/profile_about.dart';
 import 'profile_orders.dart';
 
 class ProfilePage extends StatefulWidget {

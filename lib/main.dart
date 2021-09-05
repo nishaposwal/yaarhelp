@@ -1,19 +1,19 @@
-import 'package:fiverr_clone/pages/main_tabs.dart';
+import 'package:yaarhelp/pages/main_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(FiverrClone());
+  runApp(Yaarhelp());
 }
 
-class FiverrClone extends StatefulWidget {
+class Yaarhelp extends StatefulWidget {
   @override
-  _FiverrCloneState createState() => _FiverrCloneState();
+  _YaarhelpState createState() => _YaarhelpState();
 }
 
-class _FiverrCloneState extends State<FiverrClone> {
+class _YaarhelpState extends State<Yaarhelp> {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   @override
   Widget build(BuildContext context) {

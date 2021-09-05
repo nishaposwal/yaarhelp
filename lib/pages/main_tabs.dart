@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fiverr_clone/pages/create-post.dart';
-import 'package:fiverr_clone/pages/user_details.dart';
+import 'package:yaarhelp/pages/create-post.dart';
+import 'package:yaarhelp/pages/user_details.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fiverr_clone/pages/home.dart';
-import 'package:fiverr_clone/pages/manage_account.dart';
-import 'package:fiverr_clone/pages/explore.dart';
-import 'package:fiverr_clone/pages/notifications.dart';
+import 'package:yaarhelp/pages/home.dart';
+import 'package:yaarhelp/pages/manage_account.dart';
+import 'package:yaarhelp/pages/explore.dart';
+import 'package:yaarhelp/pages/notifications.dart';
 import 'loginPage.dart';
 
 class MainTabs extends StatefulWidget {

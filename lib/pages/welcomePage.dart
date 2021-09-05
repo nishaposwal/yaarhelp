@@ -1,4 +1,4 @@
-import 'package:fiverr_clone/pages/signup.dart';
+import 'package:yaarhelp/pages/signup.dart';
 import 'package:flutter/material.dart';
 
 import 'loginPage.dart';

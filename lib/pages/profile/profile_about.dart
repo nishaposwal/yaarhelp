@@ -36,18 +36,19 @@ class _AboutPageState extends State<AboutPage> {
             children: List.generate(
               list.length,
               (index) => Container(
-                  padding: EdgeInsets.all(8),
-                  margin: EdgeInsets.all(5),
-                  child: Text(
-                    list[index]['name'],
-                    style: TextStyle(color: Colors.white),
+                padding: EdgeInsets.all(8),
+                margin: EdgeInsets.all(5),
+                child: Text(
+                  list[index]['name'],
+                  style: TextStyle(color: Colors.white),
+                ),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).accentColor,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
                   ),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).accentColor,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                  )),
+                ),
+              ),
             ),
           ),
         ],
@@ -69,7 +70,9 @@ class _AboutPageState extends State<AboutPage> {
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (!snapshot.hasData) {
           return Center(
-            child: CircularProgressIndicator(color: Theme.of(context).accentColor,),
+            child: CircularProgressIndicator(
+              color: Theme.of(context).accentColor,
+            ),
           );
         }
         if (snapshot.data.docs.length == 0) {

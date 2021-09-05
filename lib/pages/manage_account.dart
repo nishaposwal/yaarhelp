@@ -1,13 +1,13 @@
-import 'package:fiverr_clone/pages/Support.dart';
-import 'package:fiverr_clone/pages/main_tabs.dart';
-import 'package:fiverr_clone/pages/privacy.dart';
-import 'package:fiverr_clone/pages/tnc.dart';
-import 'package:fiverr_clone/pages/user_details.dart';
+import 'package:yaarhelp/pages/Support.dart';
+import 'package:yaarhelp/pages/main_tabs.dart';
+import 'package:yaarhelp/pages/privacy.dart';
+import 'package:yaarhelp/pages/tnc.dart';
+import 'package:yaarhelp/pages/user_details.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fiverr_clone/pages/profile/profile.dart';
+import 'package:yaarhelp/pages/profile/profile.dart';
 
 class ManageAccount extends StatefulWidget {
   @override
