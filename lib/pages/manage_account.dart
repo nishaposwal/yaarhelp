@@ -1,5 +1,7 @@
+import 'package:fiverr_clone/pages/Support.dart';
 import 'package:fiverr_clone/pages/main_tabs.dart';
 import 'package:fiverr_clone/pages/privacy.dart';
+import 'package:fiverr_clone/pages/tnc.dart';
 import 'package:fiverr_clone/pages/user_details.dart';
 import 'package:flutter/material.dart';
 
@@ -211,11 +213,36 @@ class _ManageAccountState extends State<ManageAccount> {
                     Divider(),
                     title("General"),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Support(),
+                          ),
+                        );
+                      },
                       child: ListTile(
                         leading: Icon(Icons.support, color: Colors.green[400]),
                         title: Text(
                           "Support",
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => TNC()),
+                        );
+                      },
+                      child: ListTile(
+                        leading: Icon(Icons.feed, color: Colors.blue),
+                        title: Text(
+                          "Terms And Conditions",
                           style: TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,
