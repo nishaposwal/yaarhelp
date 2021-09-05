@@ -87,25 +87,37 @@ class _HomePageState extends State<HomePage>
               fontFamily: 'Rowdies', color: Color(0xff7ED8D8), fontSize: 24),
         ),
         actions: <Widget>[
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => HowItWorks(),
-                ),
-              );
-            },
-            child: Column(
-              children: [
-                Container(
-                  width: 70,
-                  height: 30,
-                  decoration:
-                      BoxDecoration(color: Theme.of(context).accentColor),
-                ),
-                Text('How It Works')
-              ],
+          Container(
+            height: double.infinity,
+            // alignment: AlignmentGeometry(),
+            padding: EdgeInsets.only(right: 10),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HowItWorks(),
+                  ),
+                );
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.engineering_rounded,
+                    color: Theme.of(context).accentColor,
+                    size: 30,
+                  ),
+                  Text(
+                    'How It Works',
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(context).accentColor,
+                        fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
             ),
           ),
         ],

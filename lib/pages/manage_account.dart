@@ -1,4 +1,5 @@
 import 'package:fiverr_clone/pages/main_tabs.dart';
+import 'package:fiverr_clone/pages/privacy.dart';
 import 'package:fiverr_clone/pages/user_details.dart';
 import 'package:flutter/material.dart';
 
@@ -15,11 +16,9 @@ final uid = FirebaseAuth.instance.currentUser.uid;
 var data;
 
 class _ManageAccountState extends State<ManageAccount> {
-
   Widget title(String text) {
     return Padding(
-      padding: const EdgeInsets.only(
-          top: 18.0, left: 20.0, bottom: 8.0),
+      padding: const EdgeInsets.only(top: 18.0, left: 20.0, bottom: 8.0),
       child: Text(
         text,
         style: TextStyle(
@@ -191,8 +190,8 @@ class _ManageAccountState extends State<ManageAccount> {
                       onTap: () {
                         Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => UserDetails(true))
-                        );
+                            MaterialPageRoute(
+                                builder: (context) => UserDetails(true)));
                       },
                       child: ListTile(
                         leading: Icon(
@@ -225,7 +224,12 @@ class _ManageAccountState extends State<ManageAccount> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PrivacyPolicy()));
+                      },
                       child: ListTile(
                         leading: Icon(Icons.privacy_tip_outlined,
                             color: Colors.red[400]),
