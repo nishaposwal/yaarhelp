@@ -111,12 +111,11 @@ class _CreatePostState extends State<CreatePost> {
       'House Help',
       'Other Help'
     ],
-    'Learn English': [],
     'Volunteering': [
       'Donate Blood',
       'Clean Your City',
       'Feed poor',
-      'Educate girls'
+      'Educate underprivileged'
     ],
   };
   bool isPostPressed = false;

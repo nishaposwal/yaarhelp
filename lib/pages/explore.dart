@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fiverr_clone/pages/gig.dart';
 import 'package:fiverr_clone/pages/helperCard.dart';
+import 'package:fiverr_clone/pages/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -62,7 +64,7 @@ class _ExplorePageState extends State<ExplorePage>
         'Donate Blood',
         'Clean Your City',
         'Feed poor',
-        'Educate girls'
+        'Educate underprivileged'
       ]
     },
   ];
@@ -94,8 +96,7 @@ class _ExplorePageState extends State<ExplorePage>
         setState(() {
           currentMode = i;
           currentCat = modes[currentMode]['domains'];
-          if (currentCat.length != 0)
-            currentCat = currentCat[0];
+          if (currentCat.length != 0) currentCat = currentCat[0];
         });
       },
       child: Column(
@@ -230,7 +231,12 @@ class _ExplorePageState extends State<ExplorePage>
   Widget gigList(BuildContext context) {
     return Container(
       child: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('gigs').where('subCategory', isEqualTo: currentCat).snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('gigs')
+            .where('category', isEqualTo: modes[currentMode]['name'])
+            .where('subCategory', isEqualTo: currentCat)
+            .orderBy('timeStamp', descending: true)
+            .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return Text('Something went wrong');
@@ -293,6 +299,115 @@ class _ExplorePageState extends State<ExplorePage>
     );
   }
 
+  var englishProgrammes = {
+    "day": [
+      "assets/images/day.png",
+      "assets/images/40.png",
+      "assets/images/50.png",
+      "assets/images/60.png"
+      ],
+    "week": [
+      "assets/images/week.png",
+      "assets/images/240.png",
+      "assets/images/300.png",
+      "assets/images/360.png"
+    ],
+    "month": [
+      "assets/images/month.png",
+      "assets/images/1200.png",
+      "assets/images/1500.png",
+      "assets/images/1800.png"
+    ]
+  };
+
+  String getType(String str) {
+    var types = ["day", "month", "week", "40", "50", "60", "240", "300", "360", "1200", "1500", "1800"];
+    for (var item in types) {
+      if(str.contains(item))
+        return item;
+    }
+    return "";
+  }
+
+  Widget englishProgram() {
+    return Container(
+      child: Column(
+        children: [
+          for (var item in englishProgrammes.values)
+            for (var i = 0; i < item.length; i++)
+              i == 0
+                  ? Container(
+                      padding: EdgeInsets.all(8),
+                      height: 180,
+                      width: double.infinity,
+                      child: Image.asset(
+                        item[0],
+                        fit: BoxFit.fill,
+                      ),
+                    )
+                  : Container(
+                      padding: EdgeInsets.all(8),
+                      height: 300,
+                      width: double.infinity,
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            item[i],
+                            fit: BoxFit.fill,
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 45,
+                            child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  backgroundColor: Theme.of(context).accentColor,
+                                ),
+                                onPressed: () {
+                                  if (FirebaseAuth.instance.currentUser == null) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => LoginPage(),
+                                      ),
+                                    );
+                                  }
+                                  var currentUser = FirebaseAuth.instance.currentUser;
+                                  var uid = currentUser.uid;
+                                  FirebaseFirestore.instance
+                                      .collection('users')
+                                      .doc(uid)
+                                      .get()
+                                      .then((value) {
+                                    if (value.data() != null) {
+                                      var data = value.data();
+                                      FirebaseFirestore.instance.collection("englishLearners").add(
+                                          {
+                                            "userId": currentUser.uid,
+                                            "phoneNumber": data['phoneNumber'],
+                                            "userName": data['displayName'],
+                                            "type": getType(item[0]),
+                                            "subtype": 'rupees ' + getType(item[i])
+                                          }
+                                      );
+                                    }
+                                  });
+                                },
+                                child: Text(
+                                  'R  E  G  I  S  T  E  R',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 22,
+                                      fontFamily: 'Lato'),
+                                )),
+                          )
+                        ],
+                      ),
+                    ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -307,8 +422,16 @@ class _ExplorePageState extends State<ExplorePage>
               height: 5,
             ),
             subcategories(),
-            tabBar(),
-            selected == 0 ? gigList(context) : helperList(context)
+            modes[currentMode]['name'] != "Learn English"
+                ? tabBar()
+                : SizedBox(
+                    height: 0,
+                  ),
+            modes[currentMode]['name'] != "Learn English"
+                ? selected == 0
+                    ? gigList(context)
+                    : helperList(context)
+                : englishProgram()
           ],
         ),
       ),

@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage>
   Map<String, List> subCategories = {
     "Online Help": [
       "Assignment Help",
-      "Spcial Media Help",
+      "Social Media Help",
       "Art & Design Help"
     ],
     "Offline Help": ["General Help", "Technical Help", "Organise/Decor Help"],
