@@ -29,12 +29,22 @@ class _AboutPageState extends State<AboutPage> {
             heading,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Wrap(
             children: List.generate(
               list.length,
-              (idx) => Text(list[idx]['name']),
+              (index) => Container(
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.all(5),
+                  child: Text(
+                    list[index]['name'],
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).accentColor,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5),
+                    ),
+                  )),
             ),
           ),
         ],
@@ -205,7 +215,7 @@ class _AboutPageState extends State<AboutPage> {
             Padding(
               padding: const EdgeInsets.all(10),
               child: Text(
-                'Categories',
+                'Categories Of Interest',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
             ),

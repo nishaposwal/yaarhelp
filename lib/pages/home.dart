@@ -1,3 +1,4 @@
+import 'package:fiverr_clone/pages/how-it-works.dart';
 import 'package:fiverr_clone/pages/main_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:fiverr_clone/pages/profile/profile.dart';
@@ -91,7 +92,7 @@ class _HomePageState extends State<HomePage>
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ProfilePage(),
+                  builder: (context) => HowItWorks(),
                 ),
               );
             },

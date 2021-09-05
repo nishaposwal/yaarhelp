@@ -35,9 +35,10 @@ class _FiverrCloneState extends State<FiverrClone> {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
-                primaryColor: Colors.white,
-                accentColor: Color(0xFF7ED8D8),
-              ),
+                  primaryColor: Colors.white,
+                  accentColor: Color(0xFF7ED8D8),
+                  fontFamily: 'Lato'),
+
               // home: LoginPage(),
               home: MainTabs(),
             );
