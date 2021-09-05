@@ -16,9 +16,6 @@ class _MultuSelectState extends State<MultuSelect> {
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> test = widget.selectedValuse;
-    print(test);
-    print('lol12');
-    print(widget.selectedValuse);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,

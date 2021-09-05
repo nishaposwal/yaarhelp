@@ -235,7 +235,7 @@ class _UserDetailsState extends State<UserDetails> {
     }
     final uid = FirebaseAuth.instance.currentUser.uid;
     CollectionReference users = FirebaseFirestore.instance.collection('users');
-
+    FirebaseAuth.instance.currentUser.updateDisplayName(nameController.text);
     final now = new DateTime.now();
     String formatter = DateFormat.yMMMM('en_US').format(now);
     editing == true

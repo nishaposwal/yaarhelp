@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fiverr_clone/pages/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:fiverr_clone/pages/profile/profile_about.dart';
 import 'profile_orders.dart';
@@ -13,6 +15,9 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
+    if (FirebaseAuth.instance.currentUser == null) {
+      return LoginPage();
+    }
     if (widget.index == null) {
       widget.index = 0;
     }
@@ -37,8 +42,12 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         body: TabBarView(
           children: <Widget>[
-            AboutPage(uid: widget.uid.toString(),),
-            Orders(uid: widget.uid.toString(),)
+            AboutPage(
+              uid: widget.uid.toString(),
+            ),
+            Orders(
+              uid: widget.uid.toString(),
+            )
           ],
         ),
       ),

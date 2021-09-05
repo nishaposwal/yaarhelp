@@ -20,6 +20,7 @@ class _ExplorePageState extends State<ExplorePage>
     _tabController = new TabController(initialIndex: 0, length: 2, vsync: this);
     currentMode = 0;
     currentCat = "Assignment Help";
+    selected = 0;
     super.initState();
   }
 
@@ -93,7 +94,8 @@ class _ExplorePageState extends State<ExplorePage>
         setState(() {
           currentMode = i;
           currentCat = modes[currentMode]['domains'];
-          currentCat = currentCat[0];
+          if (currentCat.length != 0)
+            currentCat = currentCat[0];
         });
       },
       child: Column(
@@ -228,7 +230,7 @@ class _ExplorePageState extends State<ExplorePage>
   Widget gigList(BuildContext context) {
     return Container(
       child: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('gigs').snapshots(),
+        stream: FirebaseFirestore.instance.collection('gigs').where('subCategory', isEqualTo: currentCat).snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return Text('Something went wrong');

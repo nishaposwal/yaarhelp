@@ -1,8 +1,11 @@
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fiverr_clone/pages/loginPage.dart';
 import 'package:fiverr_clone/pages/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'gig.dart';
+import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Post extends StatefulWidget {
   final Map<String, dynamic> data;
@@ -15,6 +18,11 @@ class Post extends StatefulWidget {
 
 bool hasRequested = false;
 bool hasApplied = false;
+
+initState() {
+  hasRequested = false;
+  hasApplied = false;
+}
 
 Widget rowInfo(String title, String value) {
   return Table(
@@ -111,35 +119,82 @@ Widget description(String description) {
   );
 }
 
+Future<void> apply(data, id, BuildContext context) {
+  hasRequested = true;
+  final now = new DateTime.now();
+  String formattedDate = DateFormat.yMMMMd('en_US').format(now);
+
+  var currentUser = FirebaseAuth.instance.currentUser;
+  if (currentUser != null) {
+    var userData = {
+      'userId': currentUser.uid,
+      'userName': currentUser.displayName,
+      'userImageUrl': currentUser.photoURL,
+      'postedOn': formattedDate,
+      'timeStamp': new DateTime.now().microsecondsSinceEpoch,
+    };
+    List<dynamic> requests = data['requests'];
+    if (requests == null) {
+      requests = [];
+    }
+    requests.add(userData);
+
+    return FirebaseFirestore.instance
+        .collection('gigs')
+        .doc(id)
+        .update({'requests': requests}).onError((error, stackTrace) {
+          hasRequested = false;
+      String err = 'Error in applying :: ' + error.toString();
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text(err),
+        ),
+      );
+    });
+  } else {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginPage(),
+      ),
+    );
+  }
+  return null;
+}
+
 Widget button(String text, BuildContext context, bool disable, widget) {
+  hasRequested = false;
   return Padding(
     padding: const EdgeInsets.all(12.0),
     child: OutlinedButton(
-      onPressed: disable ? null : () async {
-        if (text == "Apply") {
-          try {
-            await new Gig().apply(widget.data, widget.id);
-            print(widget);
-            widget.setState(() {
-              hasRequested = true;
-              hasApplied = true;
-            });
-          } catch (e) {
-            print('Error in applying for gig :: ' + widget.id + e);
-          }
-        } else if (text == "View User Profile") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ProfilePage(uid: widget.data['userId'],),
-            ),
-          );
-        }
-      },
+      onPressed: disable
+          ? null
+          : () async {
+              if (text == "Apply") {
+                try {
+                  apply(widget.data, widget.id, context);
+                } catch (e) {
+                  print('Error in applying for gig :: ' + widget.id + e);
+                }
+              } else if (text == "View Employer") {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfilePage(
+                      uid: widget.data['userId'],
+                    ),
+                  ),
+                );
+              }
+            },
       child: Text(
         text,
         style: TextStyle(
-            fontWeight: FontWeight.w700, fontSize: 15, fontFamily: 'Lato', color: Colors.white),
+            fontWeight: FontWeight.w700,
+            fontSize: 15,
+            fontFamily: 'Lato',
+            color: Colors.white),
       ),
       style: OutlinedButton.styleFrom(
         backgroundColor: disable ? Colors.grey[400] : Color(0xff49BABA),
@@ -151,9 +206,6 @@ Widget button(String text, BuildContext context, bool disable, widget) {
 class _PostState extends State<Post> {
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      hasRequested = false;
-    });
     var uid = FirebaseAuth.instance.currentUser?.uid;
     if (widget.data["requests"] != null && !hasApplied) {
       for (var item in widget.data["requests"]) {
@@ -186,16 +238,10 @@ class _PostState extends State<Post> {
                       ')'),
               Row(
                 children: [
-                  hasRequested
-                      ? button('Applied', context, true, widget)
-                      : button('Apply', context, false, widget),
-                  button('View User Profile', context, false, widget),
+                  button('View Employer', context, false, widget),
                 ],
               ),
               description(widget.data['description']),
-              hasRequested
-                  ? button('Applied', context, true, widget)
-                  : button('Apply', context, false, widget),
             ],
           ),
         ),

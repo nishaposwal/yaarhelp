@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fiverr_clone/pages/loginPage.dart';
 import 'package:fiverr_clone/pages/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,7 +7,7 @@ import 'post.dart';
 import 'package:intl/intl.dart';
 
 class Gig extends StatefulWidget {
-  Future<void> apply(data, id) {
+  Future<void> apply(data, id, BuildContext context) {
     final now = new DateTime.now();
     String formattedDate = DateFormat.yMMMMd('en_US').format(now);
 
@@ -29,6 +30,13 @@ class Gig extends StatefulWidget {
           .collection('gigs')
           .doc(id)
           .update({'requests': requests});
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LoginPage(),
+        ),
+      );
     }
     return null;
   }
@@ -135,7 +143,7 @@ Widget actions(BuildContext context, data, id, source, widget) {
                   (source == 'explore')
                       ? (helperAssigned
                           ? viewHelper(context, data['helper'])
-                          : await widget.apply(data, id))
+                          : await widget.apply(data, id, context))
                       : await accept(data, id)
                 },
         child: Text(
@@ -207,73 +215,78 @@ class _GigState extends State<Gig> {
     if (widget.subsource == "home" && widget.gig['title'].length >= 30) {
       widget.gig['title'] = widget.gig['title'].substring(0, 30) + '...';
     }
-    return Card(
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        width: double.infinity,
-        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          CircleAvatar(
-              backgroundImage: NetworkImage(widget.gig['userImageUrl']),
-              radius: 30),
-          SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: cWidth,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        widget.gig['userName'],
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Lato'),
-                      ),
-                      Text(
-                        widget.gig['postedOn'],
-                        style: TextStyle(fontFamily: 'Lato'),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                Container(
-                  width: cWidth,
-                  child: Text(
-                    widget.gig['title'],
-                    style: TextStyle(
-                        color: Colors.blueGrey[900],
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Lato'),
-                  ),
-                ),
-                SizedBox(
-                  height: 6,
-                ),
-                widget.source == "explore"
-                    ? budget('₹ ' + widget.gig['budget'], context)
-                    : SizedBox(
-                        height: 0,
-                      ),
-                SizedBox(
-                  height: 4,
-                ),
-                actions(context, widget.gig, widget.id, widget.source, widget),
-              ],
+    return InkWell(
+      onTap: () {
+        viewGigDetail(context, widget.gig, widget.id);
+      },
+      child: Card(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          width: double.infinity,
+          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            CircleAvatar(
+                backgroundImage: NetworkImage(widget.gig['userImageUrl']),
+                radius: 30),
+            SizedBox(
+              width: 10,
             ),
-          ),
-        ]),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: cWidth,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          widget.gig['userName'],
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Lato'),
+                        ),
+                        Text(
+                          widget.gig['postedOn'],
+                          style: TextStyle(fontFamily: 'Lato'),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Container(
+                    width: cWidth,
+                    child: Text(
+                      widget.gig['title'],
+                      style: TextStyle(
+                          color: Colors.blueGrey[900],
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Lato'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 6,
+                  ),
+                  widget.source == "explore"
+                      ? budget('₹ ' + widget.gig['budget'], context)
+                      : SizedBox(
+                          height: 0,
+                        ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  actions(context, widget.gig, widget.id, widget.source, widget),
+                ],
+              ),
+            ),
+          ]),
+        ),
       ),
     );
   }

@@ -350,6 +350,7 @@ class _HomePageState extends State<HomePage>
                       StreamBuilder<QuerySnapshot>(
                         stream: FirebaseFirestore.instance
                             .collection('gigs')
+                            .orderBy('timeStamp', descending: true)
                             .where('category', isEqualTo: item)
                             .limit(5)
                             .snapshots(),
@@ -402,7 +403,7 @@ class _HomePageState extends State<HomePage>
                       ),
                     ],
                   ),
-                )
+                ),
             ],
           ),
         ),

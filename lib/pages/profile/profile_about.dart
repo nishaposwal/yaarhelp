@@ -25,15 +25,18 @@ class _AboutPageState extends State<AboutPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            heading,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              heading,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
           ),
           Wrap(
             children: List.generate(
               list.length,
               (index) => Container(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(8),
                   margin: EdgeInsets.all(5),
                   child: Text(
                     list[index]['name'],
@@ -42,7 +45,7 @@ class _AboutPageState extends State<AboutPage> {
                   decoration: BoxDecoration(
                     color: Theme.of(context).accentColor,
                     borderRadius: BorderRadius.all(
-                      Radius.circular(5),
+                      Radius.circular(20),
                     ),
                   )),
             ),
@@ -66,7 +69,7 @@ class _AboutPageState extends State<AboutPage> {
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (!snapshot.hasData) {
           return Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(color: Theme.of(context).accentColor,),
           );
         }
         if (snapshot.data.docs.length == 0) {
@@ -212,10 +215,11 @@ class _AboutPageState extends State<AboutPage> {
                 style: TextStyle(color: Colors.grey[900]),
               ),
             ),
+            Divider(),
             Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(16),
               child: Text(
-                'Categories Of Interest',
+                'Categories',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
             ),
