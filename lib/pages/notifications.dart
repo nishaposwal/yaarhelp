@@ -1,3 +1,4 @@
+import 'package:fiverr_clone/pages/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -101,10 +102,19 @@ class _NotificationsState extends State<Notifications> {
                     return Column(
                       children: [
                         for (var item in requests)
-                          Gig(
-                              gig: item,
-                              id: item['gigId'],
-                              source: 'notification')
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(context,
+                              MaterialPageRoute(
+                                builder: (context) => ProfilePage(uid: item['userId'],)
+                              )
+                              );
+                            },
+                            child: Gig(
+                                gig: item,
+                                id: item['gigId'],
+                                source: 'notification'),
+                          )
                       ],
                     );
                   },

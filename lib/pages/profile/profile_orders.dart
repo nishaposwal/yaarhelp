@@ -18,6 +18,7 @@ class _OrdersState extends State<Orders> {
         stream: FirebaseFirestore.instance
             .collection('gigs')
             .where('userId', isEqualTo: widget.uid)
+            .orderBy('timeStamp', descending: true)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {

@@ -1,3 +1,4 @@
+import 'package:fiverr_clone/pages/loginPage.dart';
 import 'package:fiverr_clone/pages/profile/profile.dart';
 import 'package:intl/intl.dart';
 import 'package:fiverr_clone/pages/dropDown.dart';
@@ -145,74 +146,6 @@ class _CreatePostState extends State<CreatePost> {
     _razorpay.clear();
   }
 
-  void openCheckout(amount) async {
-    var options = {
-      'key': 'rzp_test_eqfjo7B0yh51Nh',
-      'amount': amount,
-      'name': 'Yaar Help',
-      'description': 'Post a help',
-      'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
-    };
-    try {
-      await _razorpay.open(options);
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-  }
-
-  void _handlePaymentSuccess(PaymentSuccessResponse response) async {
-    try {
-      await addGig();
-      Fluttertoast.showToast(
-          msg: "Help Posted Successfully!",
-          toastLength: Toast.LENGTH_LONG,
-          backgroundColor: Colors.green);
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => ProfilePage(uid: FirebaseAuth.instance.currentUser.uid, )),
-        (Route<dynamic> route) => false,
-      );
-    } catch (e) {
-      showdialogBox(e, true);
-    }
-  }
-
-  void _handlePaymentError(PaymentFailureResponse response) {
-    print("ERROR: " + response.code.toString() + " - " + response.message);
-    var error = "";
-    var code = response.code.toString();
-    switch (code) {
-      case "0":
-        error = "There was a network error. Payment Unsuccessful.";
-        break;
-      case "1":
-        error =
-            "An issue with options passed in Razorpay.open. Payment Unsuccessful.";
-        break;
-      case "2":
-        error = "Payment Cancelled. Please complete the payment to checkout.";
-        break;
-      case "3":
-        error =
-            "Unsupported device. Please try to create a post from some other device.";
-        break;
-      case "4":
-        error = "An unknown error occurred. Payment Unsuccessful.";
-        break;
-      default:
-        error = "Payment Failure.";
-        break;
-    }
-    showdialogBox(code + error, true);
-    throw Exception('Payment Failure');
-  }
-
-  void _handleExternalWallet(ExternalWalletResponse response) {
-    Fluttertoast.showToast(
-        msg: "EXTERNAL_WALLET: " + response.walletName,
-        toastLength: Toast.LENGTH_LONG);
-  }
-
   Widget categories() {
     return Container(
       width: double.infinity,
@@ -283,8 +216,8 @@ class _CreatePostState extends State<CreatePost> {
             child: TextField(
               controller: controller,
               decoration: new InputDecoration(
-                  labelText: hint,
-                  labelStyle: TextStyle(color: Colors.grey[400]),
+                  hintText: hint,
+                  hintStyle: TextStyle(color: Colors.grey[400]),
                   errorText: controller.value == null ? errorText : null),
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -327,12 +260,99 @@ class _CreatePostState extends State<CreatePost> {
     );
   }
 
+  void openCheckout(amount) async {
+    var currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      var uid = currentUser.uid;
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .get()
+          .then((value) {
+        if (value.data() != null) {
+          var options = {
+            'key': 'rzp_live_BvYohqnLVXKdY1',
+            'amount': amount,
+            'name': 'Yaar Help',
+            'description': 'Post a help',
+            'prefill': {
+              'contact': value.data()['phoneNumber'],
+              'email': currentUser.email
+            },
+          };
+          try {
+            _razorpay.open(options);
+          } catch (e) {
+            debugPrint(e.toString());
+          }
+        }
+      });
+    }
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    try {
+      await addGig();
+      Fluttertoast.showToast(
+          msg: "Help Posted Successfully!",
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.green);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProfilePage(
+            uid: FirebaseAuth.instance.currentUser.uid,
+            index: 1,
+          ),
+        ),
+      );
+    } catch (e) {
+      showdialogBox(e, true);
+    }
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    print("ERROR: " + response.code.toString() + " - " + response.message);
+    var error = "";
+    var code = response.code.toString();
+    switch (code) {
+      case "0":
+        error = "There was a network error. Payment was Unsuccessful.";
+        break;
+      case "1":
+        error =
+            "An issue with data passed to Razorpay. Payment was Unsuccessful.";
+        break;
+      case "2":
+        error = "Payment Cancelled. Please complete the payment to checkout.";
+        break;
+      case "3":
+        error =
+            "Unsupported device. Please try to create a post from some other device.";
+        break;
+      case "4":
+        error = "An unknown error occurred. Payment was Unsuccessful.";
+        break;
+      default:
+        error = "Payment Failure.";
+        break;
+    }
+    showdialogBox(error, true);
+    throw Exception('Payment Failure');
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    Fluttertoast.showToast(
+        msg: "EXTERNAL_WALLET: " + response.walletName,
+        toastLength: Toast.LENGTH_LONG);
+  }
+
   Future<DocumentReference> addGig() {
     if (FirebaseAuth.instance.currentUser == null) {
       print('not logged in');
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => LoginPage()));
       return null;
-    } else {
-      print('logged in');
     }
     final now = new DateTime.now();
     String formatter = DateFormat.yMMMMd('en_US').format(now);
@@ -397,6 +417,12 @@ class _CreatePostState extends State<CreatePost> {
       margin: EdgeInsets.symmetric(vertical: 10),
       child: ElevatedButton(
         onPressed: () async {
+          if (FirebaseAuth.instance.currentUser == null) {
+            print('not logged in');
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => LoginPage()));
+            return null;
+          }
           if (validate()) {
             try {
               await openCheckout(budgetController.text + "00");
@@ -441,12 +467,9 @@ class _CreatePostState extends State<CreatePost> {
               stringInput(titleController, 'Add Title', 'Title'),
               stringInput(
                   descriptionController, 'Add Description', 'Description'),
-              inputNumber(
-                  timerequiredController,
-                  'Service Delivery time',
-                  'Enter time required in hours to complete task',
-                  'Please enter time required ih hours'),
-              inputNumber(budgetController, 'What is your budget',
+              stringInput(timerequiredController, 'Service Delivery time',
+                  'Enter time required to complete task'),
+              inputNumber(budgetController, 'What is your budget ( ₹ )',
                   'Enter your budget in rupees', 'Please Enter your budget'),
               stringInput(addressController, 'Add Address', 'Address'),
               post(),

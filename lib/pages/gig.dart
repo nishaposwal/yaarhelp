@@ -141,7 +141,7 @@ Widget actions(BuildContext context, data, id, source, widget) {
         child: Text(
           (source == "explore")
               ? helperAssigned
-                  ? ('View Helper')
+                  ? ('Helper')
                   : (applied ? 'Applied' : 'Apply')
               : ('Accept'),
           style: TextStyle(
@@ -162,7 +162,7 @@ Widget actions(BuildContext context, data, id, source, widget) {
           side: BorderSide(width: 2, color: Theme.of(context).accentColor),
         ),
         child: Text(
-          (source == 'explore') ? 'View Details' : 'Reject',
+          (source == 'explore') ? 'Gig' : 'Reject',
           style: TextStyle(
               color: Theme.of(context).accentColor,
               fontWeight: FontWeight.bold,
