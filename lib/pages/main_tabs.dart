@@ -8,6 +8,7 @@ import 'package:yaarhelp/pages/manage_account.dart';
 import 'package:yaarhelp/pages/explore.dart';
 import 'package:yaarhelp/pages/notifications.dart';
 import 'loginPage.dart';
+import 'package:titled_navigation_bar/titled_navigation_bar.dart';
 
 class MainTabs extends StatefulWidget {
   @override
@@ -82,49 +83,50 @@ class _MainTabsState extends State<MainTabs>
     return Scaffold(
       body: _listOfPagesForBottomNavigationBar[
           _selectedIndexForBottomNavigationBar],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        onTap: _onItemTappedForBottomNavigationBar,
-        // this will be set when a new tab is tapped
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(
+      bottomNavigationBar: TitledBottomNavigationBar(
+          // type: BottomNavigationBarType.fixed,
+          onTap: _onItemTappedForBottomNavigationBar,
+          // this will be set when a new tab is tapped
+          items: [
+            TitledNavigationBarItem(
+              icon: Icons.home,
+              title: Icon(
                 Icons.home,
-                size: 35,
+                color: Theme.of(context).accentColor,
               ),
-              label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.explore,
-                size: 35,
-              ),
-              label: 'Messages'),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.add_box_rounded,
-                size: 35,
-              ),
-              label: 'Sales'),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.notifications_rounded,
-                size: 35,
-              ),
-              label: 'Notifications'),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person,
-              size: 38,
             ),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: _selectedIndexForBottomNavigationBar,
-        selectedItemColor: Theme.of(context).accentColor,
-        unselectedItemColor: Colors.grey[700],
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-      ),
+            TitledNavigationBarItem(
+              icon: Icons.explore,
+              title: Icon(
+                Icons.explore,
+                color: Theme.of(context).accentColor,
+              ),
+            ),
+            TitledNavigationBarItem(
+              icon: Icons.add_box_rounded,
+              title: Icon(
+                Icons.add_box_rounded,
+                color: Theme.of(context).accentColor,
+              ),
+            ),
+            TitledNavigationBarItem(
+              icon: Icons.notifications_active_rounded,
+              title: Icon(
+                Icons.notifications_active_rounded,
+                color: Theme.of(context).accentColor,
+              ),
+            ),
+            TitledNavigationBarItem(
+              icon: Icons.person,
+              title: Icon(
+                Icons.person,
+                color: Theme.of(context).accentColor,
+              ),
+            ),
+          ],
+          currentIndex: _selectedIndexForBottomNavigationBar,
+          inactiveColor: Colors.grey[700],
+          reverse: true),
     );
   }
 }
