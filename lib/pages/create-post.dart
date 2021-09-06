@@ -39,7 +39,8 @@ Widget top(BuildContext context) {
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).accentColor,
-                          fontSize: 24),
+                          fontSize: 24,
+                          fontFamily: 'Rowdies'),
                     ),
                   ),
                   Text(
@@ -52,7 +53,8 @@ Widget top(BuildContext context) {
                 ],
               ),
               Image(
-                image: AssetImage('assets/images/people.jpeg'),
+                image: AssetImage('assets/images/fashion.png'),
+                height: 60,
               ),
             ],
           ),

@@ -163,7 +163,8 @@ class _HomePageState extends State<HomePage>
             children: [
               carousel(list),
               Container(
-                height: 85,
+                // height: 85,
+                padding: EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(
                     Radius.circular(11),
@@ -178,27 +179,40 @@ class _HomePageState extends State<HomePage>
                   ],
                   color: Colors.white,
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                child: Column(
                   children: [
-                    for (var item in categories.keys)
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            backgroundImage: NetworkImage(categories[item]),
-                            radius: 25,
-                          ),
-                          SizedBox(
-                            height: 6,
-                          ),
-                          Text(
-                            item,
-                            style:
-                                TextStyle(fontSize: 12, fontFamily: 'Roboto'),
+                    Text(
+                      'Categories',
+                      style: TextStyle(
+                          color: Theme.of(context).accentColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        for (var item in categories.keys)
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CircleAvatar(
+                                backgroundImage: NetworkImage(categories[item]),
+                                radius: 25,
+                              ),
+                              SizedBox(
+                                height: 6,
+                              ),
+                              Text(
+                                item,
+                                style: TextStyle(
+                                    fontSize: 12, fontFamily: 'Roboto'),
+                              )
+                            ],
                           )
-                        ],
-                      )
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -211,13 +225,27 @@ class _HomePageState extends State<HomePage>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        item,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
+                      Material(
+                        elevation: 5,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5),
+                        ),
+                        child: Container(
+                          width: double.infinity,
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          child: Text(
+                            item,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Theme.of(context).accentColor,
+                            ),
+                          ),
+                        ),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 20,
                       ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,

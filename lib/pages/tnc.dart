@@ -30,10 +30,10 @@ class TNC extends StatelessWidget {
                   child: Text(
                     'Terms and conditions',
                     style: TextStyle(
-                      color: Theme.of(context).accentColor,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                        color: Theme.of(context).accentColor,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Rowdies'),
                   ),
                 ),
                 text(

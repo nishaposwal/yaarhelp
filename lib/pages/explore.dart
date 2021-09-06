@@ -73,12 +73,13 @@ class _ExplorePageState extends State<ExplorePage>
   Widget exploreHeader() {
     return Container(
       width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 15),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            "EXPLORE",
+            "Explore",
             style: TextStyle(
                 fontFamily: 'Rowdies', color: Color(0xff7ED8D8), fontSize: 25),
           ),

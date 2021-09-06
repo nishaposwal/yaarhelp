@@ -25,12 +25,16 @@ class PrivacyPolicy extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Yaarhelp’s Privacy Policy',
-                  style: TextStyle(
-                    color: Theme.of(context).accentColor,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                Container(
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Yaarhelp’s Privacy Policy',
+                    style: TextStyle(
+                        color: Theme.of(context).accentColor,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Rowdies'),
                   ),
                 ),
                 text('What personal data we collect and why we collect it?',

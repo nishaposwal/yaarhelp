@@ -19,7 +19,7 @@ class _SignUpPageState extends State<SignUpPage> {
   bool loading = false;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final userNameController = TextEditingController();
+
   FirebaseAuth auth = FirebaseAuth.instance;
   Widget _entryField(String title, TextEditingController controller,
       {bool isPassword = false}) {
@@ -61,20 +61,22 @@ class _SignUpPageState extends State<SignUpPage> {
           .doc(FirebaseAuth.instance.currentUser.uid)
           .get()
           .then((value) => {
-        if (value.data() == null)
-          {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => UserDetails(false)))
-          }
-        else
-          {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => MainTabs()),
-                  (Route<dynamic> route) => false,
-            )
-          }
-      });
+                if (value.data() == null)
+                  {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => UserDetails(false)))
+                  }
+                else
+                  {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainTabs()),
+                      (Route<dynamic> route) => false,
+                    )
+                  }
+              });
     } catch (err) {
       print('error has occured ${err.message}');
       showdialogBox('Error has occured', err.message, true);
@@ -158,7 +160,7 @@ class _SignUpPageState extends State<SignUpPage> {
             Text(
               'Login',
               style: TextStyle(
-                  color:Color(0xff49BABA),
+                  color: Color(0xff49BABA),
                   fontSize: 13,
                   fontWeight: FontWeight.w600),
             ),
@@ -179,7 +181,6 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
-        _entryField("Username", userNameController),
         _entryField("Email id", emailController),
         _entryField("Password", passwordController, isPassword: true),
       ],

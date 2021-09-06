@@ -17,14 +17,15 @@ class _SupportState extends State<Support> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
+                padding: EdgeInsets.symmetric(vertical: 20),
                 alignment: Alignment.center,
                 child: Text(
                   'Support',
                   style: TextStyle(
-                    color: Theme.of(context).accentColor,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
+                      color: Theme.of(context).accentColor,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Rowdies'),
                 ),
               ),
               ListTile(

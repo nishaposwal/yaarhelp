@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:yaarhelp/pages/loginPage.dart';
+import 'package:yaarhelp/pages/main_tabs.dart';
 import 'package:yaarhelp/pages/multiselect.dart';
 import 'package:path/path.dart';
 import 'package:flutter/material.dart';
@@ -263,7 +264,10 @@ class _UserDetailsState extends State<UserDetails> {
             'onlineHelp': selectedOnlineCats,
             'offlineHelp': selectedOfflineCats
           });
-    Navigator.pop(context);
+    editing == true
+        ? Navigator.pop(context)
+        : Navigator.push(
+            context, MaterialPageRoute(builder: (context) => MainTabs()));
     return null;
   }
 

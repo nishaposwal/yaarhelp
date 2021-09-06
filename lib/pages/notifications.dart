@@ -42,7 +42,14 @@ class _NotificationsState extends State<Notifications> {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Notifications"),
+        title: Text(
+          "Notifications",
+          style: TextStyle(
+              color: Theme.of(context).accentColor,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Rowdies',
+              fontSize: 24),
+        ),
       ),
       body: currentUser == null
           ? noNotifications(context)
@@ -104,11 +111,12 @@ class _NotificationsState extends State<Notifications> {
                         for (var item in requests)
                           InkWell(
                             onTap: () {
-                              Navigator.push(context,
-                              MaterialPageRoute(
-                                builder: (context) => ProfilePage(uid: item['userId'],)
-                              )
-                              );
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ProfilePage(
+                                            uid: item['userId'],
+                                          )));
                             },
                             child: Gig(
                                 gig: item,
