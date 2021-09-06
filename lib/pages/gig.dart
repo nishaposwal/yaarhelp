@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fiverr_clone/pages/loginPage.dart';
-import 'package:fiverr_clone/pages/profile/profile.dart';
+import 'package:yaarhelp/pages/loginPage.dart';
+import 'package:yaarhelp/pages/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'post.dart';
@@ -170,7 +170,7 @@ Widget actions(BuildContext context, data, id, source, widget) {
           side: BorderSide(width: 2, color: Theme.of(context).accentColor),
         ),
         child: Text(
-          (source == 'explore') ? 'Gig' : 'Reject',
+          (source == 'explore') ? 'view' : 'Reject',
           style: TextStyle(
               color: Theme.of(context).accentColor,
               fontWeight: FontWeight.bold,
@@ -281,7 +281,8 @@ class _GigState extends State<Gig> {
                   SizedBox(
                     height: 4,
                   ),
-                  actions(context, widget.gig, widget.id, widget.source, widget),
+                  actions(
+                      context, widget.gig, widget.id, widget.source, widget),
                 ],
               ),
             ),

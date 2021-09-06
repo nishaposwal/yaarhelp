@@ -1,7 +1,7 @@
-import 'package:fiverr_clone/pages/how-it-works.dart';
-import 'package:fiverr_clone/pages/main_tabs.dart';
+import 'package:yaarhelp/pages/how-it-works.dart';
+import 'package:yaarhelp/pages/main_tabs.dart';
 import 'package:flutter/material.dart';
-import 'package:fiverr_clone/pages/profile/profile.dart';
+import 'package:yaarhelp/pages/profile/profile.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'gig.dart';
@@ -42,12 +42,46 @@ class _HomePageState extends State<HomePage>
     "Online Help": [
       "Assignment Help",
       "Social Media Help",
-      "Art & Design Help"
+      "Art & Design Help",
+      'Presentations Help',
+      'Programming Help',
+      'Question solving Help',
+      'Writing Help',
+      'Tech Help',
+      'Content research Help',
+      'Other Help',
     ],
-    "Offline Help": ["General Help", "Technical Help", "Organise/Decor Help"],
+    "Offline Help": [
+      'Personal Assistant Help',
+      'Organize/Decor Help',
+      'Health/Therapy Help',
+      'Technical Help',
+      'Drop-ship/Moving Help',
+      'Baby/Pet Care Help',
+      'Cafe/Hotel',
+      'Repairing Help',
+      'House Help',
+      'Other Help'
+    ],
   };
 
   var times = 6;
+  Widget subcat(String name) {
+    return Container(
+      padding: EdgeInsets.all(8),
+      margin: EdgeInsets.symmetric(horizontal: 5),
+      child: Text(
+        name,
+        style: TextStyle(color: Colors.white),
+      ),
+      decoration: BoxDecoration(
+        color: Theme.of(context).accentColor,
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+      ),
+    );
+  }
 
   Widget carousel(List<dynamic> list) {
     return CarouselSlider(
@@ -168,154 +202,36 @@ class _HomePageState extends State<HomePage>
                   ],
                 ),
               ),
+              SizedBox(
+                height: 15,
+              ),
               for (var item in subCategories.keys)
                 Container(
-                  margin: EdgeInsets.only(top: 14, bottom: 14),
+                  margin: EdgeInsets.symmetric(vertical: 5),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Text(
+                        item,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
-                          children: [
-                            Container(
-                                margin: EdgeInsets.only(left: 11),
-                                height: 50,
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 12, horizontal: 3),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(5),
-                                  ),
-                                  border: Border.all(
-                                    width: .5,
-                                    color: const Color.fromRGBO(0, 0, 0, 0.15),
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color:
-                                          Color.fromRGBO(242, 242, 242, 0.95),
-                                      spreadRadius: 0,
-                                      blurRadius: 4,
-                                      offset: Offset(
-                                          0, 4), // changes position of shadow
-                                    ),
-                                  ],
-                                  color: Color(0xfff2f2f2),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      item,
-                                      style: TextStyle(fontSize: 13),
-                                    ),
-                                    Image(
-                                      image:
-                                          AssetImage('assets/images/img.png'),
-                                    )
-                                  ],
-                                )),
-                            Container(
-                              margin: EdgeInsets.only(left: 0, right: 11),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 6, vertical: 5),
-                              width: 80,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  bottomRight: Radius.circular(4),
-                                  topRight: Radius.circular(4),
-                                ),
-                                border: Border.all(
-                                  width: .5,
-                                  color: const Color.fromRGBO(0, 0, 0, 0.15),
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color.fromRGBO(242, 242, 242, 0.95),
-                                    spreadRadius: 0,
-                                    blurRadius: 4,
-                                    offset: Offset(
-                                        0, 4), // changes position of shadow
-                                  ),
-                                ],
-                                color: Color(0xfff2f2f2),
-                              ),
-                              child: Text(
-                                subCategories[item][0],
-                                style: TextStyle(fontSize: 12),
-                                textAlign: TextAlign.center,
-                              ),
+                          children: List.generate(
+                            subCategories[item].length,
+                            (index) => subcat(
+                              subCategories[item][index],
                             ),
-                            Container(
-                              width: 80,
-                              height: 40,
-                              margin: EdgeInsets.only(left: 0, right: 11),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 6, vertical: 5),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(4),
-                                ),
-                                border: Border.all(
-                                  width: .5,
-                                  color: const Color.fromRGBO(0, 0, 0, 0.15),
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color.fromRGBO(242, 242, 242, 0.95),
-                                    spreadRadius: 0,
-                                    blurRadius: 4,
-                                    offset: Offset(
-                                        0, 4), // changes position of shadow
-                                  ),
-                                ],
-                                color: Color(0xfff2f2f2),
-                              ),
-                              child: Text(
-                                subCategories[item][1],
-                                style: TextStyle(fontSize: 12),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            Container(
-                              width: 80,
-                              height: 40,
-                              alignment: Alignment.center,
-                              margin: EdgeInsets.only(left: 0, right: 19),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 6, vertical: 5),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(4),
-                                ),
-                                border: Border.all(
-                                  width: .5,
-                                  color: const Color.fromRGBO(0, 0, 0, 0.15),
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color.fromRGBO(242, 242, 242, 0.95),
-                                    spreadRadius: 0,
-                                    blurRadius: 4,
-                                    offset: Offset(
-                                        0, 4), // changes position of shadow
-                                  ),
-                                ],
-                                color: Color(0xfff2f2f2),
-                              ),
-                              child: Text(
-                                subCategories[item][2],
-                                style: TextStyle(fontSize: 12),
-                                textAlign: TextAlign.center,
-                              ),
-                            )
-                          ],
+                          ),
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(
-                            top: 18, left: 8, right: 8, bottom: 10),
+                        margin: EdgeInsets.all(10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fiverr_clone/pages/gig.dart';
+import 'package:yaarhelp/pages/gig.dart';
 
 class Orders extends StatefulWidget {
   final uid;

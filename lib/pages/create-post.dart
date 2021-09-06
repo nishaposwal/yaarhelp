@@ -1,7 +1,7 @@
-import 'package:fiverr_clone/pages/loginPage.dart';
-import 'package:fiverr_clone/pages/profile/profile.dart';
+import 'package:yaarhelp/pages/loginPage.dart';
+import 'package:yaarhelp/pages/profile/profile.dart';
 import 'package:intl/intl.dart';
-import 'package:fiverr_clone/pages/dropDown.dart';
+import 'package:yaarhelp/pages/dropDown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';

@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:fiverr_clone/pages/loginPage.dart';
-import 'package:fiverr_clone/pages/multiselect.dart';
+import 'package:yaarhelp/pages/loginPage.dart';
+import 'package:yaarhelp/pages/multiselect.dart';
 import 'package:path/path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

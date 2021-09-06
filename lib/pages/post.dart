@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fiverr_clone/pages/loginPage.dart';
-import 'package:fiverr_clone/pages/profile/profile.dart';
+import 'package:yaarhelp/pages/loginPage.dart';
+import 'package:yaarhelp/pages/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'gig.dart';
 import 'package:intl/intl.dart';
@@ -143,7 +143,7 @@ Future<void> apply(data, id, BuildContext context) {
         .collection('gigs')
         .doc(id)
         .update({'requests': requests}).onError((error, stackTrace) {
-          hasRequested = false;
+      hasRequested = false;
       String err = 'Error in applying :: ' + error.toString();
       showDialog(
         context: context,
@@ -236,6 +236,7 @@ class _PostState extends State<Post> {
                       ' (' +
                       widget.data['subCategory'].toString() +
                       ')'),
+              rowInfo('Title', widget.data['title']),
               Row(
                 children: [
                   button('View Employer', context, false, widget),

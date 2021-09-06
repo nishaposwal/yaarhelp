@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fiverr_clone/pages/gig.dart';
-import 'package:fiverr_clone/pages/helperCard.dart';
-import 'package:fiverr_clone/pages/loginPage.dart';
+
+import 'package:yaarhelp/pages/gig.dart';
+import 'package:yaarhelp/pages/helperCard.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:yaarhelp/pages/loginPage.dart';
 
 class ExplorePage extends StatefulWidget {
   @override
@@ -305,7 +306,7 @@ class _ExplorePageState extends State<ExplorePage>
       "assets/images/40.png",
       "assets/images/50.png",
       "assets/images/60.png"
-      ],
+    ],
     "week": [
       "assets/images/week.png",
       "assets/images/240.png",
@@ -321,10 +322,22 @@ class _ExplorePageState extends State<ExplorePage>
   };
 
   String getType(String str) {
-    var types = ["day", "month", "week", "40", "50", "60", "240", "300", "360", "1200", "1500", "1800"];
+    var types = [
+      "day",
+      "month",
+      "week",
+      "40",
+      "50",
+      "60",
+      "240",
+      "300",
+      "360",
+      "1200",
+      "1500",
+      "1800"
+    ];
     for (var item in types) {
-      if(str.contains(item))
-        return item;
+      if (str.contains(item)) return item;
     }
     return "";
   }
@@ -360,10 +373,12 @@ class _ExplorePageState extends State<ExplorePage>
                             height: 45,
                             child: OutlinedButton(
                                 style: OutlinedButton.styleFrom(
-                                  backgroundColor: Theme.of(context).accentColor,
+                                  backgroundColor:
+                                      Theme.of(context).accentColor,
                                 ),
                                 onPressed: () {
-                                  if (FirebaseAuth.instance.currentUser == null) {
+                                  if (FirebaseAuth.instance.currentUser ==
+                                      null) {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -371,7 +386,8 @@ class _ExplorePageState extends State<ExplorePage>
                                       ),
                                     );
                                   }
-                                  var currentUser = FirebaseAuth.instance.currentUser;
+                                  var currentUser =
+                                      FirebaseAuth.instance.currentUser;
                                   var uid = currentUser.uid;
                                   FirebaseFirestore.instance
                                       .collection('users')
@@ -380,15 +396,15 @@ class _ExplorePageState extends State<ExplorePage>
                                       .then((value) {
                                     if (value.data() != null) {
                                       var data = value.data();
-                                      FirebaseFirestore.instance.collection("englishLearners").add(
-                                          {
-                                            "userId": currentUser.uid,
-                                            "phoneNumber": data['phoneNumber'],
-                                            "userName": data['displayName'],
-                                            "type": getType(item[0]),
-                                            "subtype": 'rupees ' + getType(item[i])
-                                          }
-                                      );
+                                      FirebaseFirestore.instance
+                                          .collection("englishLearners")
+                                          .add({
+                                        "userId": currentUser.uid,
+                                        "phoneNumber": data['phoneNumber'],
+                                        "userName": data['displayName'],
+                                        "type": getType(item[0]),
+                                        "subtype": 'rupees ' + getType(item[i])
+                                      });
                                     }
                                   });
                                 },
