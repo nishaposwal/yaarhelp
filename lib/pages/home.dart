@@ -24,18 +24,18 @@ class _HomePageState extends State<HomePage>
   }
 
   List<String> list = [
-    "https://prosesoft.com/images/e3.jpg",
-    "https://shribalajiplacement.com/wp-content/uploads/2021/03/carpenter-sawing-wood-table_7496-936.jpg",
-    "https://www.meiccymru.org/wp-content/uploads/2018/06/volunteer-2055042_1920-1024x706.png"
+    "assets/images/banner1.png",
+    "assets/images/banner2.png",
+    "assets/images/banner3.png"
   ];
   Map<String, String> categories = {
     "Online Help":
-        "https://cdn.pixabay.com/photo/2015/09/16/08/55/online-942406_1280.jpg",
-    "Offline Help": "https://i.ytimg.com/vi/OBfLvqA_E4A/maxresdefault.jpg",
+        "assets/images/image 24.png",
+    "Offline Help": "assets/images/image 25.png",
     "Learn English":
-        "https://cdn2.vectorstock.com/i/1000x1000/67/01/its-time-to-learn-english-sign-or-stamp-vector-21476701.jpg",
+        "assets/images/image 26.png",
     "Volunteering":
-        "https://webgate.ec.europa.eu/fpfis/wikis/download/thumbnails/285091230/ESC_VoluPart_What.png?version=1&modificationDate=1530888095124&api=v2"
+        "assets/images/image 27.png"
   };
 
   Map<String, List> subCategories = {
@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage>
                   ),
                 ),
                 child: Image(
-                  image: NetworkImage(url),
+                  image: AssetImage(url),
                   fit: BoxFit.fill,
                 ));
           },
@@ -198,7 +198,7 @@ class _HomePageState extends State<HomePage>
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               CircleAvatar(
-                                backgroundImage: NetworkImage(categories[item]),
+                                backgroundImage: AssetImage(categories[item]),
                                 radius: 25,
                               ),
                               SizedBox(

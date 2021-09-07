@@ -129,6 +129,11 @@ class _ManageAccountState extends State<ManageAccount> {
               child: CircularProgressIndicator(),
             );
           }
+          if (snapshot.data.docs.length == 0) {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => UserDetails(false)));
+            return SizedBox(height: 0,);
+          }
           var imageUrl = snapshot.data.docs.first.get('imageUrl');
           var name = snapshot.data.docs.first.get('displayName');
           var address = snapshot.data.docs.first.get('address');

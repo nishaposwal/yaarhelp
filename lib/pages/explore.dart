@@ -55,7 +55,7 @@ class _ExplorePageState extends State<ExplorePage>
         'Cafe/Hotel',
         'Repairing Help',
         'House Help',
-        'Other Help'
+        'Other Help '
       ]
     },
     {"name": "Learn English", "domains": []},
@@ -67,6 +67,39 @@ class _ExplorePageState extends State<ExplorePage>
         'Feed poor',
         'Educate underprivileged'
       ]
+    },
+  ];
+
+  var imagesMap = [
+    {
+      "Online Help": "assets/images/image 24.png",
+      "Assignment Help": "assets/images/image 2.png",
+      "Social Media Help": "assets/images/image 9.png",
+      "Art & Design Help": "assets/images/image 3.png",
+      'Presentations Help': "assets/images/image 8.png",
+      'Programming Help': "assets/images/image 10.png",
+      'Question solving Help': "assets/images/image 11.png",
+      'Writing Help': "assets/images/image 12.png",
+      'Tech Help': "assets/images/image 28.png",
+      'Content research Help': "assets/images/image 13.png",
+      'Other Help': "assets/images/image 1.png",
+      "Offline Help": "assets/images/image 25.png",
+      'Personal Assistant Help': "assets/images/image 15.png",
+      'Organize/Decor Help': "assets/images/image 16.png",
+      'Health/Therapy Help': "assets/images/image 23.png",
+      'Technical Help': "assets/images/image 17.png",
+      'Drop-ship/Moving Help': "assets/images/image 18.png",
+      'Baby/Pet Care Help': "assets/images/image 19.png",
+      'Cafe/Hotel': "assets/images/image 20.png",
+      'Repairing Help': "assets/images/image 22.png",
+      'House Help': "assets/images/image 21.png",
+      'Other Help ': "assets/images/image 14.png",
+      "Learn English": "assets/images/image 26.png",
+      "Volunteering": "assets/images/image 27.png",
+      'Donate Blood': "assets/images/image 2.png",
+      'Clean Your City': "assets/images/image 2.png",
+      'Feed poor': "assets/images/image 2.png",
+      'Educate underprivileged': "assets/images/image 2.png"
     },
   ];
 
@@ -105,8 +138,14 @@ class _ExplorePageState extends State<ExplorePage>
         children: [
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(11)),
-              color: Colors.teal,
+              borderRadius: BorderRadius.all(Radius.circular(11))
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(11.0),
+              child: Image.asset(
+                imagesMap[0][modes[i]["name"]],
+                fit: BoxFit.fill,
+              ),
             ),
             height: 60,
             width: 75,
@@ -188,7 +227,13 @@ class _ExplorePageState extends State<ExplorePage>
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(11)),
-                color: Colors.teal,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(11.0),
+                child: Image.asset(
+                  imagesMap[0][item],
+                  fit: BoxFit.fill,
+                ),
               ),
               margin: EdgeInsets.only(bottom: 5),
               height: 60,
@@ -387,6 +432,7 @@ class _ExplorePageState extends State<ExplorePage>
                                       ),
                                     );
                                   }
+                                  
                                   var currentUser =
                                       FirebaseAuth.instance.currentUser;
                                   var uid = currentUser.uid;

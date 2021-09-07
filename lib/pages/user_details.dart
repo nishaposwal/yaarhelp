@@ -202,7 +202,8 @@ class _UserDetailsState extends State<UserDetails> {
     );
   }
 
-  bool validateControllers() {
+  bool validateControllers(bool editing) {
+    bool imgMand = !editing && imageFile == null;
     return (nameController.text != null &&
         phoneNumberController.text != null &&
         descriptionController.text != null &&
@@ -214,7 +215,7 @@ class _UserDetailsState extends State<UserDetails> {
         descriptionController.text != "" &&
         addressController.text != "" &&
         skillsController.text != "" &&
-        languagesController.text != "");
+        languagesController.text != "" && !imgMand);
   }
 
   Future<dynamic> addDetails(BuildContext context, bool editing) async {
@@ -224,7 +225,7 @@ class _UserDetailsState extends State<UserDetails> {
       return null;
     }
 
-    if (!validateControllers()) {
+    if (!validateControllers(editing)) {
       showdialogBox("Please fill all the fields", true, context);
       return null;
     }
