@@ -215,7 +215,8 @@ class _UserDetailsState extends State<UserDetails> {
         descriptionController.text != "" &&
         addressController.text != "" &&
         skillsController.text != "" &&
-        languagesController.text != "" && !imgMand);
+        languagesController.text != "" &&
+        !imgMand);
   }
 
   Future<dynamic> addDetails(BuildContext context, bool editing) async {
@@ -267,8 +268,10 @@ class _UserDetailsState extends State<UserDetails> {
           });
     editing == true
         ? Navigator.pop(context)
-        : Navigator.push(
-            context, MaterialPageRoute(builder: (context) => MainTabs()));
+        : Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => MainTabs()),
+            (Route<dynamic> route) => false);
     return null;
   }
 

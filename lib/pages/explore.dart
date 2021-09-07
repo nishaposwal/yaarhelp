@@ -23,6 +23,23 @@ class _ExplorePageState extends State<ExplorePage>
     _tabController = new TabController(initialIndex: 0, length: 2, vsync: this);
     currentMode = 0;
     currentCat = "Assignment Help";
+    var currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      FirebaseFirestore.instance
+          .collection('englishLearners')
+          .where('userId', isEqualTo: currentUser.uid)
+          .get()
+          .then((value) {
+        for (var doc in value.docs) {
+          var docData = doc.data();
+          var str = docData['subtype'];
+          var subtype = str.substring(7, str.length);
+          setState(() {
+            typesMap[subtype + ".png"] = false;
+          });
+        }
+      });
+    }
     selected = 0;
     super.initState();
   }
@@ -138,8 +155,7 @@ class _ExplorePageState extends State<ExplorePage>
         children: [
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(11))
-            ),
+                borderRadius: BorderRadius.all(Radius.circular(11))),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(11.0),
               child: Image.asset(
@@ -367,21 +383,34 @@ class _ExplorePageState extends State<ExplorePage>
     ]
   };
 
+  var typesMap = {
+    "40.png": true,
+    "50.png": true,
+    "60.png": true,
+    "240.png": true,
+    "300.png": true,
+    "360.png": true,
+    "1200.png": true,
+    "1500.png": true,
+    "1800.png": true
+  };
+
+  var types = [
+    "day",
+    "month",
+    "week",
+    "40",
+    "50",
+    "60",
+    "240",
+    "300",
+    "360",
+    "1200",
+    "1500",
+    "1800"
+  ];
+
   String getType(String str) {
-    var types = [
-      "day",
-      "month",
-      "week",
-      "40",
-      "50",
-      "60",
-      "240",
-      "300",
-      "360",
-      "1200",
-      "1500",
-      "1800"
-    ];
     for (var item in types) {
       if (str.contains(item)) return item;
     }
@@ -420,9 +449,9 @@ class _ExplorePageState extends State<ExplorePage>
                             child: OutlinedButton(
                                 style: OutlinedButton.styleFrom(
                                   backgroundColor:
-                                      Theme.of(context).accentColor,
+                                  typesMap[item[i].substring(14)] ? Theme.of(context).accentColor : Colors.grey[200],
                                 ),
-                                onPressed: () {
+                                onPressed: typesMap[item[i].substring(14)] ? () {
                                   if (FirebaseAuth.instance.currentUser ==
                                       null) {
                                     Navigator.push(
@@ -432,7 +461,7 @@ class _ExplorePageState extends State<ExplorePage>
                                       ),
                                     );
                                   }
-                                  
+
                                   var currentUser =
                                       FirebaseAuth.instance.currentUser;
                                   var uid = currentUser.uid;
@@ -451,10 +480,14 @@ class _ExplorePageState extends State<ExplorePage>
                                         "userName": data['displayName'],
                                         "type": getType(item[0]),
                                         "subtype": 'rupees ' + getType(item[i])
+                                      }).then((value) {
+                                        setState(() {
+                                          typesMap[item[i].substring(14)] = false;
+                                        });
                                       });
                                     }
                                   });
-                                },
+                                } : null,
                                 child: Text(
                                   'R  E  G  I  S  T  E  R',
                                   style: TextStyle(
