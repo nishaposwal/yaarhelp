@@ -1,7 +1,6 @@
 import 'package:yaarhelp/pages/how-it-works.dart';
 import 'package:yaarhelp/pages/main_tabs.dart';
 import 'package:flutter/material.dart';
-import 'package:yaarhelp/pages/profile/profile.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'gig.dart';

@@ -1,5 +1,4 @@
 import 'package:yaarhelp/pages/profile/profile.dart';
-import 'package:yaarhelp/pages/profile/profile_about.dart';
 import 'package:flutter/material.dart';
 
 class HelperCard extends StatelessWidget {

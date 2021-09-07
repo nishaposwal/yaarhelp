@@ -249,6 +249,8 @@ class _CreatePostState extends State<CreatePost> {
           ),
           Container(
             child: TextField(
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
               controller: controller,
               decoration: InputDecoration(
                 hintText: hint,
