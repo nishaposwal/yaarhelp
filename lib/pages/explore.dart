@@ -113,10 +113,10 @@ class _ExplorePageState extends State<ExplorePage>
       'Other Help ': "assets/images/image 14.png",
       "Learn English": "assets/images/image 26.png",
       "Volunteering": "assets/images/image 27.png",
-      'Donate Blood': "assets/images/image 2.png",
-      'Clean Your City': "assets/images/image 2.png",
-      'Feed poor': "assets/images/image 2.png",
-      'Educate underprivileged': "assets/images/image 2.png"
+      'Donate Blood': "assets/images/image 29.jpeg",
+      'Clean Your City': "assets/images/image 30.jpeg",
+      'Feed poor': "assets/images/image 31.jpeg",
+      'Educate underprivileged': "assets/images/image 32.jpeg"
     },
   ];
 
