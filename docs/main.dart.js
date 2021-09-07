@@ -25969,7 +25969,7 @@ return P.al($async$q_,s)},
 E:function(a5){var t,s,r,q,p,o,n,m,l,k,j,i,h,g,f,e=this,d=null,c=4281413937,b="completed",a="remaining",a0="progress",a1="100%",a2="Earnings",a3=u.X,a4=new R.ac(S.bK(C.d3,e.x,d),new R.aA(0,3.141592653589793,a3),a3.j("ac<Z.T>"))
 a3=L.k("bruce",d,d,d,d,d)
 t=u.p
-a3=E.hN(H.a([R.aR(!1,!0,new T.E(C.V,M.P(d,T.e9(C.eH,H.a([K.f5(d,new L.iV("assets/images/fiverr_logo.png"),14),M.P(d,K.f5(new P.q(4280139635),d,4),d,d,S.b2(F.j1(C.k,2),d,d,C.k,d,d,C.ai),d,d,d,d,d,d)],t),C.ad,d,d),d,d,d,d,36,d,d,d,36),d),d,!0,d,d,C.a3,d,d,d,d,d,new Y.SW(a5),C.a3)],t),d,d,a3)
+a3=E.hN(H.a([R.aR(!1,!0,new T.E(C.V,M.P(d,T.e9(C.eH,H.a([K.f5(d,new L.iV("assets/images/yaargelpr_logo.png"),14),M.P(d,K.f5(new P.q(4280139635),d,4),d,d,S.b2(F.j1(C.k,2),d,d,C.k,d,d,C.ai),d,d,d,d,d,d)],t),C.ad,d,d),d,d,d,d,36,d,d,d,36),d),d,!0,d,d,C.a3,d,d,d,d,d,new Y.SW(a5),C.a3)],t),d,d,a3)
 s=T.bq(H.a([new T.E(C.re,T.d0(H.a([L.k("Standards to maintain",d,d,d,A.m(d,d,C.k,d,d,d,d,d,d,d,d,20,d,C.i,d,d,!0,d,d,d,d,d,d),d),R.aR(!1,!0,L.ap(C.lf,C.k,d),d,!0,d,d,d,d,d,d,d,d,new Y.SX(),d)],t),C.U,C.m,d,C.x,C.j,d,d,C.R),d),new T.E(C.d5,T.d0(H.a([L.k("Seller level",d,d,d,A.m(d,d,C.k,d,d,d,d,d,d,d,d,d,d,C.i,d,d,!0,d,d,d,d,d,d),d),L.k("Level One",d,d,d,A.m(d,d,C.v,d,d,d,d,d,d,d,d,d,d,C.i,d,d,!0,d,d,d,d,d,d),d)],t),C.U,C.m,d,C.x,C.j,d,d,C.R),d),new T.E(C.d5,T.d0(H.a([L.k("Next evaluation",d,d,d,A.m(d,d,C.k,d,d,d,d,d,d,d,d,d,d,C.i,d,d,!0,d,d,d,d,d,d),d),L.k("Feb 15, 2020",d,d,d,A.m(d,d,C.v,d,d,d,d,d,d,d,d,d,d,C.i,d,d,!0,d,d,d,d,d,d),d)],t),C.U,C.m,d,C.x,C.j,d,d,C.R),d),new T.E(C.d5,T.d0(H.a([L.k("Response Time",d,d,d,A.m(d,d,C.k,d,d,d,d,d,d,d,d,d,d,C.i,d,d,!0,d,d,d,d,d,d),d),L.k("1 Hour",d,d,d,A.m(d,d,K.N(a5,!1).x,d,d,d,d,d,d,d,d,d,d,C.i,d,d,!0,d,d,d,d,d,d),d)],t),C.U,C.m,d,C.x,C.j,d,d,C.R),d)],t),C.l,C.u,C.j)
 r=A.m(d,d,C.n,d,d,d,d,d,d,d,d,d,d,d,d,d,!0,d,d,d,d,d,d)
 q=S.b2(d,d,d,C.k,d,d,C.y)
@@ -26093,13 +26093,13 @@ N.pM.prototype={
 a6:function(){return new N.Db(C.o)}}
 N.Db.prototype={
 E:function(a){var t,s,r,q,p,o,n,m,l,k,j,i,h=this,g=null,f=4287355309,e=u.p,d=E.hN(H.a([B.li(g,L.ap(C.rS,C.v,g),new N.Tv(a),g)],e),g,g,g),c=F.aw(a,!1).a
-c=T.bq(H.a([M.P(g,new T.E(C.ri,T.bq(H.a([new T.E(C.d5,T.e9(C.eH,H.a([K.f5(g,new L.iV("assets/images/fiverr_logo.png"),30),M.P(g,K.f5(new P.q(4280139635),g,6),g,g,S.b2(F.j1(C.I,2),g,g,C.k,g,g,C.ai),g,g,g,g,g,g)],e),C.ad,g,g),g),L.k("bruce",g,g,g,A.m(g,g,C.k,g,g,g,g,g,g,g,g,18,g,g,g,g,!0,g,g,g,g,g,g),g),new T.c3(g,6,g,g),L.k("My personal balance: US$36.90",g,g,g,A.m(g,g,C.k,g,g,g,g,g,g,g,g,14,g,g,g,g,!0,g,g,g,g,g,g),g)],e),C.U,C.bM,C.j),g),new P.q(4281413937),g,g,g,200,g,g,g,c.a),M.P(g,g,g,g,g,g,50,g,g,g,F.aw(a,!1).a.a)],e),C.l,C.u,C.j)
+c=T.bq(H.a([M.P(g,new T.E(C.ri,T.bq(H.a([new T.E(C.d5,T.e9(C.eH,H.a([K.f5(g,new L.iV("assets/images/yaargelpr_logo.png"),30),M.P(g,K.f5(new P.q(4280139635),g,6),g,g,S.b2(F.j1(C.I,2),g,g,C.k,g,g,C.ai),g,g,g,g,g,g)],e),C.ad,g,g),g),L.k("bruce",g,g,g,A.m(g,g,C.k,g,g,g,g,g,g,g,g,18,g,g,g,g,!0,g,g,g,g,g,g),g),new T.c3(g,6,g,g),L.k("My personal balance: US$36.90",g,g,g,A.m(g,g,C.k,g,g,g,g,g,g,g,g,14,g,g,g,g,!0,g,g,g,g,g,g),g)],e),C.U,C.bM,C.j),g),new P.q(4281413937),g,g,g,200,g,g,g,c.a),M.P(g,g,g,g,g,g,50,g,g,g,F.aw(a,!1).a.a)],e),C.l,C.u,C.j)
 t=F.aw(a,!1).a
 s=L.ap(C.t3,K.N(a,!1).x,g)
 r=L.k("Seller mode",g,g,g,A.m(g,g,g,g,g,g,g,g,g,g,g,g,g,C.i,g,g,!0,g,g,g,g,g,g),g)
 q=h.d
 t=T.e9(C.ci,H.a([c,V.j4(M.P(g,Q.aS(g,g,s,g,r,N.Yx(K.N(a,!1).x,new P.q(f),new N.Tw(h),q)),g,g,g,g,60,g,g,g,t.a*0.9),8)],e),C.ad,g,g)
-q=L.k("My Fiverr",g,g,g,A.m(g,g,g,g,g,g,g,g,g,g,g,20,g,C.i,g,g,!0,g,g,g,g,g,g),g)
+q=L.k("My yaargelpr",g,g,g,A.m(g,g,g,g,g,g,g,g,g,g,g,20,g,C.i,g,g,!0,g,g,g,g,g,g),g)
 r=R.aR(!1,!0,Q.aS(g,g,L.ap(C.lk,g,g),g,L.k("Earnings",g,g,g,A.m(g,g,g,g,g,g,g,g,g,g,g,16,g,C.i,g,g,!0,g,g,g,g,g,g),g),g),g,!0,g,g,g,g,g,g,g,g,new N.Tx(a),g)
 s=R.aR(!1,!0,Q.aS(g,g,L.ap(C.rJ,g,g),g,L.k("Buyers requests",g,g,g,A.m(g,g,g,g,g,g,g,g,g,g,g,16,g,C.i,g,g,!0,g,g,g,g,g,g),g),g),g,!0,g,g,g,g,g,g,g,g,new N.Tz(),g)
 c=R.aR(!1,!0,Q.aS(g,g,L.ap(C.rK,g,g),g,L.k("Offer templates",g,g,g,A.m(g,g,g,g,g,g,g,g,g,g,g,16,g,C.i,g,g,!0,g,g,g,g,g,g),g),g),g,!0,g,g,g,g,g,g,g,g,new N.TA(),g)
@@ -26315,7 +26315,7 @@ return U.XE(M.hf(E.hN(t,E.Yz(K.N(a,!1).x,H.a([E.ms("ABOUT"),E.ms("GIGS"),E.ms("R
 F.nI.prototype={
 a6:function(){return new F.BC(C.o)}}
 F.BC.prototype={
-E:function(a0){var t,s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d=null,c=K.f5(d,new L.iV("assets/images/fiverr_logo.png"),15),b=L.k("bruce",d,d,d,A.m(d,d,d,d,d,d,d,d,d,d,d,14,d,C.i,d,d,!0,d,d,d,d,d,d),d),a=u.p
+E:function(a0){var t,s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d=null,c=K.f5(d,new L.iV("assets/images/yaargelpr_logo.png"),15),b=L.k("bruce",d,d,d,A.m(d,d,d,d,d,d,d,d,d,d,d,14,d,C.i,d,d,!0,d,d,d,d,d,d),d),a=u.p
 b=Q.aS(d,d,c,T.az(H.a([L.ap(C.bL,C.an,12),new T.E(C.bf,L.k("4.9",d,d,d,A.m(d,d,C.an,d,d,d,d,d,d,d,d,d,d,d,d,d,!0,d,d,d,d,d,d),d),d),new T.E(C.bf,L.k("(56)",d,d,d,A.m(d,d,C.v,d,d,d,d,d,d,d,d,d,d,d,d,d,!0,d,d,d,d,d,d),d),d)],a),C.l,C.u,C.j),b,d)
 c=L.k("User information",d,d,d,A.m(d,d,d,d,d,d,d,d,d,d,d,d,d,C.i,d,d,!0,d,d,d,d,d,d),d)
 t=L.ap(C.rT,d,d)
@@ -26346,7 +26346,7 @@ j=L.k("Sinhala, Sinhalese",d,d,d,A.m(d,d,d,d,d,d,d,d,d,d,d,d,d,C.i,d,d,!0,d,d,d,
 j=Q.aS(d,d,l,L.k("Native/Bilingual",d,d,d,A.m(d,d,C.n,d,d,d,d,d,d,d,d,d,d,d,d,d,!0,d,d,d,d,d,d),d),j,d)
 l=Z.cr()
 i=L.k("Description\n",d,d,d,A.m(d,d,C.n,d,d,d,d,d,d,d,d,d,d,C.i,d,d,!0,d,d,d,d,d,d),d)
-i=Q.aS(d,d,d,L.k("Hi. I'm Bruce, freelance developer and designer working part time on Fiverr. I have over 9 years of experience in the fields of computing. I will guarantee a 100% customer satisfaction. Drop me a message I'll reply asap!",d,d,d,A.m(d,d,C.n,d,d,d,d,d,d,d,d,d,d,d,d,d,!0,d,d,d,d,d,d),d),i,d)
+i=Q.aS(d,d,d,L.k("Hi. I'm Bruce, freelance developer and designer working part time on yaargelpr. I have over 9 years of experience in the fields of computing. I will guarantee a 100% customer satisfaction. Drop me a message I'll reply asap!",d,d,d,A.m(d,d,C.n,d,d,d,d,d,d,d,d,d,d,d,d,d,!0,d,d,d,d,d,d),d),i,d)
 h=Z.cr()
 g=L.k("Skills\n",d,d,d,A.m(d,d,C.n,d,d,d,d,d,d,d,d,d,d,C.i,d,d,!0,d,d,d,d,d,d),d)
 f=new P.aP(20,20)
