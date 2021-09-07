@@ -2,7 +2,7 @@
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
   "/assets\AssetManifest.json": "e3ed30d9cf555a2679fc593847344567",
-"/assets\assets\images\fiverr_logo.png": "2955471cb4ba9decb1722b85752e0441",
+"/assets\assets\images\yaargelpr_logo.png": "2955471cb4ba9decb1722b85752e0441",
 "/assets\FontManifest.json": "b1448b2dfc414e9463b0976526b04622",
 "/assets\fonts\MaterialIcons-Regular.ttf": "56d3ffdef7a25659eab6a68a3fbfaf16",
 "/assets\LICENSE": "78d85b26060a14de71c4f6b367bf9a1f",
