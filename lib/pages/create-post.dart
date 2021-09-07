@@ -82,12 +82,7 @@ class _CreatePostState extends State<CreatePost> {
   final descriptionController = new TextEditingController();
   final titleController = new TextEditingController();
   final addressController = new TextEditingController();
-  final categoryList = [
-    'Online Help',
-    'Offline Help',
-    'Learn English',
-    'Volunteering'
-  ];
+  final categoryList = ['Online Help', 'Offline Help', 'Volunteering'];
   Map<String, List<String>> subCategoryList = {
     'Online Help': [
       "Assignment Help",
