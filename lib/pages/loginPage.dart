@@ -16,11 +16,11 @@ class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    // TODO: implement shouldReclip
-    return true;
-  }
+
+@override
+bool shouldReclip(CustomClipper<Path> oldClipper) {
+  return true;
+}
 
 class _LoginPageState extends State<LoginPage> {
   String error = 'yes';
@@ -78,8 +78,10 @@ class _LoginPageState extends State<LoginPage> {
           .then((value) => {
                 if (value.data() == null)
                   {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => UserDetails(false)))
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => UserDetails(false)))
                   }
                 else
                   {
@@ -136,9 +138,7 @@ class _LoginPageState extends State<LoginPage> {
             gradient: LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
-                colors: [
-                  Color(0xff7ED8D8), Color(0xff49BABA)
-                ])),
+                colors: [Color(0xff7ED8D8), Color(0xff49BABA)])),
         child: TextButton(
           onPressed: () => login(),
           child: loading

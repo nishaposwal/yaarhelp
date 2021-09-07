@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:yaarhelp/pages/loginPage.dart';
 import 'package:yaarhelp/pages/profile/profile.dart';
 import 'package:flutter/material.dart';
-import 'gig.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -227,8 +226,7 @@ class _PostState extends State<Post> {
               title(widget.data['title'], context),
               userProfile(widget.data['userImageUrl'], widget.data['userName']),
               rowInfo('Budget', 'INR ' + widget.data['budget']),
-              rowInfo('Time Required',
-                  widget.data['timeRequired'].toString() + ' Hours'),
+              rowInfo('Time Required', widget.data['timeRequired'].toString()),
               rowInfo('Address', widget.data['address']),
               rowInfo(
                   'Category',
