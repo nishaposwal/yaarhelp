@@ -328,7 +328,7 @@ class _CreatePostState extends State<CreatePost> {
         error =
             "Unsupported device. Please try to create a post from some other device.";
         break;
-      case "4":
+      case "100":
         error = "An unknown error occurred. Payment was Unsuccessful.";
         break;
       default:
