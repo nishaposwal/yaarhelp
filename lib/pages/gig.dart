@@ -215,11 +215,7 @@ class _GigState extends State<Gig> {
     if (widget.subsource == "home" && widget.gig['title'].length >= 30) {
       widget.gig['title'] = widget.gig['title'].substring(0, 30) + '...';
     }
-    return InkWell(
-      onTap: () {
-        viewGigDetail(context, widget.gig, widget.id);
-      },
-      child: Card(
+    return Card(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           width: double.infinity,
@@ -288,7 +284,6 @@ class _GigState extends State<Gig> {
             ),
           ]),
         ),
-      ),
-    );
+      );
   }
 }

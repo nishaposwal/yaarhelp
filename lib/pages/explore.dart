@@ -115,8 +115,8 @@ class _ExplorePageState extends State<ExplorePage>
       "Volunteering": "assets/images/image 27.png",
       'Donate Blood': "assets/images/image 29.jpeg",
       'Clean Your City': "assets/images/image 30.jpeg",
-      'Feed poor': "assets/images/image 31.jpeg",
-      'Educate underprivileged': "assets/images/image 32.jpeg"
+      'Feed poor': "assets/images/image 32.jpeg",
+      'Educate underprivileged': "assets/images/image 31.jpeg"
     },
   ];
 
@@ -292,12 +292,16 @@ class _ExplorePageState extends State<ExplorePage>
   }
 
   Widget gigList(BuildContext context) {
+    var subCat = currentCat;
+    if (subCat == 'Other Help ') {
+      subCat = 'Other Help';
+    }
     return Container(
       child: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('gigs')
             .where('category', isEqualTo: modes[currentMode]['name'])
-            .where('subCategory', isEqualTo: currentCat)
+            .where('subCategory', isEqualTo: subCat)
             .orderBy('timeStamp', descending: true)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
