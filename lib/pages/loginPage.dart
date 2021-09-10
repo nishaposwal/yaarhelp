@@ -69,7 +69,8 @@ class _LoginPageState extends State<LoginPage> {
     });
     try {
       await auth.signInWithEmailAndPassword(
-          email: emailController.text, password: passwordController.text);
+          email: emailController.text.trim(),
+          password: passwordController.text.trim());
       showdialogBox('Success', 'Logged in successfully', false);
       FirebaseFirestore.instance
           .collection('users')

@@ -54,7 +54,8 @@ class _SignUpPageState extends State<SignUpPage> {
     print(emailController.text + ' ' + passwordController.text);
     try {
       await auth.createUserWithEmailAndPassword(
-          email: emailController.text, password: passwordController.text);
+          email: emailController.text.trim(),
+          password: passwordController.text.trim());
       showdialogBox('Success', 'Your account has been created', false);
       FirebaseFirestore.instance
           .collection('users')
