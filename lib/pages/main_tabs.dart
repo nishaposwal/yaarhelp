@@ -13,15 +13,16 @@ import 'package:titled_navigation_bar/titled_navigation_bar.dart';
 class MainTabs extends StatefulWidget {
   @override
   _MainTabsState createState() => _MainTabsState();
-
+  int catInExplore;
   int selectedIndex;
-  MainTabs({this.selectedIndex});
+  MainTabs({this.selectedIndex, this.catInExplore});
 }
 
 class _MainTabsState extends State<MainTabs>
     with SingleTickerProviderStateMixin {
   int _selectedIndexForBottomNavigationBar;
   bool _profileCompleted = false;
+  int catInExplore;
 
   @override
   void initState() {
@@ -42,6 +43,10 @@ class _MainTabsState extends State<MainTabs>
     super.initState();
     _selectedIndexForBottomNavigationBar =
         widget.selectedIndex != null ? widget.selectedIndex : 0;
+    catInExplore = widget.catInExplore != null ? widget.catInExplore : 0;
+    _listOfPagesForBottomNavigationBar[1] = ExplorePage(
+      currentMode: catInExplore,
+    );
   }
 
   @override
@@ -69,7 +74,7 @@ class _MainTabsState extends State<MainTabs>
     }
   }
 
-  static List<Widget> _listOfPagesForBottomNavigationBar = <Widget>[
+  List<Widget> _listOfPagesForBottomNavigationBar = <Widget>[
     HomePage(),
     ExplorePage(),
     CreatePost(),

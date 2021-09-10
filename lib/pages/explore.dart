@@ -24,7 +24,8 @@ class _ExplorePageState extends State<ExplorePage>
   void initState() {
     _tabController = new TabController(initialIndex: 0, length: 2, vsync: this);
     currentMode = widget.currentMode != null ? widget.currentMode : 0;
-    currentCat = "Assignment Help";
+    currentCat = modes[currentMode]['domains'];
+    if (currentCat.length != 0) currentCat = currentCat[0];
     var currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
       FirebaseFirestore.instance

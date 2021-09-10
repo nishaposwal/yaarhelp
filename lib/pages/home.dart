@@ -196,8 +196,9 @@ class _HomePageState extends State<HomePage>
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => ExplorePage(
-                                          currentMode: index,
+                                        builder: (context) => MainTabs(
+                                          selectedIndex: 1,
+                                          catInExplore: index,
                                         ),
                                       ),
                                     );
