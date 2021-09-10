@@ -9,6 +9,8 @@ import 'package:yaarhelp/pages/loginPage.dart';
 class ExplorePage extends StatefulWidget {
   @override
   _ExplorePageState createState() => _ExplorePageState();
+  int currentMode;
+  ExplorePage({this.currentMode});
 }
 
 int selected = 0;
@@ -21,7 +23,7 @@ class _ExplorePageState extends State<ExplorePage>
   @override
   void initState() {
     _tabController = new TabController(initialIndex: 0, length: 2, vsync: this);
-    currentMode = 0;
+    currentMode = widget.currentMode != null ? widget.currentMode : 0;
     currentCat = "Assignment Help";
     var currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
@@ -453,45 +455,52 @@ class _ExplorePageState extends State<ExplorePage>
                             child: OutlinedButton(
                                 style: OutlinedButton.styleFrom(
                                   backgroundColor:
-                                  typesMap[item[i].substring(14)] ? Theme.of(context).accentColor : Colors.grey[200],
+                                      typesMap[item[i].substring(14)]
+                                          ? Theme.of(context).accentColor
+                                          : Colors.grey[200],
                                 ),
-                                onPressed: typesMap[item[i].substring(14)] ? () {
-                                  if (FirebaseAuth.instance.currentUser ==
-                                      null) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => LoginPage(),
-                                      ),
-                                    );
-                                  }
+                                onPressed: typesMap[item[i].substring(14)]
+                                    ? () {
+                                        if (FirebaseAuth.instance.currentUser ==
+                                            null) {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => LoginPage(),
+                                            ),
+                                          );
+                                        }
 
-                                  var currentUser =
-                                      FirebaseAuth.instance.currentUser;
-                                  var uid = currentUser.uid;
-                                  FirebaseFirestore.instance
-                                      .collection('users')
-                                      .doc(uid)
-                                      .get()
-                                      .then((value) {
-                                    if (value.data() != null) {
-                                      var data = value.data();
-                                      FirebaseFirestore.instance
-                                          .collection("englishLearners")
-                                          .add({
-                                        "userId": currentUser.uid,
-                                        "phoneNumber": data['phoneNumber'],
-                                        "userName": data['displayName'],
-                                        "type": getType(item[0]),
-                                        "subtype": 'rupees ' + getType(item[i])
-                                      }).then((value) {
-                                        setState(() {
-                                          typesMap[item[i].substring(14)] = false;
+                                        var currentUser =
+                                            FirebaseAuth.instance.currentUser;
+                                        var uid = currentUser.uid;
+                                        FirebaseFirestore.instance
+                                            .collection('users')
+                                            .doc(uid)
+                                            .get()
+                                            .then((value) {
+                                          if (value.data() != null) {
+                                            var data = value.data();
+                                            FirebaseFirestore.instance
+                                                .collection("englishLearners")
+                                                .add({
+                                              "userId": currentUser.uid,
+                                              "phoneNumber":
+                                                  data['phoneNumber'],
+                                              "userName": data['displayName'],
+                                              "type": getType(item[0]),
+                                              "subtype":
+                                                  'rupees ' + getType(item[i])
+                                            }).then((value) {
+                                              setState(() {
+                                                typesMap[item[i]
+                                                    .substring(14)] = false;
+                                              });
+                                            });
+                                          }
                                         });
-                                      });
-                                    }
-                                  });
-                                } : null,
+                                      }
+                                    : null,
                                 child: Text(
                                   'R  E  G  I  S  T  E  R',
                                   style: TextStyle(
@@ -510,31 +519,33 @@ class _ExplorePageState extends State<ExplorePage>
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            top(),
-            SizedBox(
-              height: 5,
-            ),
-            subcategories(),
-            modes[currentMode]['name'] != "Learn English"
-                ? tabBar()
-                : SizedBox(
-                    height: 0,
-                  ),
-            modes[currentMode]['name'] != "Learn English"
-                ? selected == 0
-                    ? gigList(context)
-                    : helperList(context)
-                : englishProgram()
-          ],
+    return Material(
+      child: SafeArea(
+          child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 10),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              top(),
+              SizedBox(
+                height: 5,
+              ),
+              subcategories(),
+              modes[currentMode]['name'] != "Learn English"
+                  ? tabBar()
+                  : SizedBox(
+                      height: 0,
+                    ),
+              modes[currentMode]['name'] != "Learn English"
+                  ? selected == 0
+                      ? gigList(context)
+                      : helperList(context)
+                  : englishProgram()
+            ],
+          ),
         ),
-      ),
-    ));
+      )),
+    );
   }
 }

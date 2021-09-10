@@ -14,10 +14,9 @@ class ManageAccount extends StatefulWidget {
   _ManageAccountState createState() => _ManageAccountState();
 }
 
-final uid = FirebaseAuth.instance.currentUser.uid;
-var data;
-
 class _ManageAccountState extends State<ManageAccount> {
+  final uid = FirebaseAuth.instance.currentUser.uid;
+  var data;
   Widget title(String text) {
     return Padding(
       padding: const EdgeInsets.only(top: 18.0, left: 20.0, bottom: 8.0),
@@ -132,7 +131,9 @@ class _ManageAccountState extends State<ManageAccount> {
           if (snapshot.data.docs.length == 0) {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => UserDetails(false)));
-            return SizedBox(height: 0,);
+            return SizedBox(
+              height: 0,
+            );
           }
           var imageUrl = snapshot.data.docs.first.get('imageUrl');
           var name = snapshot.data.docs.first.get('displayName');

@@ -1,3 +1,4 @@
+import 'package:yaarhelp/pages/explore.dart';
 import 'package:yaarhelp/pages/how-it-works.dart';
 import 'package:yaarhelp/pages/main_tabs.dart';
 import 'package:flutter/material.dart';
@@ -28,13 +29,10 @@ class _HomePageState extends State<HomePage>
     "assets/images/banner3.png"
   ];
   Map<String, String> categories = {
-    "Online Help":
-        "assets/images/image 24.png",
+    "Online Help": "assets/images/image 24.png",
     "Offline Help": "assets/images/image 25.png",
-    "Learn English":
-        "assets/images/image 26.png",
-    "Volunteering":
-        "assets/images/image 27.png"
+    "Learn English": "assets/images/image 26.png",
+    "Volunteering": "assets/images/image 27.png"
   };
 
   Map<String, List> subCategories = {
@@ -190,28 +188,39 @@ class _HomePageState extends State<HomePage>
                       height: 10,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        for (var item in categories.keys)
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CircleAvatar(
-                                backgroundImage: AssetImage(categories[item]),
-                                radius: 25,
-                              ),
-                              SizedBox(
-                                height: 6,
-                              ),
-                              Text(
-                                item,
-                                style: TextStyle(
-                                    fontSize: 12, fontFamily: 'Roboto'),
-                              )
-                            ],
-                          )
-                      ],
-                    ),
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: List.generate(
+                            categories.keys.length,
+                            (index) => InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ExplorePage(
+                                          currentMode: index,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundImage: AssetImage(categories[
+                                            categories.keys.elementAt(index)]),
+                                        radius: 25,
+                                      ),
+                                      SizedBox(
+                                        height: 6,
+                                      ),
+                                      Text(
+                                        categories.keys.elementAt(index),
+                                        style: TextStyle(
+                                            fontSize: 12, fontFamily: 'Roboto'),
+                                      )
+                                    ],
+                                  ),
+                                ))),
                   ],
                 ),
               ),

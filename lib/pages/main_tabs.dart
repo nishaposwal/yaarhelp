@@ -20,7 +20,6 @@ class MainTabs extends StatefulWidget {
 
 class _MainTabsState extends State<MainTabs>
     with SingleTickerProviderStateMixin {
-  TabController controller;
   int _selectedIndexForBottomNavigationBar;
   bool _profileCompleted = false;
 
@@ -34,29 +33,40 @@ class _MainTabsState extends State<MainTabs>
           .then((value) => {
                 if (value.data() != null)
                   {
-                    _profileCompleted = true,
+                    setState(() {
+                      _profileCompleted = true;
+                    })
                   }
               });
     }
     super.initState();
     _selectedIndexForBottomNavigationBar =
         widget.selectedIndex != null ? widget.selectedIndex : 0;
-    controller = TabController(
-        vsync: this,
-        length: _listOfPagesForBottomNavigationBar.length,
-        initialIndex: 1);
   }
 
   @override
   void dispose() {
     super.dispose();
-    controller.dispose();
   }
 
   void _onItemTappedForBottomNavigationBar(int index) {
     setState(() {
       _selectedIndexForBottomNavigationBar = index;
     });
+    if (FirebaseAuth.instance.currentUser != null) {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser.uid)
+          .get()
+          .then((value) => {
+                if (value.data() != null)
+                  {
+                    setState(() {
+                      _profileCompleted = true;
+                    })
+                  }
+              });
+    }
   }
 
   static List<Widget> _listOfPagesForBottomNavigationBar = <Widget>[

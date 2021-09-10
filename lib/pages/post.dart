@@ -216,6 +216,10 @@ class _PostState extends State<Post> {
         }
       }
     }
+    String shorttitle = widget.data['title'];
+    if (widget.data['title'].length >= 30) {
+      shorttitle = widget.data['title'].substring(0, 25) + '...';
+    }
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -223,7 +227,7 @@ class _PostState extends State<Post> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              title(widget.data['title'], context),
+              title(shorttitle, context),
               userProfile(widget.data['userImageUrl'], widget.data['userName']),
               rowInfo('Budget', 'INR ' + widget.data['budget']),
               rowInfo('Time Required', widget.data['timeRequired'].toString()),
