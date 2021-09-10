@@ -224,8 +224,8 @@ class _CreatePostState extends State<CreatePost> {
     );
   }
 
-  Widget stringInput(
-      TextEditingController controller, String header, String hint) {
+  Widget stringInput(TextEditingController controller, String header,
+      String hint, bool multiline) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Column(
@@ -244,7 +244,8 @@ class _CreatePostState extends State<CreatePost> {
           ),
           Container(
             child: TextField(
-              keyboardType: TextInputType.multiline,
+              keyboardType:
+                  multiline ? TextInputType.multiline : TextInputType.text,
               maxLines: null,
               controller: controller,
               decoration: InputDecoration(
@@ -462,14 +463,14 @@ class _CreatePostState extends State<CreatePost> {
             children: [
               top(context),
               categories(),
-              stringInput(titleController, 'Add Title', 'Title'),
-              stringInput(
-                  descriptionController, 'Add Description', 'Description'),
+              stringInput(titleController, 'Add Title', 'Title', false),
+              stringInput(descriptionController, 'Add Description',
+                  'Description', true),
               stringInput(timerequiredController, 'Service Delivery time',
-                  'Enter time required to complete task'),
+                  'Enter time required to complete task', false),
               inputNumber(budgetController, 'What is your budget ( ₹ )',
                   'Enter your budget in rupees', 'Please Enter your budget'),
-              stringInput(addressController, 'Add Address', 'Address'),
+              stringInput(addressController, 'Add Address', 'Address', true),
               post(),
             ],
           ),
