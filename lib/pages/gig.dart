@@ -275,74 +275,92 @@ class _GigState extends State<Gig> {
     if (widget.subsource == "home" && widget.gig['title'].length >= 30) {
       title = widget.gig['title'].substring(0, 30) + '...';
     }
-    return Card(
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        width: double.infinity,
-        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          CircleAvatar(
-              backgroundImage: NetworkImage(widget.gig['userImageUrl']),
-              radius: 30),
-          SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: cWidth,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        userName,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Lato'),
-                      ),
-                      Text(
-                        widget.gig['postedOn'],
-                        style: TextStyle(fontFamily: 'Lato', fontSize: 8),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                Container(
-                  width: cWidth,
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                        color: Colors.blueGrey[900],
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Lato'),
-                  ),
-                ),
-                SizedBox(
-                  height: 6,
-                ),
-                widget.source == "explore"
-                    ? budget('₹ ' + widget.gig['budget'], context)
-                    : SizedBox(
-                        height: 0,
-                      ),
-                SizedBox(
-                  height: 4,
-                ),
-                actions(context, widget.gig, widget.id, widget.source, widget,
-                    _profileCompleted),
-              ],
+    return InkWell(
+      onTap: () {
+        (widget.source == 'explore')
+            ? Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Post(
+                          data: widget.gig,
+                          id: widget.id,
+                        )))
+            : Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ProfilePage(
+                          uid: widget.gig['userId'],
+                        )));
+      },
+      child: Card(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          width: double.infinity,
+          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            CircleAvatar(
+                backgroundImage: NetworkImage(widget.gig['userImageUrl']),
+                radius: 30),
+            SizedBox(
+              width: 10,
             ),
-          ),
-        ]),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: cWidth,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          userName,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Lato'),
+                        ),
+                        Text(
+                          widget.gig['postedOn'],
+                          style: TextStyle(fontFamily: 'Lato', fontSize: 11),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Container(
+                    width: cWidth,
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                          color: Colors.blueGrey[900],
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Lato'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 6,
+                  ),
+                  widget.source == "explore"
+                      ? budget('₹ ' + widget.gig['budget'], context)
+                      : SizedBox(
+                          height: 0,
+                        ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  actions(context, widget.gig, widget.id, widget.source, widget,
+                      _profileCompleted),
+                ],
+              ),
+            ),
+          ]),
+        ),
       ),
     );
   }

@@ -300,7 +300,8 @@ class _ExplorePageState extends State<ExplorePage>
       subCat = 'Other Help';
     }
     return Container(
-      child: StreamBuilder<QuerySnapshot>(
+      child:
+      StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('gigs')
             .where('category', isEqualTo: modes[currentMode]['name'])
