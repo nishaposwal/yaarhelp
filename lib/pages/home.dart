@@ -24,9 +24,9 @@ class _HomePageState extends State<HomePage>
   }
 
   List<String> list = [
-    "assets/images/banner1.png",
-    "assets/images/banner2.png",
-    "assets/images/banner3.png"
+    "assets/images/banner_01.png",
+    "assets/images/banner_02.png",
+    "assets/images/banner_03.png"
   ];
   Map<String, String> categories = {
     "Online Help": "assets/images/image 24.png",
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage>
   Widget carousel(List<dynamic> list) {
     return CarouselSlider(
       options: CarouselOptions(
-          height: 150.0,
+          height: 180.0,
           autoPlay: true,
           autoPlayInterval: Duration(seconds: 3),
           viewportFraction: 1.0),
@@ -91,17 +91,16 @@ class _HomePageState extends State<HomePage>
         return Builder(
           builder: (BuildContext context) {
             return Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 2),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                ),
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.symmetric(vertical: 8),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(11),
                 child: Image(
                   image: AssetImage(url),
                   fit: BoxFit.fill,
-                ));
+                ),
+              ),
+            );
           },
         );
       }).toList(),
