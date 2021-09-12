@@ -36,6 +36,9 @@ Widget noNotifications(BuildContext context) {
 }
 
 Widget showBody(BuildContext context, currentUser, height) {
+  if (currentUser == null) {
+    return noNotifications(context);
+  }
   return Center(
     child: StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
@@ -71,7 +74,6 @@ Widget showBody(BuildContext context, currentUser, height) {
                 ? adminNotifications(context, currentUser, height)
                 : userNotifications(context, currentUser, height);
           } else {
-            print('here');
             return Text('Admin Configuration Issue!');
           }
         }),
